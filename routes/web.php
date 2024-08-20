@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\InstructorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/admin', [LoginController::class, 'index']);
+
+Route::post('login', [LoginController::class, 'login']);
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('admin-dashboard', function () {
+        return view('admin.dashboard');
+    });
+    Route::get('instructor-index', [InstructorController::class, 'index'])->name('instructor-index');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('admin', function () {
-    return view('admin.index');
-});
+
