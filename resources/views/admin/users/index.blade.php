@@ -48,7 +48,7 @@
                     {{ session('status') }}
                 </div>
               @endif
-            <button type="submit" class="btn btn-success"><a href="/users-create" style="text-decoration: none; color:aliceblue">Add More</a></button>
+            <button type="submit" class="btn btn-success"><a href="{{ route('users.create') }}" style="text-decoration: none; color:aliceblue">Add More</a></button>
             <br><br>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
