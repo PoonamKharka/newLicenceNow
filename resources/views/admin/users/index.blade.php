@@ -43,6 +43,13 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+            <div class="alert alert-success">
+              @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+              @endif
+          </div> 
             <button type="submit" class="btn btn-success"><a href="/users-create" style="text-decoration: none; color:aliceblue">Add More</a></button>
             <br><br>
             <table id="example1" class="table table-bordered table-striped">

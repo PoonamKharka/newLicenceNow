@@ -14,11 +14,15 @@ class RegisterService {
         $this->regRep = $regRepository;
     }
 
-    public function index(){
-        return $this->regRep->index();
+    public function index($req){
+        return $this->regRep->index($req);
     }
 
     public function create() {
         return $this->regRep->create();
+    }
+
+    public function store(Request $req){
+        return $this->regRep->store($req);
     }
 }

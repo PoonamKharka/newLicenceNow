@@ -68,20 +68,20 @@
         </div>
       </div>
       <!-- ./col -->
-      {{-- <div class="col-lg-3 col-6">
+      <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-danger">
           <div class="inner">
-            <h3>65</h3>
+            <h3>99</h3>
 
-            <p>Unique Visitors</p>
+            <p>Users Count</p>
           </div>
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="/users-list" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-      </div> --}}
+      </div>
       <!-- ./col -->
     </div>
     <!-- /.row -->

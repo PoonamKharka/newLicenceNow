@@ -30,19 +30,23 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <form>
+                  <form method="POST" action="{{ route('add-user') }}">
+                    @csrf
                     <div class="row">
                       <div class="col-sm-6">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Name</label>
-                          <input type="text" class="form-control" placeholder="Enter Name">
+                          <input type="text" class="form-control" placeholder="Enter Name" name="name">
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label>Email</label>
-                          <input type="email" class="form-control" placeholder="Enter Email">
+                          <input type="email" class="form-control" placeholder="Enter Email" name="email">
+                          @error('email')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
                         </div>
                       </div>
                     </div>
@@ -51,16 +55,19 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                               <label>Username</label>
-                              <input type="text" class="form-control" placeholder="Enter Username">
+                              <input type="text" class="form-control" placeholder="Enter Username" name="username">
+                              @error('username')
+                                <span class="text-danger">{{ $message }}</span>
+                              @enderror
                             </div>
                           </div>
                         <div class="col-sm-6">
                             <!-- select -->
                             <div class="form-group">
                             <label>Select User Type</label>
-                            <select class="form-control">
-                                <option>Instructor</option>
-                                <option>Learner</option>
+                            <select class="form-control" name="userType">
+                                <option value="isInstructor">Instructor</option>
+                                <option value="isLearner">Learner</option>
                             </select>
                             </div>
                       </div>
@@ -70,18 +77,21 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                               <label>Password</label>
-                              <input type="password" class="form-control" placeholder="Enter Password">
+                              <input type="password" class="form-control" placeholder="Enter Password" name="password">
+                              @error('password')
+                                <span class="text-danger">{{ $message }}</span>
+                              @enderror
                             </div>
                           </div>
                     </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                      <button type="submit" class="btn btn-info">Submit</button>
+                      <button type="reset" class="btn btn-default">Cancel</button>
+                    </div>
+                    <!-- /.card-footer -->
                   </form>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-info">Submit</button>
-                    <button type="submit" class="btn btn-default">Cancel</button>
-                  </div>
-                  <!-- /.card-footer -->
               </div>
               <!-- /.card -->
               <!-- general form elements disabled -->
