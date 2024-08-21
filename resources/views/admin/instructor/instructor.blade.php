@@ -35,6 +35,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -42,6 +43,7 @@
                     <tr>
                         <td> {{ $details->name }}</td>
                         <td> {{ ( $details->status === 1 ) ? 'Active' : 'Inactive' }} </td>
+                        <td> <a href="#">view</a> </td>
                       </tr>
                     @endforeach
                 </tbody>

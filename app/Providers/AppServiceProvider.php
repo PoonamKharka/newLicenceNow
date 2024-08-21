@@ -12,6 +12,9 @@ use App\Services\Api\RegistrationService;
 use App\Repositories\InterFaces\InstructorRepositoryInterFace;
 use App\Repositories\Repository\InstructorRepository;
 use App\Services\InstructorService;
+use App\Repositories\InterFaces\RegisterRepositoryInterFace;
+use App\Repositories\Repository\RegisterRepository;
+use App\Services\RegisterService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +36,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(InstructorRepositoryInterFace::class, InstructorRepository::class);
         $this->app->bind(InstructorService::class, function ($app) {
             return new InstructorService($app->make(InstructorRepositoryInterFace::class));
+        });
+
+        $this->app->bind( RegisterRepositoryInterFace::class, RegisterRepository::class);
+        $this->app->bind(RegisterService::class, function ($app) {
+            return new RegisterService($app->make(RegisterRepositoryInterFace::class));
         });
     }
 

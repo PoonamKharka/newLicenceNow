@@ -65,7 +65,7 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- my custom script for chart-->
-<script src="{{ asset('js/chart.js') }}"></script>
+{{-- <script src="{{ asset('js/chart.js') }}"></script> --}}
 <!-- Bootstrap 4 -->
 <script src="{{  asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- ChartJS -->

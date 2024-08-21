@@ -17,6 +17,6 @@ class InstructorController extends Controller
 
    public function index(){
     $userDetails = $this->instService->getAllInstructors();
-    return view('admin.instructor', compact('userDetails'));
+    return view('admin.instructor.instructor', compact('userDetails'));
    }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\InstructorController;
-
+use App\Http\Controllers\RegisterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin-dashboard', function () {
         return view('admin.dashboard');
     });
+    Route::get('users-list', [ RegisterController::class, 'index']);
+    Route::get('users-create', [ RegisterController::class, 'create']);
     Route::get('instructor-index', [InstructorController::class, 'index'])->name('instructor-index');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

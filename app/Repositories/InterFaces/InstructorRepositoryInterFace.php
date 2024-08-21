@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 interface InstructorRepositoryInterFace {
     public function getAllInstructors();
+    ///public function profile($request, $id);
 }
 
 ?>

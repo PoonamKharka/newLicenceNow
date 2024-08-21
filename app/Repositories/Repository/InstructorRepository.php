@@ -12,4 +12,6 @@ class InstructorRepository implements InstructorRepositoryInterFace {
     public function getAllInstructors(){
         return User::where('isInstructor', 1)->get();
     }
+
+    //public function 
 }
