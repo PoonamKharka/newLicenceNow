@@ -41,4 +41,12 @@ class RegisterController extends Controller
             return redirect()->route('uIndex')->with('status', 'User created successfully.');
         }
     }
+
+    /**
+     * For getting user on the basis of pass userid
+     */
+    public function show($id) {
+        $userData =  $this->regService->view($id);
+        return view('admin.users.show', compact('userData'));
+    }
 }

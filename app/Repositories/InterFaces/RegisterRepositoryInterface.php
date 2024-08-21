@@ -8,7 +8,7 @@ interface RegisterRepositoryInterFace {
     public function index(Request $request);
     public function create();
     public function store( Request $request );
-    // public function update();
+    public function view($id);
 }
 
 ?>

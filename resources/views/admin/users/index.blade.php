@@ -43,13 +43,11 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <div class="alert alert-success">
-              @if (session('status'))
+            @if (session('status'))
                 <div class="alert alert-success">
                     {{ session('status') }}
                 </div>
               @endif
-          </div> 
             <button type="submit" class="btn btn-success"><a href="/users-create" style="text-decoration: none; color:aliceblue">Add More</a></button>
             <br><br>
             <table id="example1" class="table table-bordered table-striped">
@@ -77,7 +75,12 @@
                   <td> Admin </td>
                 @endif
                 <td>{{  ($users->status === 1)? 'Active' : 'Inactive'}}</td>
-                <td> <a href="#">View</a></td>
+                <td> 
+                  <div class="btn-group btn-group-sm">
+                    <a href="{{ route('users.show', encrypt($users->id)) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                  </div>
+                </td>
               </tr>
               @endforeach
              </tbody>

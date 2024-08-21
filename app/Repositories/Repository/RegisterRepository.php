@@ -24,7 +24,7 @@ class RegisterRepository implements RegisterRepositoryInterFace {
             $allUsers = User::where('name', 'LIKE' , "%{$searching}%")
             ->get();
         } else {
-            $allUsers = User::get();
+            $allUsers = User::where('isAdmin' , '=', 0 )->get()->toArray();
         }
        
         return view('admin.users.index', compact('allUsers'));
@@ -71,6 +71,12 @@ class RegisterRepository implements RegisterRepositoryInterFace {
         ]);
 
         return $user;
+    }
+
+    public function view($id) {
+        $userId = decrypt($id); 
+        return User::findOrFail($userId);
+        
     }
 
 }

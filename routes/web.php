@@ -27,9 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin-dashboard', function () {
         return view('admin.dashboard');
     });
-    Route::get('users-list', [ RegisterController::class, 'index'])->name('uIndex');;
-    Route::get('users-create', [ RegisterController::class, 'create']);
-    Route::post('user-add', [RegisterController::class, 'store'])->name('add-user');
+    Route::resource('users', RegisterController::class);
     Route::get('instructor-index', [InstructorController::class, 'index'])->name('instructor-index');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

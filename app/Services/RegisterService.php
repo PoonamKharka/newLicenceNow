@@ -25,4 +25,8 @@ class RegisterService {
     public function store(Request $req){
         return $this->regRep->store($req);
     }
+
+    public function view($id) {
+        return $this->regRep->view($id);
+    }
 }
