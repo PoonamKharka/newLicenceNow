@@ -33,10 +33,13 @@
                     </button>
                   </div>
                 </div>
+                @php
+                    {{ $userData }}
+                @endphp
                 <div class="card-body">
                   <div class="form-group">
                     <label for="inputName">Name</label>
-                    <input type="text" id="inputName" class="form-control" value="{{ $userData->name }}">
+                    <input type="text" id="inputName" class="form-control" value="">
                   </div>
                   
                   <div class="form-group">

@@ -24,7 +24,7 @@ class RegisterRepository implements RegisterRepositoryInterFace {
             $allUsers = User::where('name', 'LIKE' , "%{$searching}%")
             ->get();
         } else {
-            $allUsers = User::where('isAdmin' , '=', 0 )->get()->toArray();
+            $allUsers = User::where('isAdmin' , '=', 0 )->get();
         }
        
         return view('admin.users.index', compact('allUsers'));
