@@ -38,7 +38,7 @@ class RegisterController extends Controller
     public function store(Request $req) {
         $result =  $this->regService->store($req);
         if( $result ) {
-            return redirect()->route('uIndex')->with('status', 'User created successfully.');
+            return redirect()->route('users.index')->with('status', 'User created successfully.');
         }
     }
 

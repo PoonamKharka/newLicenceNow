@@ -30,7 +30,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <form method="POST" action="{{ route('add-user') }}">
+                  <form method="POST" action="{{ route('users.store') }}">
                     @csrf
                     <div class="row">
                       <div class="col-sm-6">

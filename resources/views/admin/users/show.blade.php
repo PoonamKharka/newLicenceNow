@@ -34,7 +34,7 @@
                   </div>
                 </div>
                 @php
-                    {{ $userData }}
+                   dd($userData->name)
                 @endphp
                 <div class="card-body">
                   <div class="form-group">
