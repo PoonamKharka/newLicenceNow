@@ -26,30 +26,42 @@
             <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">User Details</h3>
-    
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                       <i class="fas fa-minus"></i>
                     </button>
                   </div>
                 </div>
-                @php
-                   dd($userData->name)
-                @endphp
                 <div class="card-body">
+                  <form method="POST" action="">
+                    @csrf
                   <div class="form-group">
-                    <label for="inputName">Name</label>
-                    <input type="text" id="inputName" class="form-control" value="">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" value="{{ $userData->name }}">
                   </div>
                   
                   <div class="form-group">
-                    <label for="inputClientCompany">User Name</label>
-                    <input type="text" id="inputClientCompany" class="form-control" value="Deveint Inc">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" value="{{ $userData->username }}" disabled>
                   </div>
                   <div class="form-group">
-                    <label for="inputProjectLeader">Project Leader</label>
-                    <input type="text" id="inputProjectLeader" class="form-control" value="Tony Chicken">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" class="form-control" value="{{ $userData->email }}" disabled>
                   </div>
+                  <div class="form-group">
+                    <label for="email">Status</label>
+                        <select class="form-control" name="status">
+                          <option value="1" selected> {{ ($userData->status == 1) ? "Active" : "Inactive" }}</option>
+                        </select>
+                    {{-- <input type="text" id="email" class="form-control" value="{{ $userData->status }}"> --}}
+                  </div>
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-info">Update</button>
+                    <button type="reset" class="btn btn-default">Cancel</button>
+                  </div>
+                  <!-- /.card-footer -->
+                  </form>
+                  <!-- /form -->
                 </div>
                 <!-- /.card-body -->
               </div>

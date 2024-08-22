@@ -45,6 +45,9 @@
           <div class="card-body">
             @if (session('status'))
                 <div class="alert alert-success">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                  </button>
                     {{ session('status') }}
                 </div>
               @endif
@@ -71,14 +74,16 @@
                 @if ( $users->isLearner === 1 )
                   <td> Learner </td>
                 @endif
-                @if ( $users->isAdmin === 1 )
-                  <td> Admin </td>
-                @endif
+                
                 <td>{{  ($users->status === 1)? 'Active' : 'Inactive'}}</td>
                 <td> 
                   <div class="btn-group btn-group-sm">
                     <a href="{{ route('users.show', encrypt($users->id)) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    <form action="{{ route('users.destroy', encrypt($users->id)) }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete user?')"> <i class="fas fa-trash"></i></button>
+                  </form>
                   </div>
                 </td>
               </tr>

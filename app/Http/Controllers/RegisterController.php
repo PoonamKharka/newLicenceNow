@@ -49,4 +49,11 @@ class RegisterController extends Controller
         $userData =  $this->regService->view($id);
         return view('admin.users.show', compact('userData'));
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id){
+        return  $this->regService->delete($id);
+    }
 }

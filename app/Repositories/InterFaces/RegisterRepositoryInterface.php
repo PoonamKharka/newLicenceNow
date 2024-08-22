@@ -9,6 +9,7 @@ interface RegisterRepositoryInterFace {
     public function create();
     public function store( Request $request );
     public function view($id);
+    public function delete($id);
 }
 
 ?>

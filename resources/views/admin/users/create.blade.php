@@ -66,6 +66,7 @@
                             <div class="form-group">
                             <label>Select User Type</label>
                             <select class="form-control" name="userType">
+                              <option value="selected" selected>Select User Type</option>
                                 <option value="isInstructor">Instructor</option>
                                 <option value="isLearner">Learner</option>
                             </select>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Datatables;
 
 class RegisterRepository implements RegisterRepositoryInterFace {
 
@@ -49,23 +50,24 @@ class RegisterRepository implements RegisterRepositoryInterFace {
             'email.email' => 'Email field must be email address.'
         ]);
 
-        if( $request->userType == "isInstructor") {
+        if( $request->userType === "isInstructor") {
             $isInstructor = 1; 
         } else {
-            $isInstructor = 0;
+            $isInstructor = 0; 
         }
-        if( $request->userType == "isLearner") {
+        
+        if( $request->userType === "isLearner") {
             $isLearner = 1; 
         } else {
-            $isLearner = 0;
+            $isLearner = 0; 
         }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
-            'isLearner' =>  $isInstructor,
-            'isInstructor' => $isLearner,
+            'isLearner' =>  $isLearner,
+            'isInstructor' => $isInstructor,
             'status' => 1,
             'password' => bcrypt($request->password)
         ]);
@@ -79,4 +81,13 @@ class RegisterRepository implements RegisterRepositoryInterFace {
         
     }
 
-}
+
+    public function delete($id) {
+        $userId = decrypt($id); 
+        $user = User::find($userId);
+        $user->delete();
+
+        return redirect()->route('users.index')->with('status', 'User deleted successfully.');
+    }
+
+}   

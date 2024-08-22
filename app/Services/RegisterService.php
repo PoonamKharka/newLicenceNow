@@ -29,4 +29,8 @@ class RegisterService {
     public function view($id) {
         return $this->regRep->view($id);
     }
+
+    public function delete($id) {
+        return $this->regRep->delete($id);
+    }
 }
