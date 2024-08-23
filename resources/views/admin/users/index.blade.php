@@ -26,20 +26,6 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">List of All Users</h3>
-            <div class="card-tools">
-              <div class="col-md-8 offset-md-4">
-                <form action="#">
-                    <div class="input-group">
-                        <input type="search" class="form-control form-control-sm" placeholder="Search">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-sm btn-default">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -53,7 +39,7 @@
               @endif
             <button type="submit" class="btn btn-success"><a href="{{ route('users.create') }}" style="text-decoration: none; color:aliceblue">Add More</a></button>
             <br><br>
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="y_dataTables" class="table table-bordered table-striped">
               <thead>
               <tr>
                 <th>Name</th>
@@ -63,32 +49,6 @@
                 <th>Action</th>
               </tr>
               </thead>
-              <tbody>
-              @foreach ( $allUsers as $users)
-              <tr>
-                <td>{{  $users->name }}</td>
-                <td>{{  $users->email }}</td>
-                @if ( $users->isInstructor === 1 )
-                  <td> Instructor </td>
-                @endif
-                @if ( $users->isLearner === 1 )
-                  <td> Learner </td>
-                @endif
-                
-                <td>{{  ($users->status === 1)? 'Active' : 'Inactive'}}</td>
-                <td> 
-                  <div class="btn-group btn-group-sm">
-                    <a href="{{ route('users.show', encrypt($users->id)) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                    <form action="{{ route('users.destroy', encrypt($users->id)) }}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure to delete user?')"> <i class="fas fa-trash"></i></button>
-                  </form>
-                  </div>
-                </td>
-              </tr>
-              @endforeach
-             </tbody>
             </table>
           </div>
           <!-- /.card-body -->

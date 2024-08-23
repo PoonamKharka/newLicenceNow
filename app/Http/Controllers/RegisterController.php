@@ -51,6 +51,13 @@ class RegisterController extends Controller
     }
 
     /**
+     * For updating the record
+     */
+    public function update(Request $request , $id){
+        return $this->regService->update($request, $id);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy($id){

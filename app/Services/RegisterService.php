@@ -30,6 +30,10 @@ class RegisterService {
         return $this->regRep->view($id);
     }
 
+    public function update(Request $req , $id) {
+        return $this->regRep->updateData($req , $id);
+    }
+
     public function delete($id) {
         return $this->regRep->delete($id);
     }

@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('username')->unique();
             $table->integer('isAdmin')->default(0);
-            $table->integer('isLearner')->default(0);
-            $table->integer('isInstructor')->default(0);
+            $table->unsignedBigInteger('userType_id');
+            $table->foreign('userType_id')->references('id')->on('user_types');
             $table->integer('status')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

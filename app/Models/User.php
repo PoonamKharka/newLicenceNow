@@ -23,8 +23,8 @@ class User extends Authenticatable
         'password',
         'username',
         'isAdmin',
-        'isLearner',
-        'isInstructor'
+        'userType_id',
+        'status'
     ];
 
     /**

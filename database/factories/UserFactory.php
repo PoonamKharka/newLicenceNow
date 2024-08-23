@@ -19,10 +19,9 @@ class UserFactory extends Factory
             'email' => 'adminln@yopmail.com',
             'email_verified_at' => now(),
             'isAdmin' => 1,
-            'isLearner' => 0,
-            'isInstructor' => 0,
+            'userType_id' => 1,
             'username' => 'admin',
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2a$10$S6RAT1YG2dQ2mnzXJp1xEOsXppcmygjMcO2KQGAqWE7WLJOWuJPuG', // admin
             'remember_token' => Str::random(10),
         ];
     }

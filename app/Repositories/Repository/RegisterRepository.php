@@ -4,10 +4,7 @@ namespace App\Repositories\Repository;
 
 use App\Repositories\InterFaces\RegisterRepositoryInterFace;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 use Datatables;
 
 class RegisterRepository implements RegisterRepositoryInterFace {
@@ -19,16 +16,36 @@ class RegisterRepository implements RegisterRepositoryInterFace {
      */
     public function index(Request $request)
     {
-        $searching = $request->get('search');
+        if ($request->ajax()) {
+            $users = User::where('isAdmin', '=' , 0)->select('*');
+            return datatables()->of($users)
+                        ->editColumn('status' , function($row) {
+                            if( $row->status == 1) {
+                                return 'Active';
+                            } else {
+                                return 'Inactive';
+                            }
+                        })
+                        ->editColumn('userType_id' , function($row) {
+                            if( $row->userType_id == 2) {
+                                return 'Instructor';
+                            }
+                            if( $row->userType_id == 3) {
+                                return 'Learner';
+                            }
+                        })
+                        ->addColumn('action', function($row){
+                            $btn = '<a href="' . route('users.show', encrypt($row->id)) .'" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>';
 
-        if($searching != '') {
-            $allUsers = User::where('name', 'LIKE' , "%{$searching}%")
-            ->get();
-        } else {
-            $allUsers = User::where('isAdmin' , '=', 0 )->get();
+                            $btn .=  '<a href="' . route('users.destroy', encrypt($row->id)) .'" class="btn btn-danger"><i class="fas fa-trash"></i></a>';
+
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
         }
-       
-        return view('admin.users.index', compact('allUsers'));
+          
+        return view('admin.users.index');
     }
 
     public function create()
@@ -37,8 +54,6 @@ class RegisterRepository implements RegisterRepositoryInterFace {
     }
 
     public function store( Request $request) {
-        $name = $request->name;
-
         $request->validate([
             'username' => 'required|unique:users',
             'password' => 'required|min:4',
@@ -49,29 +64,9 @@ class RegisterRepository implements RegisterRepositoryInterFace {
             'email.required' => 'Email field is required.',
             'email.email' => 'Email field must be email address.'
         ]);
-
-        if( $request->userType === "isInstructor") {
-            $isInstructor = 1; 
-        } else {
-            $isInstructor = 0; 
-        }
         
-        if( $request->userType === "isLearner") {
-            $isLearner = 1; 
-        } else {
-            $isLearner = 0; 
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'username' => $request->username,
-            'isLearner' =>  $isLearner,
-            'isInstructor' => $isInstructor,
-            'status' => 1,
-            'password' => bcrypt($request->password)
-        ]);
-
+        $user = User::create($request->all());
+        
         return $user;
     }
 
@@ -81,6 +76,11 @@ class RegisterRepository implements RegisterRepositoryInterFace {
         
     }
 
+    public function updateData( Request $request, $id ) {
+        $userId = decrypt($id); 
+        User::findOrFail($userId)->update($request->all());
+        return redirect()->route('users.index')->with('status', 'User Updated successfully.');
+    }
 
     public function delete($id) {
         $userId = decrypt($id); 

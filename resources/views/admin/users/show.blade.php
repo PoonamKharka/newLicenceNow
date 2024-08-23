@@ -33,31 +33,32 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="">
+                  <form method="POST" action="{{ route('users.update', encrypt( $userData->id))  }}">
                     @csrf
+                    @method('PUT')
                   <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" class="form-control" value="{{ $userData->name }}">
+                    <input type="text" id="name" class="form-control" name="name" value="{{ $userData->name }}">
                   </div>
                   
                   <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" value="{{ $userData->username }}" disabled>
+                    <input type="text" id="username" class="form-control" name="username" value="{{ $userData->username }}">
                   </div>
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" id="email" class="form-control" value="{{ $userData->email }}" disabled>
+                    <input type="text" id="email" class="form-control" name="email" value="{{ $userData->email }}" disabled>
                   </div>
                   <div class="form-group">
                     <label for="email">Status</label>
                         <select class="form-control" name="status">
-                          <option value="1" selected> {{ ($userData->status == 1) ? "Active" : "Inactive" }}</option>
+                          <option value = 1 {{ $userData->status == 1 ? 'selected' : '' }}>Active</option>
+                          <option value = 0 {{ $userData->status == 0 ? 'selected' : '' }}>Inactive</option>
                         </select>
-                    {{-- <input type="text" id="email" class="form-control" value="{{ $userData->status }}"> --}}
                   </div>
                   <div class="card-footer">
                     <button type="submit" class="btn btn-info">Update</button>
-                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="reset" class="btn btn-default" onclick="window.location='{{ route('users.index') }}'">Cancel</button>
                   </div>
                   <!-- /.card-footer -->
                   </form>
