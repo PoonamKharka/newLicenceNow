@@ -26,11 +26,11 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                {{-- <h3 class="card-title">DataTable with minimal features & hover style</h3> --}}
+                <h3 class="card-title">List Of Instructors</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="y_dataTables" class="table table-bordered table-hover">
                   <thead>
                   <tr>
                     <th>Name</th>
@@ -38,15 +38,6 @@
                     <th>Action</th>
                   </tr>
                   </thead>
-                  <tbody>
-                    @foreach ($userDetails as $details)
-                    <tr>
-                        <td> {{ $details->name }}</td>
-                        <td> {{ ( $details->status === 1 ) ? 'Active' : 'Inactive' }} </td>
-                        <td> <a href="#">view</a> </td>
-                      </tr>
-                    @endforeach
-                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -60,4 +51,22 @@
       <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+<script type="text/javascript">
+$(function() { 
+  $(document).ready( function () {
+      $('#y_dataTables').DataTable({
+             processing: false,
+             serverSide: true,
+             ajax: "{{ route('instructors.index') }}",
+             columns: [
+                      // { data: 'id', name: 'id' },
+                      { data: 'name', name: 'name' },
+                      { data: 'status', name: 'status' },
+                      { data: 'action', name: 'action', orderable: false, searchable: false},
+                   ]
+          });
+       });
+});
+
+  </script>
 @endsection

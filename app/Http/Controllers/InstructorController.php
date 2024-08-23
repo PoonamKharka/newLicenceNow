@@ -9,14 +9,19 @@ class InstructorController extends Controller
 {
 
    protected $instService;
-   
+
+   /**
+    * inject instructor service into the controller
+    */
    public function __construct(InstructorService $instructorService)
    {
         $this->instService = $instructorService;
    }
 
-   public function index(){
-    $userDetails = $this->instService->getAllInstructors();
-    return view('admin.instructor.instructor', compact('userDetails'));
+   /**
+    * fetching Instructor list
+    */
+   public function index(Request $request){
+    return $this->instService->getAllInstructors($request);
    }
 }

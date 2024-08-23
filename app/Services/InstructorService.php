@@ -13,8 +13,8 @@ class InstructorService {
         $this->instRep = $instructorRepository;
     }
 
-    public function getAllInstructors(){
-        return $this->instRep->getAllInstructors();
+    public function getAllInstructors(Request $request){
+        return $this->instRep->getAllInstructors($request);
     }
 
 }

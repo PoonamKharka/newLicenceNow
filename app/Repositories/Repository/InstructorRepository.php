@@ -3,15 +3,34 @@
 namespace App\Repositories\Repository;
 
 use App\Repositories\InterFaces\InstructorRepositoryInterFace;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class InstructorRepository implements InstructorRepositoryInterFace {
 
-    public function getAllInstructors(){
-        return User::where('isInstructor', 1)->get();
-    }
+    public function getAllInstructors(Request $request) {
 
-    //public function 
+        if($request->ajax()) {
+            $instrutors = User::whereHas('userType' , function ( $query) {
+                $query->where('type', '=', 'Instructor');
+            })->select('*');
+
+            return datatables()->of($instrutors)
+                    ->editColumn('status' , function($row) {
+                        if( $row->status == 1) {
+                            return 'Active';
+                        } else {
+                            return 'Inactive';
+                        }
+                    })
+                    ->addColumn('action', function($row){
+                        $btn = '<a href="' . route('users.show', encrypt($row->id)) .'" class="btn btn-sm btn-info">Add More Details</a>';
+
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('admin.instructor.index'); 
+    }
 }

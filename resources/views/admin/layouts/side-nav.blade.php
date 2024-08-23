@@ -39,7 +39,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('instructor-index') }}" class="nav-link">
+            <a href="{{ route('instructors.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Instructors

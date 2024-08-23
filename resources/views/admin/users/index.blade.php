@@ -62,4 +62,45 @@
    <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+<script type="text/javascript">
+  $(function() {
+    $(document).ready( function () {
+    $('#y_dataTables').DataTable({
+           processing: false,
+           serverSide: true,
+           ajax: "{{ route('users.index') }}",
+           columns: [
+                    // { data: 'id', name: 'id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'userType_id' , name: 'userType_id'},
+                    { data: 'status', name: 'status' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false},
+                 ]
+        });
+     });
+
+     // Handle delete button click
+    $(document).on('click', '.delete-btn', function() {
+        let userId = $(this).data('id');
+        
+        // Show confirmation dialog
+        if (confirm('Are you sure you want to delete this user?')) {
+            // Create a form dynamically
+            var form = $('<form>', {
+                action: route('users.destroy', userId),
+                method: 'POST'
+            });
+
+            // Append CSRF token and DELETE method
+            form.append('@csrf');
+            form.append('@method("DELETE")');
+
+            // Append the form to the body and submit it
+            $('body').append(form);
+            form.submit();
+        }
+    });
+  });
+</script>
 @endsection

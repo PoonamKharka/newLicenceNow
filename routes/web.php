@@ -28,7 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
         return view('admin.dashboard');
     });
     Route::resource('users', RegisterController::class);
-    Route::get('instructor-index', [InstructorController::class, 'index'])->name('instructor-index');
+    Route::resource('instructors' , InstructorController::class);
+
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
