@@ -17,4 +17,8 @@ class InstructorService {
         return $this->instRep->getAllInstructors($request);
     }
 
+    public function profile($request, $id) {
+        return $this->instRep->profile($request, $id);
+    }
+
 }

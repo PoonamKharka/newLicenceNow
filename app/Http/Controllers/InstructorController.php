@@ -24,4 +24,11 @@ class InstructorController extends Controller
    public function index(Request $request){
     return $this->instService->getAllInstructors($request);
    }
+
+   /** 
+    * to view selected Instructor profile 
+    */
+   public function show( Request $request, $id) {
+      return $this->instService->profile($request, $id);
+   }
 }

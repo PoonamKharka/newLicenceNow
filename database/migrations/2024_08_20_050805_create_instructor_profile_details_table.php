@@ -16,8 +16,17 @@ class CreateInstructorProfileDetailsTable extends Migration
         Schema::create('instructor_profile_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('std_code');
+            $table->integer('phoneNo')->unique();
+            $table->binary('picture')->nullable();
+            $table->string('contact_address');
             $table->date('dob');
             $table->date('doj');
+            $table->date('dot')->nullable();
+            $table->string('blood_group')->nullable(); 
+            $table->string('driving_expirence');
+            $table->unsignedBigInteger('gender_id');
+            $table->foreign('gender_id')->references('id')->on('genders');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
