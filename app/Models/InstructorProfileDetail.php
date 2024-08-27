@@ -22,13 +22,17 @@ class InstructorProfileDetail extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'std_code',
-        'phoneNo ',
+        'phoneNo',
+        'picture',
         'contact_address',
         'dob',
         'doj',
         'dot',
         'blood_group',
-        'driving_expirence'
+        'driving_experience',
+        'gender_id',
     ];
+    
 }

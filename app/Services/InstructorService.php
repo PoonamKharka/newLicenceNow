@@ -21,4 +21,9 @@ class InstructorService {
         return $this->instRep->profile($request, $id);
     }
 
+    public function store(Request $request) {
+        return $this->instRep->store($request);  
+    }
+    
+
 }

@@ -31,4 +31,10 @@ class InstructorController extends Controller
    public function show( Request $request, $id) {
       return $this->instService->profile($request, $id);
    }
+
+   public function store(Request $request) {
+      return $this->instService->store($request); 
+  }
+  
+
 }
