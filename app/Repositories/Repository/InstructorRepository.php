@@ -24,7 +24,7 @@ class InstructorRepository implements InstructorRepositoryInterFace {
                         }
                     })
                     ->addColumn('action', function($row){
-                        $btn = '<a href="' . route('instructors.show', encrypt($row->id)) .'" class="btn btn-sm btn-info">Add More Details</a>';
+                        $btn = '<a href="' . route('instructors.show', encrypt($row)) .'" class="btn btn-sm btn-info">Add More Details</a>';
 
                         return $btn;
                     })
@@ -34,8 +34,10 @@ class InstructorRepository implements InstructorRepositoryInterFace {
         return view('admin.instructor.index'); 
     }
 
-    public function profile($request, $id)
-    {
-        return view('admin.instructor.profile');
+    public function profile($request, $data)
+    {   
+        $users = decrypt($data);
+        //dd($users );
+        return view('admin.instructor.profile', compact('users'));
     }
 }
