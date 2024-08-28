@@ -56,7 +56,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
     
         if ($formType === 'personal_details') {
             // Logic for processing the Personal Details form
-    
+
             // Convert dates from d/m/Y to Y-m-d using Carbon
             $dob = Carbon::createFromFormat('d/m/Y', $request->input('dob'))->format('Y-m-d');
             $doj = Carbon::createFromFormat('d/m/Y', $request->input('doj'))->format('Y-m-d');
@@ -75,13 +75,15 @@ class InstructorRepository implements InstructorRepositoryInterFace
             // Assign other input data to the model
             $instructorProfileDetail->user_id = $request->input('user_id');
             $instructorProfileDetail->phoneNo = $request->input('phoneNo');
-            $instructorProfileDetail->contact_address = $request->input('contact_address');
+            $instructorProfileDetail->contact_address = $request->input('contactAddress');
+            $instructorProfileDetail->postal_code = $request->input('postalCode') ?: '000000';
+            $instructorProfileDetail->state = $request->input('state');
             $instructorProfileDetail->dob = $dob;
             $instructorProfileDetail->doj = $doj;
             $instructorProfileDetail->dot = $dot;
-            $instructorProfileDetail->blood_group = $request->input('blood_group');
-            $instructorProfileDetail->driving_expirence = $request->input('driving_expirence');
-            $instructorProfileDetail->gender_id = $request->input('gender_id');
+            $instructorProfileDetail->blood_group_id = $request->input('bloodGroupId');
+            $instructorProfileDetail->driving_expirence = $request->input('drivingExpirence');
+            $instructorProfileDetail->gender_id = $request->input('genderId');
     
             // Save the instance to the database
             $instructorProfileDetail->save();
@@ -92,16 +94,19 @@ class InstructorRepository implements InstructorRepositoryInterFace
         
         } elseif ($formType === 'bank_details') {
             // Logic for processing the Bank Details form
-    // dd($request->all());
+            
             // Create and save the InstructorBankDetail instance
             $instructorBankDetail = new InstructorBankDetail();
             // Assign bank-related input data to the model  
             $instructorBankDetail->user_id = $request->input('user_id');
-            $instructorBankDetail->salary_pay_mode = $request->input('salaryPayMode');
+            $instructorBankDetail->salary_pay_mode_id = $request->input('salaryPayModeId');
             $instructorBankDetail->salary_bank_name = $request->input('salaryBankName');
             $instructorBankDetail->salary_branch_name = $request->input('salaryBranchName');
             $instructorBankDetail->salary_ifsc_code = $request->input('salaryIFSCCode');
             $instructorBankDetail->salary_account_number = $request->input('salaryAccountNumber');
+            $instructorBankDetail->postal_code = $request->input('postalCode') ?: '000000';
+            $instructorBankDetail->state = $request->input('state');
+            
             // Save the instance to the database
             $instructorBankDetail->save();
     

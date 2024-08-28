@@ -33,6 +33,8 @@ class InstructorProfileDetail extends Model
         'blood_group',
         'driving_experience',
         'gender_id',
+        'state',
+        'postal_code'
     ];
     
 }

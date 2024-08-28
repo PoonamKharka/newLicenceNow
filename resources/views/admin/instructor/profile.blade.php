@@ -123,7 +123,7 @@
                                                         <div class="form-group">
                                                             <label>Gender</label>
                                                             <select class="form-control select2" style="width: 100%;"
-                                                                name="gender_id">
+                                                                name="genderId">
                                                                 <option selected="selected">Select a Gender</option>
                                                                 <option value="1">Female</option>
                                                                 <option value="2">Male</option>
@@ -152,16 +152,26 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="blood_group">Blood Group:</label>
-                                                            <input type="text" class="form-control" id="blood_group"
-                                                                name="blood_group" placeholder="Enter blood group">
+                                                            <label>Blood Group</label>
+                                                            <select class="form-control select2" style="width: 100%;"
+                                                                name="bloodGroupId">
+                                                                <option selected="selected">Select a Blood Group</option>
+                                                                <option value="1">O+</option>
+                                                                <option value="2">A+</option>
+                                                                <option value="3">B+</option>
+                                                                <option value="4">AB+</option>
+                                                                <option value="5">O-</option>
+                                                                <option value="6">A-</option>
+                                                                <option value="7">B--</option>
+                                                                <option value="8">AB-</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Total Driving Expirence</label>
                                                             <input type="number" class="form-control"
-                                                                name="driving_expirence"
+                                                                name="drivingExpirence"
                                                                 placeholder="Enter Your Total Expirence in Driving">
                                                         </div>
                                                     </div>
@@ -171,9 +181,26 @@
                                                         <!-- textarea -->
                                                         <div class="form-group">
                                                             <label>Correspondence Address</label>
-                                                            <textarea class="form-control" rows="3" name="contact_address" placeholder="Enter Correspondence Address"></textarea>
+                                                            <textarea class="form-control" rows="3" name="contactAddress" placeholder="Enter Correspondence Address"></textarea>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="state">State</label>
+                                                            <input type="text" class="form-control" id="state"
+                                                                name="state" placeholder="Enter State">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="postalCode">Postal Code</label>
+                                                            <input type="text" class="form-control" id="postalCode"
+                                                                name="postalCode" placeholder="Enter Postal Code">
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col-sm-6">
                                                         <label>Profile Picture</label>
                                                         <div class="input-group">
@@ -199,14 +226,16 @@
                                         <!-- /.card-body -->
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel" aria-labelledby="vert-tabs-messages-tab">
+                                <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel"
+                                    aria-labelledby="vert-tabs-messages-tab">
                                     <div class="card card-info">
                                         <div class="card-header">
                                             <h3 class="card-title">Bank Details</h3>
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
-                                            <form action="{{ route('instructors.store') }}" method="POST" enctype="multipart/form-data">
+                                            <form action="{{ route('instructors.store') }}" method="POST"
+                                                enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="form_type" value="bank_details">
                                                 <div class="row">
@@ -214,15 +243,26 @@
                                                         <!-- text input -->
                                                         <div class="form-group">
                                                             <label>Nominee</label>
-                                                            <input type="hidden" class="form-control" name="user_id" value="{{ $users->id }}" />
-                                                            <input type="text" class="form-control" name="name" value="{{ $users->name }}" disabled />
+                                                            <input type="hidden" class="form-control" name="user_id"
+                                                                value="{{ $users->id }}" />
+                                                            <input type="text" class="form-control" name="name"
+                                                                value="{{ $users->name }}" disabled />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryPayMode">Salary Pay Mode</label>
-                                                            <input type="text" class="form-control" id="salaryPayMode" name="salaryPayMode"
-                                                                placeholder="Enter salary Pay Mode">
+                                                            <label>Salary Pay Mode</label>
+                                                            <select class="form-control select2" style="width: 100%;"
+                                                                name="salaryPayModeId">
+                                                                <option selected="selected">Select a Salary Mode</option>
+                                                                <option value="1">Direct Deposit ( EFT/NEFT )</option>
+                                                                <option value="2">Cheque</option>
+                                                                <option value="3">Cash</option>
+                                                                <option value="4">Payroll Cards</option>
+                                                                <option value="5">Superannuation Contributions
+                                                                </option>
+                                                                <option value="6">BPAY</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -230,14 +270,16 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label for="salaryBankName">Salary Bank Name</label>
-                                                            <input type="text" class="form-control" id="salaryBankName" name="salaryBankName"
+                                                            <input type="text" class="form-control"
+                                                                id="salaryBankName" name="salaryBankName"
                                                                 placeholder="Enter Salary Bank Name">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label for="salaryBranchName">Salary Branch Name</label>
-                                                            <input type="text" class="form-control" id="salaryBranchName" name="salaryBranchName"
+                                                            <input type="text" class="form-control"
+                                                                id="salaryBranchName" name="salaryBranchName"
                                                                 placeholder="Enter Salary Branch Name">
                                                         </div>
                                                     </div>
@@ -246,15 +288,33 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label for="salaryIFSCCode">Salary IFSC Code</label>
-                                                            <input type="text" class="form-control" id="salaryIFSCCode" name="salaryIFSCCode"
+                                                            <input type="text" class="form-control"
+                                                                id="salaryIFSCCode" name="salaryIFSCCode"
                                                                 placeholder="Enter Salary IFSC Code">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label for="salaryAccountNumber">Salary Account Number</label>
-                                                            <input type="text" class="form-control" id="salaryAccountNumber" name="salaryAccountNumber"
+                                                            <input type="text" class="form-control"
+                                                                id="salaryAccountNumber" name="salaryAccountNumber"
                                                                 placeholder="Enter Salary Account Number">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="state">State</label>
+                                                            <input type="text" class="form-control" id="state"
+                                                                name="state" placeholder="Enter State">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="postalCode">Postal Code</label>
+                                                            <input type="text" class="form-control" id="postalCode"
+                                                                name="postalCode" placeholder="Enter Postal Code">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -268,7 +328,7 @@
                                         <!-- /.card-body -->
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>

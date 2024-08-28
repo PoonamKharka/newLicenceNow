@@ -14,16 +14,16 @@ class BloodGroupSeeder extends Seeder
     public function run(): void
     {
         $createUserType = [
-            ['id' => 1 , 'name'=> 'O+', 'created_at' => now()],
-            ['id' => 2 , 'name'=> 'A+', 'created_at' => now()],
-            ['id' => 3 , 'name'=> 'B+','created_at' => now()],
-            ['id' => 4 , 'name'=> 'AB+','created_at' => now()],
-            ['id' => 5, 'name'=> 'O-','created_at' => now()],
-            ['id' => 6 , 'name'=> 'A-','created_at' => now()],
-            ['id' => 7 , 'name'=> 'B-','created_at' => now()],
-            ['id' => 8 , 'name'=> 'AB-','created_at' => now()]
+            ['id' => 1 , 'blood_group'=> 'O+', 'created_at' => now()],
+            ['id' => 2 , 'blood_group'=> 'A+', 'created_at' => now()],
+            ['id' => 3 , 'blood_group'=> 'B+','created_at' => now()],
+            ['id' => 4 , 'blood_group'=> 'AB+','created_at' => now()],
+            ['id' => 5, 'blood_group'=> 'O-','created_at' => now()],
+            ['id' => 6 , 'blood_group'=> 'A-','created_at' => now()],
+            ['id' => 7 , 'blood_group'=> 'B-','created_at' => now()],
+            ['id' => 8 , 'blood_group'=> 'AB-','created_at' => now()]
         ];
         
-        DB::table('blood_group')->insert($createUserType);
+        DB::table('blood_groups')->insert($createUserType);
     }
 }

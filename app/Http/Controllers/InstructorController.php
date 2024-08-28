@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\InstructorService;
+use App\Http\Requests\StoreInstructorRequest;
 
 class InstructorController extends Controller
 {
@@ -32,7 +33,7 @@ class InstructorController extends Controller
       return $this->instService->profile($request, $id);
    }
 
-   public function store(Request $request) {
+   public function store(StoreInstructorRequest  $request) {
       return $this->instService->store($request); 
   }
   

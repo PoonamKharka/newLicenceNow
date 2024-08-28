@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('learner_profile_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('userid');
-            $table->foreign('userid')->references('id')->on('users');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');;
             $table->bigInteger('std_code')->nullable();
             $table->bigInteger('phoneNo')->nullable();
             $table->string('corresponding_address')->nullable();
