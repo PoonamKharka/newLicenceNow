@@ -20,8 +20,6 @@ class CreateInstructorProfileDetailsTable extends Migration
             $table->unsignedBigInteger('phoneNo')->unique();
             $table->binary('picture')->nullable();
             $table->string('contact_address');
-            $table->string('state');
-            $table->unsignedBigInteger('postal_code');
             $table->date('dob');
             $table->date('doj');
             $table->date('dot')->nullable();

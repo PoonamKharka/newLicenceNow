@@ -33,7 +33,13 @@ class InstructorRepository implements InstructorRepositoryInterFace
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('instructors.show', encrypt($row)) . '" class="btn btn-sm btn-info">Add More Details</a> <a href="' . route('instructors.edit', encrypt($row->id)) . '" class="btn btn-sm btn-warning">Edit More Details</a>';
+                    $btn = '<a href="' . route('instructors.show', encrypt($row)) . '" class="btn btn-sm btn-success">
+                        <i class="fas fa-plus"></i>
+                        <span>More Details</span></a>';
+                    $btn .= '&nbsp';
+                    $btn .= '<a href="' . route('users.show', encrypt($row->id)) . '" class="btn btn-sm btn-info">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span>Update Cred</span></a>';
 
                     return $btn;
                 })
@@ -46,8 +52,14 @@ class InstructorRepository implements InstructorRepositoryInterFace
     public function profile($request, $data)
     {
         $users = decrypt($data);
-        //dd($users );
-        return view('admin.instructor.profile', compact('users'));
+        $userData =  User::with('bankDetails', 'profileDetails')->findOrFail($users->id);
+        if( $userData->profileDetails ){
+            $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
+            $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
+            $userData->profileDetails->dot = Carbon::parse($userData->profileDetails->dot)->format('d/m/Y');
+        }
+        
+        return view('admin.instructor.profile', compact('userData'));
     }
 
     public function store(Request $request)
@@ -55,7 +67,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
         // Determine which form was submitted
         $formType = $request->input('form_type');
 
-        if ($formType === 'personal_details') {
+        if ( $formType === 'personal_details' ) {
             // Logic for processing the Personal Details form
 
             // Convert dates from d/m/Y to Y-m-d using Carbon
@@ -72,26 +84,32 @@ class InstructorRepository implements InstructorRepositoryInterFace
                 $request->file('picture')->move(public_path('profile'), $imageFileName);
                 $instructorProfileDetail->picture = 'profile/' . $imageFileName;
             }
-
-            // Assign other input data to the model
-            $instructorProfileDetail->user_id = $request->input('user_id');
-            $instructorProfileDetail->phoneNo = $request->input('phoneNo');
-            $instructorProfileDetail->contact_address = $request->input('contactAddress');
-            $instructorProfileDetail->postal_code = $request->input('postalCode') ?: '000000';
-            $instructorProfileDetail->state = $request->input('state');
-            $instructorProfileDetail->dob = $dob;
-            $instructorProfileDetail->doj = $doj;
-            $instructorProfileDetail->dot = $dot;
-            $instructorProfileDetail->blood_group_id = $request->input('bloodGroupId');
-            $instructorProfileDetail->driving_expirence = $request->input('drivingExpirence');
-            $instructorProfileDetail->gender_id = $request->input('genderId');
+            
+            //Assign other input data to the model
+            $instructorProfileDetail = [
+                'user_id' => $request->input('user_id'),
+                'phoneNo' => $request->input('phoneNo'),
+                'contact_address' => $request->input('contactAddress'),
+                'dob' => $dob,
+                'doj' => $doj,
+                'dot' => $dot,
+                'blood_group_id' => $request->input('bloodGroupId'),
+                'driving_expirence' => $request->input('drivingExpirence'),
+                'gender_id' => $request->input('genderId'),
+            ];
 
             // Save the instance to the database
-            $instructorProfileDetail->save();
-
-            // Redirect with success message
-            return redirect()->route('instructors.index')
-                ->with('success', 'Instructor profile created successfully.');
+            $findUser = InstructorProfileDetail::where('user_id', '=' , $request->input('user_id'))->first();
+            
+                if( $findUser ){
+                    $updateDetails =  $findUser->update($instructorProfileDetail);
+                } else {
+                    $updateDetails =  InstructorProfileDetail::create($instructorProfileDetail);
+                }
+            if( $updateDetails ) {
+                return back()->with('success', 'Data has been added!');
+            }
+            
         } elseif ($formType === 'bank_details') {
             // Logic for processing the Bank Details form
 
@@ -104,24 +122,19 @@ class InstructorRepository implements InstructorRepositoryInterFace
             $instructorBankDetail->salary_branch_name = $request->input('salaryBranchName');
             $instructorBankDetail->salary_ifsc_code = $request->input('salaryIFSCCode');
             $instructorBankDetail->salary_account_number = $request->input('salaryAccountNumber');
-            $instructorBankDetail->postal_code = $request->input('postalCode') ?: '000000';
-            $instructorBankDetail->state = $request->input('state');
 
             // Save the instance to the database
             $instructorBankDetail->save();
 
             // Redirect with success message
-            return redirect()->route('instructors.index')
-                ->with('success', 'Instructor bank details created successfully.');
+            return redirect()->route('instructors.index')->with('success', 'Instructor bank details created successfully.');
         }
     }
 
     public function view($id)
     {
-        
         $userId = decrypt($id);
         return  User::with('bankDetails', 'profileDetails')->findOrFail($userId);
-        
     }
 
     public function updateData(Request $request, $id)

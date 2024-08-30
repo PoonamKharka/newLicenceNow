@@ -30,7 +30,7 @@
                                 aria-orientation="vertical">
                                 <a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill"
                                     href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile"
-                                    aria-selected="true">Profile</a>
+                                    aria-selected="true">Personal</a>
                                 <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill"
                                     href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages"
                                     aria-selected="false">Bank</a>
@@ -49,7 +49,6 @@
                                             <form action="{{ route('instructors.store') }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
-                                                @method('post')
                                                 <input type="hidden" name="form_type" value="personal_details">
                                                 <div class="row">
                                                     <div class="col-sm-6">
@@ -57,9 +56,9 @@
                                                         <div class="form-group">
                                                             <label>Name</label>
                                                             <input type="hidden" class="form-control" name="user_id"
-                                                                value="{{ $users->id }}" />
+                                                                value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
-                                                                value="{{ $users->name }}" disabled />
+                                                                value="{{ $userData->name }}" disabled />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -67,10 +66,17 @@
                                                             <label>Date Of Birth</label>
                                                             <div class="input-group date" id="dateOfBirth"
                                                                 data-target-input="nearest">
-                                                                <input type="text"
+                                                                @if ($userData->profileDetails)
+                                                                    <input type="text"
+                                                                        class="form-control datetimepicker-input" name="dob"
+                                                                        data-target="#dateOfBirth"
+                                                                        placeholder="Enter Date Of Birth" value="{{ $userData->profileDetails->dob }}"/>
+                                                                @else
+                                                                    <input type="text"
                                                                     class="form-control datetimepicker-input" name="dob"
                                                                     data-target="#dateOfBirth"
-                                                                    placeholder="Enter Date Of Birth" />
+                                                                    placeholder="Enter Date Of Birth"/>
+                                                                @endif
                                                                 <div class="input-group-append" data-target="#dateOfBirth"
                                                                     data-toggle="datetimepicker">
                                                                     <div class="input-group-text"><i
@@ -87,10 +93,18 @@
                                                             <label>Date Of Joining</label>
                                                             <div class="input-group date" id="dateOfJoining"
                                                                 data-target-input="nearest">
-                                                                <input type="text"
+                                                                @if ($userData->profileDetails)
+                                                                    <input type="text"
+                                                                    class="form-control datetimepicker-input" name="doj"
+                                                                    data-target="#dateOfJoining"
+                                                                    value="{{ $userData->profileDetails->doj }}"
+                                                                    placeholder="Enter Date Of Joining" />
+                                                                @else
+                                                                    <input type="text"
                                                                     class="form-control datetimepicker-input" name="doj"
                                                                     data-target="#dateOfBirth"
-                                                                    placeholder="Enter Date Of Joining" />
+                                                                    placeholder="Enter Date Of Joining" /> 
+                                                                @endif
                                                                 <div class="input-group-append" data-target="#dateOfJoining"
                                                                     data-toggle="datetimepicker">
                                                                     <div class="input-group-text"><i
@@ -122,13 +136,31 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Gender</label>
-                                                            <select class="form-control select2" style="width: 100%;"
+                                                            @if ($userData->profileDetails)
+                                                                <select class="form-control select2" style="width: 100%;"
                                                                 name="genderId">
-                                                                <option selected="selected">Select a Gender</option>
-                                                                <option value="1">Female</option>
-                                                                <option value="2">Male</option>
-                                                                <option value="3">Others</option>
+                                                                    <option value="1"
+                                                                        {{ $userData->profileDetails->gender_id == 1 ? 'selected' : '' }}>
+                                                                        Female
+                                                                    </option>
+                                                                    <option value="2"
+                                                                        {{ $userData->profileDetails->gender_id == 2 ? 'selected' : '' }}>
+                                                                        Male
+                                                                    </option>
+                                                                    <option value="3"
+                                                                        {{ $userData->profileDetails->gender_id == 3 ? 'selected' : '' }}>
+                                                                        Others
+                                                                    </option>
                                                             </select>
+                                                            @else
+                                                                <select class="form-control select2" style="width: 100%;"
+                                                                name="genderId">
+                                                                    <option selected="selected">Select a Gender</option>
+                                                                    <option value="1">Female</option>
+                                                                    <option value="2">Male</option>
+                                                                    <option value="3">Others</option>
+                                                                </select>
+                                                            @endif
                                                         </div>
                                                     </div>
 
@@ -138,9 +170,16 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">+61</span>
                                                             </div>
-                                                            <input type="text" class="form-control"
+                                                            @if ($userData->profileDetails)
+                                                                <input type="text" class="form-control"
+                                                                data-inputmask='"mask": "(999) 999-9999"' data-mask
+                                                                name="phoneNo" value="{{ $userData->profileDetails->phoneNo }}">  
+                                                            @else
+                                                                <input type="text" class="form-control"
                                                                 data-inputmask='"mask": "(999) 999-9999"' data-mask
                                                                 name="phoneNo">
+                                                            @endif
+                                                            
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text"><i
                                                                         class="fas fa-phone"></i></span>
@@ -153,26 +192,69 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Blood Group</label>
+                                                            @if ($userData->profileDetails)
                                                             <select class="form-control select2" style="width: 100%;"
+                                                            name="bloodGroupId">
+                                                            <option value="1"
+                                                                {{ $userData->profileDetails->blood_group == 1 ? 'selected' : '' }}>
+                                                                O+
+                                                            </option>
+                                                            <option value="2"
+                                                                {{ $userData->profileDetails->blood_group == 2 ? 'selected' : '' }}>
+                                                                A+
+                                                            </option>
+                                                            <option value="3"
+                                                                {{ $userData->profileDetails->blood_group == 3 ? 'selected' : '' }}>
+                                                                B+
+                                                            </option>
+                                                            <option value="4"
+                                                                {{ $userData->profileDetails->blood_group == 4 ? 'selected' : '' }}>
+                                                                AB+
+                                                            </option>
+                                                            <option value="5"
+                                                                {{ $userData->profileDetails->blood_group == 5 ? 'selected' : '' }}>
+                                                                O-
+                                                            </option>
+                                                            <option value="6"
+                                                                {{ $userData->profileDetails->blood_group == 6 ? 'selected' : '' }}>
+                                                                A-
+                                                            </option>
+                                                            <option value="7"
+                                                                {{ $userData->profileDetails->blood_group == 7 ? 'selected' : '' }}>
+                                                                B-
+                                                            </option>
+                                                            <option value="8"
+                                                                {{ $userData->profileDetails->blood_group == 8 ? 'selected' : '' }}>
+                                                                AB-
+                                                            </option>
+                                                        </select>
+                                                            @else
+                                                                <select class="form-control select2" style="width: 100%;"
                                                                 name="bloodGroupId">
-                                                                <option selected="selected">Select a Blood Group</option>
-                                                                <option value="1">O+</option>
-                                                                <option value="2">A+</option>
-                                                                <option value="3">B+</option>
-                                                                <option value="4">AB+</option>
-                                                                <option value="5">O-</option>
-                                                                <option value="6">A-</option>
-                                                                <option value="7">B--</option>
-                                                                <option value="8">AB-</option>
-                                                            </select>
+                                                                    <option selected="selected">Select a Blood Group</option>
+                                                                    <option value="1">O+</option>
+                                                                    <option value="2">A+</option>
+                                                                    <option value="3">B+</option>
+                                                                    <option value="4">AB+</option>
+                                                                    <option value="5">O-</option>
+                                                                    <option value="6">A-</option>
+                                                                    <option value="7">B--</option>
+                                                                    <option value="8">AB-</option>
+                                                                </select>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Total Driving Expirence</label>
-                                                            <input type="number" class="form-control"
+                                                            @if ( $userData->profileDetails )
+                                                                <input type="text" class="form-control"
                                                                 name="drivingExpirence"
-                                                                placeholder="Enter Your Total Expirence in Driving">
+                                                                value="{{ $userData->profileDetails->driving_expirence }}">
+                                                            @else
+                                                                <input type="text" class="form-control" name="drivingExpirence" placeholder="Enter Your Total Expirence in Driving">
+                                                            @endif
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,30 +262,18 @@
                                                     <div class="col-sm-6">
                                                         <!-- textarea -->
                                                         <div class="form-group">
-                                                            <label>Correspondence Address</label>
-                                                            <textarea class="form-control" rows="3" name="contactAddress" placeholder="Enter Correspondence Address"></textarea>
+                                                            <label>Present Address</label>
+                                                            @if ($userData->profileDetails)
+                                                                <input type="text" class="form-control" name="contactAddress" value="{{$userData->profileDetails->contact_address  }}"> 
+                                                            @else
+                                                                <input type="text" class="form-control" name="contactAddress", placeholder="Enter Correspondence Address">
+                                                            @endif
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="state">State</label>
-                                                            <input type="text" class="form-control" id="state"
-                                                                name="state" placeholder="Enter State">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="postalCode">Postal Code</label>
-                                                            <input type="text" class="form-control" id="postalCode"
-                                                                name="postalCode" placeholder="Enter Postal Code">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <label>Profile Picture</label>
-                                                        <div class="input-group">
+                                                        {{-- <label for="exampleInputFile">Profile Picture</label> --}}
+                                                        {{-- <div class="input-group">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input"
                                                                     id="exampleInputFile" name="picture">
@@ -213,11 +283,43 @@
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">Upload</span>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
+                                                        {{-- <div class="input-group">
+                                                            <div class="custom-file">
+                                                              <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                            </div>
+                                                            <div class="input-group-append">
+                                                              <span class="input-group-text">Upload</span>
+                                                            </div>
+                                                          </div>
+                                                        @if ($userData->profileDetails)
+                                                            <div class="mb-3">
+                                                                <img src="{{ asset($userData->profileDetails->picture) }}"
+                                                                    alt="Profile Picture" class="img-thumbnail"
+                                                                    style="max-width: 150px;">
+                                                            </div>
+                                                        @else
+                                                            <p>No profile picture available.</p>
+                                                        @endif --}}
+
+                                                        <div class="form-group">
+                                                            <label for="profilePic">File input</label>
+                                                            <div class="input-group">
+                                                              <div class="custom-file">
+                                                                <input type="file" class="custom-file-input" id="profilePic">
+                                                                <label class="custom-file-label" for="profilePic">Choose file</label>
+                                                              </div>
+                                                              <div class="input-group-append">
+                                                                <span class="input-group-text">Upload</span>
+                                                              </div>
+                                                            </div>
+                                                          </div>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-info">Submit</button>
+                                                    <button type="reset" class="btn btn-default"><a class="btn btn-default" href=""> Cancel </a></button>
                                                     <button type="reset" class="btn btn-default">Cancel</button>
                                                 </div>
                                                 <!-- /.card-footer -->
@@ -244,9 +346,9 @@
                                                         <div class="form-group">
                                                             <label>Nominee</label>
                                                             <input type="hidden" class="form-control" name="user_id"
-                                                                value="{{ $users->id }}" />
+                                                                value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
-                                                                value="{{ $users->name }}" disabled />
+                                                                value="{{ $userData->name }}" disabled />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -302,7 +404,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                {{-- <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label for="state">State</label>
@@ -317,7 +419,7 @@
                                                                 name="postalCode" placeholder="Enter Postal Code">
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-info">Submit</button>
                                                     <button type="reset" class="btn btn-default">Cancel</button>
@@ -342,6 +444,8 @@
     <!-- /.content -->
     <script>
         $(function() {
+            //bsCustomFileInput.init();
+
             //Date picker
             $('#reservationdate').datetimepicker({
                 format: 'L'
@@ -360,6 +464,7 @@
             $('#dateOfResignation').datetimepicker({
                 format: 'L'
             });
+
         });
     </script>
 @endsection

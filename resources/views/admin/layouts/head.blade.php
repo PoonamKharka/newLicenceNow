@@ -37,6 +37,8 @@
 <!-- my custom script for chart-->
 <!-- Bootstrap 4 -->
 <script src="{{  asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+
 <!-- ChartJS -->
 <script src="{{  asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
 <!-- Sparkline -->

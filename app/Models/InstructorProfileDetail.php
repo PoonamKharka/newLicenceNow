@@ -31,17 +31,15 @@ class InstructorProfileDetail extends Model
         'dob',
         'doj',
         'dot',
-        'blood_group',
-        'driving_experience',
-        'gender_id',
-        'state',
-        'postal_code'
+        'blood_group_id',
+        'driving_expirence',
+        'gender_id'
     ];
 
     // Define the inverse relationship
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class, 'user_id', 'id');
+    // }
     
 }
