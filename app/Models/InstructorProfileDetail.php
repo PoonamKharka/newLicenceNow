@@ -15,6 +15,7 @@ class InstructorProfileDetail extends Model
      * @var string
      */
     protected $table = 'instructor_profile_details';
+    protected $primaryKey = 'user_id';
 
     /**
      * The attributes that are mass assignable.
@@ -36,5 +37,11 @@ class InstructorProfileDetail extends Model
         'state',
         'postal_code'
     ];
+
+    // Define the inverse relationship
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
     
 }

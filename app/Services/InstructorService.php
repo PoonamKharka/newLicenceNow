@@ -5,25 +5,36 @@ namespace App\Services;
 use App\Repositories\InterFaces\InstructorRepositoryInterFace;
 use Illuminate\Http\Request;
 
-class InstructorService {
+class InstructorService
+{
 
-    protected $instRep; 
+    protected $instRep;
     /** injecting repository */
-    public function __construct(InstructorRepositoryInterFace $instructorRepository) { 
+    public function __construct(InstructorRepositoryInterFace $instructorRepository)
+    {
         $this->instRep = $instructorRepository;
     }
 
-    public function getAllInstructors(Request $request){
+    public function getAllInstructors(Request $request)
+    {
         return $this->instRep->getAllInstructors($request);
     }
 
-    public function profile($request, $id) {
+    public function profile($request, $id)
+    {
         return $this->instRep->profile($request, $id);
     }
 
-    public function store(Request $request) {
-        return $this->instRep->store($request);  
+    public function store(Request $request)
+    {
+        return $this->instRep->store($request);
     }
-    
 
+    public function view($id) {
+        return $this->instRep->view($id);
+    }
+
+    public function update(Request $req , $id) {
+        return $this->instRep->updateData($req , $id);
+    }
 }

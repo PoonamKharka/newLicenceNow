@@ -11,6 +11,9 @@ class InstructorBankDetail extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'instructor_bank_details';
+    protected $primaryKey = 'user_id';
+
     protected $fillable = [
         'user_id',
         'salary_pay_mode_id',
@@ -21,4 +24,10 @@ class InstructorBankDetail extends Model
          'state',
         'postal_code'
     ];
+
+    // Define the inverse relationship
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
