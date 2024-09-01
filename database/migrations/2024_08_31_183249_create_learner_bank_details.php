@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instructor_bank_details', function (Blueprint $table) {
+        Schema::create('learner_bank_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('salary_pay_mode_id');
@@ -25,13 +25,12 @@ return new class extends Migration
             $table->softDeletes(); 
         });
     }
-    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('instructor_bank_details');
+        Schema::dropIfExists('learner_bank_details');
     }
 };

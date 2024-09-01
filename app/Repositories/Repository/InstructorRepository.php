@@ -53,12 +53,12 @@ class InstructorRepository implements InstructorRepositoryInterFace
     {
         $users = decrypt($data);
         $userData =  User::with('bankDetails', 'profileDetails')->findOrFail($users->id);
-        if( $userData->profileDetails ){
+        if ($userData->profileDetails) {
             $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
             $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
             $userData->profileDetails->dot = Carbon::parse($userData->profileDetails->dot)->format('d/m/Y');
         }
-        
+
         return view('admin.instructor.profile', compact('userData'));
     }
 
@@ -67,7 +67,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
         // Determine which form was submitted
         $formType = $request->input('form_type');
 
-        if ( $formType === 'personal_details' ) {
+        if ($formType === 'personal_details') {
             // Logic for processing the Personal Details form
 
             // Convert dates from d/m/Y to Y-m-d using Carbon
@@ -78,14 +78,6 @@ class InstructorRepository implements InstructorRepositoryInterFace
             // Create and save the InstructorProfileDetail instance
             $instructorProfileDetail = new InstructorProfileDetail();
 
-            // Handle picture upload
-            if ($request->hasFile('picture')) {
-                $imageFileName = time() . '_image.' . $request->file('picture')->getClientOriginalExtension();
-                $request->file('picture')->move(public_path('profile'), $imageFileName);
-                $instructorProfileDetail->picture = 'profile/' . $imageFileName;
-            }
-            
-            //Assign other input data to the model
             $instructorProfileDetail = [
                 'user_id' => $request->input('user_id'),
                 'phoneNo' => $request->input('phoneNo'),
@@ -98,102 +90,55 @@ class InstructorRepository implements InstructorRepositoryInterFace
                 'gender_id' => $request->input('genderId'),
             ];
 
-            // Save the instance to the database
-            $findUser = InstructorProfileDetail::where('user_id', '=' , $request->input('user_id'))->first();
-            
-                if( $findUser ){
-                    $updateDetails =  $findUser->update($instructorProfileDetail);
-                } else {
-                    $updateDetails =  InstructorProfileDetail::create($instructorProfileDetail);
-                }
-            if( $updateDetails ) {
-                return back()->with('success', 'Data has been added!');
-            }
-            
-        } elseif ($formType === 'bank_details') {
-            // Logic for processing the Bank Details form
-
-            // Create and save the InstructorBankDetail instance
-            $instructorBankDetail = new InstructorBankDetail();
-            // Assign bank-related input data to the model  
-            $instructorBankDetail->user_id = $request->input('user_id');
-            $instructorBankDetail->salary_pay_mode_id = $request->input('salaryPayModeId');
-            $instructorBankDetail->salary_bank_name = $request->input('salaryBankName');
-            $instructorBankDetail->salary_branch_name = $request->input('salaryBranchName');
-            $instructorBankDetail->salary_ifsc_code = $request->input('salaryIFSCCode');
-            $instructorBankDetail->salary_account_number = $request->input('salaryAccountNumber');
-
-            // Save the instance to the database
-            $instructorBankDetail->save();
-
-            // Redirect with success message
-            return redirect()->route('instructors.index')->with('success', 'Instructor bank details created successfully.');
-        }
-    }
-
-    public function view($id)
-    {
-        $userId = decrypt($id);
-        return  User::with('bankDetails', 'profileDetails')->findOrFail($userId);
-    }
-
-    public function updateData(Request $request, $id)
-    {
-        $formType = $request->input('form_type');
-        $userId = $id; // Decrypt the user ID if necessary
-
-        // Log the request data for debugging
-        Log::info('Form Type: ' . $formType);
-        Log::info('User ID: ' . $userId);
-        Log::info('Request Data: ', $request->all());
-
-        if ($formType === 'personal_details') {
-            $dob = $request->input('dob') ? Carbon::createFromFormat('d/m/Y', $request->input('dob'))->format('Y-m-d') : null;
-            $doj = $request->input('doj') ? Carbon::createFromFormat('d/m/Y', $request->input('doj'))->format('Y-m-d') : null;
-            $dot = $request->input('dot') ? Carbon::createFromFormat('d/m/Y', $request->input('dot'))->format('Y-m-d') : null;
-
-            $instructorProfileDetail = InstructorProfileDetail::where('user_id', $userId)->firstOrFail();
-
+            // Handle picture upload
             if ($request->hasFile('picture')) {
                 $imageFileName = time() . '_image.' . $request->file('picture')->getClientOriginalExtension();
                 $request->file('picture')->move(public_path('profile'), $imageFileName);
-                $instructorProfileDetail->picture = 'profile/' . $imageFileName;
+                $instructorProfileDetail['picture'] = 'profile/' . $imageFileName;
             }
 
-            $instructorProfileDetail->update([
-                'phoneNo' => $request->input('phoneNo'),
-                'contact_address' => $request->input('contactAddress'),
-                'postal_code' => $request->input('postalCode') ?: '000000',
-                'state' => $request->input('state'),
-                'dob' => $dob,
-                'doj' => $doj,
-                'dot' => $dot,
-                'blood_group_id' => $request->input('bloodGroupId'),
-                'driving_expirence' => $request->input('drivingExpirence'),
-                'gender_id' => $request->input('genderId'),
-            ]);
+            // Save the instance to the database
+            $findUser = InstructorProfileDetail::where('user_id', '=', $request->input('user_id'))->first();
 
-            return redirect()->route('instructors.index')
-                ->with('success', 'Instructor profile updated successfully.');
+            if ($findUser) {
+                $updateDetails =  $findUser->update($instructorProfileDetail);
+            } else {
+                $updateDetails =  InstructorProfileDetail::create($instructorProfileDetail);
+            }
+            if ($updateDetails) {
+                return back()->with('success', 'Data has been added!');
+            }
         } elseif ($formType === 'bank_details') {
-            $instructorBankDetail = InstructorBankDetail::where('user_id', $userId)->firstOrFail();
+            // Logic for processing the Bank Details form
 
-            $instructorBankDetail->update([
+            // Prepare the data as an associative array
+            $instructorBankDetail = [
+                'user_id' => $request->input('user_id'),
                 'salary_pay_mode_id' => $request->input('salaryPayModeId'),
                 'salary_bank_name' => $request->input('salaryBankName'),
                 'salary_branch_name' => $request->input('salaryBranchName'),
                 'salary_ifsc_code' => $request->input('salaryIFSCCode'),
                 'salary_account_number' => $request->input('salaryAccountNumber'),
-                'postal_code' => $request->input('postalCode') ?: '000000',
-                'state' => $request->input('state'),
-            ]);
+            ];
 
-            return redirect()->route('instructors.index')
-                ->with('success', 'Instructor Bank profile updated successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Invalid form type.');
+            // Check if the record exists
+            $findUser = InstructorBankDetail::where('user_id', '=', $request->input('user_id'))->first();
+
+            if ($findUser) {
+                // Update the existing record
+                $updateDetails = $findUser->update($instructorBankDetail);
+            } else {
+                // Create a new record
+                $updateDetails = InstructorBankDetail::create($instructorBankDetail);
+            }
+
+            if ($updateDetails) {
+                // Redirect with success message
+                return redirect()->route('instructors.index')->with('success', 'Instructor bank details saved successfully.');
+            } else {
+                // Handle failure (if needed)
+                return back()->with('error', 'Failed to save instructor bank details.');
+            }
         }
-
-        return redirect()->back()->with('error', 'Failed to update details.');
     }
 }
