@@ -13,16 +13,20 @@ return new class extends Migration
     {
         Schema::create('learner_profile_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('userid');
-            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');;
-            $table->bigInteger('std_code')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->date('dob');
+            $table->unsignedBigInteger('age')->default('0');
+            $table->string('std_code')->default('+61');
             $table->bigInteger('phoneNo')->nullable();
+            $table->binary('profile_picture')->nullable();
             $table->string('corresponding_address')->nullable();
-            $table->string('blood_group')->nullable();
-            $table->dateTime('start_at')->nullable();
-            $table->dateTime('expire_at')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('profile_picture')->nullable();
+            $table->unsignedBigInteger('blood_group_id');
+            $table->foreign('blood_group_id')->references('id')->on('blood_groups');
+            $table->date('course_start');
+            $table->date('course_end')->nullable();
+            $table->unsignedBigInteger('gender_id');
+            $table->foreign('gender_id')->references('id')->on('genders');
             $table->timestamps();
         });
     }

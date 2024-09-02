@@ -65,4 +65,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(InstructorProfileDetail::class, 'user_id', 'id');
     }
+
+    // Define the relationship with LearnerProfileDetails
+    public function learnerProfileDetails()
+    {
+        return $this->hasOne(LearnerProfileDetails::class, 'user_id', 'id');
+    }
+
+    // Define the relationship with LearnerBankDetails
+    public function learnerBankDetails()
+    {
+        return $this->hasOne(LearnerBankDetails::class, 'user_id', 'id');
+    }
 }

@@ -2,19 +2,25 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Repositories\InterFaces\LoginRepositoryInterFace;
-use App\Repositories\Repository\LoginRepository;
+
+
+
 use App\Services\LoginService;
-use App\Repositories\InterFaces\Api\RegistrationRepositoryInterFace;
-use App\Repositories\Repository\Api\RegistrationRepository;
-use App\Services\Api\RegistrationService;
-use App\Repositories\InterFaces\InstructorRepositoryInterFace;
-use App\Repositories\Repository\InstructorRepository;
-use App\Services\InstructorService;
-use App\Repositories\InterFaces\RegisterRepositoryInterFace;
-use App\Repositories\Repository\RegisterRepository;
+use App\Services\LearnerService;
 use App\Services\RegisterService;
+use App\Services\InstructorService;
+use Illuminate\Support\ServiceProvider;
+use App\Services\Api\RegistrationService;
+use App\Repositories\Repository\LoginRepository;
+use App\Repositories\Repository\LearnerRepository;
+use App\Repositories\Repository\RegisterRepository;
+use App\Repositories\Repository\InstructorRepository;
+use App\Repositories\InterFaces\LoginRepositoryInterFace;
+use App\Repositories\InterFaces\LearnerRepositoryInterface;
+use App\Repositories\Repository\Api\RegistrationRepository;
+use App\Repositories\InterFaces\RegisterRepositoryInterFace;
+use App\Repositories\InterFaces\InstructorRepositoryInterFace;
+use App\Repositories\InterFaces\Api\RegistrationRepositoryInterFace;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,6 +47,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind( RegisterRepositoryInterFace::class, RegisterRepository::class);
         $this->app->bind(RegisterService::class, function ($app) {
             return new RegisterService($app->make(RegisterRepositoryInterFace::class));
+        });
+
+        $this->app->bind(LearnerRepositoryInterface::class, LearnerRepository::class);
+        $this->app->bind(LearnerService::class, function($app){
+            return new LearnerService($app->make(LearnerRepositoryInterface::class));
+
         });
     }
 

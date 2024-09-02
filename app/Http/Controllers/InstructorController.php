@@ -38,17 +38,4 @@ class InstructorController extends Controller
       return $this->instService->store($request);
    }
 
-   public function edit($id)
-   {
-      $userData =  $this->instService->view($id);
-      $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
-      $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
-      $userData->profileDetails->dot = Carbon::parse($userData->profileDetails->dot)->format('d/m/Y');
-      return view('admin.instructor.show', compact('userData'));
-   }
-
-   public function update(Request $request, $id)
-   {
-      return $this->instService->update($request, $id);
-   }
 }

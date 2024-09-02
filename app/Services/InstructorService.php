@@ -29,12 +29,4 @@ class InstructorService
     {
         return $this->instRep->store($request);
     }
-
-    public function view($id) {
-        return $this->instRep->view($id);
-    }
-
-    public function update(Request $req , $id) {
-        return $this->instRep->updateData($req , $id);
-    }
 }

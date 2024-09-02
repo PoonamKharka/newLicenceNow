@@ -35,11 +35,5 @@ class InstructorProfileDetail extends Model
         'driving_expirence',
         'gender_id'
     ];
-
-    // Define the inverse relationship
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class, 'user_id', 'id');
-    // }
     
 }

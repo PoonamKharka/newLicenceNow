@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Instructors Details</h1>
+                    <h1 class="m-0">Learners Details</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Instructors</li>
+                        <li class="breadcrumb-item active">Learners</li>
                     </ol>
                 </div>
                 <!-- /.col -->
@@ -46,7 +46,7 @@
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
-                                            <form action="{{ route('instructors.store') }}" method="POST"
+                                            <form action="{{ route('learners.store') }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="form_type" value="personal_details">
@@ -66,12 +66,12 @@
                                                             <label>Date Of Birth</label>
                                                             <div class="input-group date" id="dateOfBirth"
                                                                 data-target-input="nearest">
-                                                                @if ($userData->profileDetails)
+                                                                @if ($userData->learnerProfileDetails)
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
                                                                         name="dob" data-target="#dateOfBirth"
                                                                         placeholder="Enter Date Of Birth"
-                                                                        value="{{ $userData->profileDetails->dob }}" />
+                                                                        value="{{ $userData->learnerProfileDetails->dob }}" />
                                                                 @else
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
@@ -91,23 +91,23 @@
                                                     <div class="col-sm-6">
                                                         <!-- text input -->
                                                         <div class="form-group">
-                                                            <label>Date Of Joining</label>
-                                                            <div class="input-group date" id="dateOfJoining"
+                                                            <label>Course start date</label>
+                                                            <div class="input-group date" id="courseStartDate"
                                                                 data-target-input="nearest">
-                                                                @if ($userData->profileDetails)
+                                                                @if ($userData->learnerProfileDetails)
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="doj" data-target="#dateOfJoining"
-                                                                        value="{{ $userData->profileDetails->doj }}"
-                                                                        placeholder="Enter Date Of Joining" />
+                                                                        name="csd" data-target="#courseStartDate"
+                                                                        value="{{ $userData->learnerProfileDetails->csd }}"
+                                                                        placeholder="Enter Start Date Of Course" />
                                                                 @else
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="doj" data-target="#dateOfBirth"
-                                                                        placeholder="Enter Date Of Joining" />
+                                                                        name="csd" data-target="#dateOfBirth"
+                                                                        placeholder="Enter Start Date Of Course" />
                                                                 @endif
                                                                 <div class="input-group-append"
-                                                                    data-target="#dateOfJoining"
+                                                                    data-target="#courseStartDate"
                                                                     data-toggle="datetimepicker">
                                                                     <div class="input-group-text"><i
                                                                             class="fa fa-calendar"></i></div>
@@ -117,23 +117,23 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>Date Of Resignation</label>
-                                                            <div class="input-group date" id="dateOfResignation"
+                                                            <label>Course end date</label>
+                                                            <div class="input-group date" id="courseEndDate"
                                                                 data-target-input="nearest">
-                                                                @if ($userData->profileDetails)
+                                                                @if ($userData->learnerProfileDetails)
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="dot" data-target="#dateOfResignation"
-                                                                        value="{{ $userData->profileDetails->doj }}"
-                                                                        placeholder="Enter Date Of Resignation" />
+                                                                        name="ced" data-target="#courseEndDate"
+                                                                        value="{{ $userData->learnerProfileDetails->ced }}"
+                                                                        placeholder="Enter End Date Of Course" />
                                                                 @else
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="dot" data-target="#dateOfResignation"
-                                                                        placeholder="Enter Date Of Resignation" />
+                                                                        name="ced" data-target="#courseEndDate"
+                                                                        placeholder="Enter End Date Of Course" />
                                                                 @endif
                                                                 <div class="input-group-append"
-                                                                    data-target="#dateOfResignation"
+                                                                    data-target="#courseEndDate"
                                                                     data-toggle="datetimepicker">
                                                                     <div class="input-group-text"><i
                                                                             class="fa fa-calendar"></i></div>
@@ -146,19 +146,19 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Gender</label>
-                                                            @if ($userData->profileDetails)
+                                                            @if ($userData->learnerProfileDetails)
                                                                 <select class="form-control select2" style="width: 100%;"
                                                                     name="genderId">
                                                                     <option value="1"
-                                                                        {{ $userData->profileDetails->gender_id == 1 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->gender_id == 1 ? 'selected' : '' }}>
                                                                         Female
                                                                     </option>
                                                                     <option value="2"
-                                                                        {{ $userData->profileDetails->gender_id == 2 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->gender_id == 2 ? 'selected' : '' }}>
                                                                         Male
                                                                     </option>
                                                                     <option value="3"
-                                                                        {{ $userData->profileDetails->gender_id == 3 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->gender_id == 3 ? 'selected' : '' }}>
                                                                         Others
                                                                     </option>
                                                                 </select>
@@ -173,69 +173,57 @@
                                                             @endif
                                                         </div>
                                                     </div>
-
                                                     <div class="col-sm-6">
-                                                        <label>Contact No</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">+61</span>
-                                                            </div>
-                                                            @if ($userData->profileDetails)
-                                                                <input type="text" class="form-control"
-                                                                    data-inputmask='"mask": "(999) 999-9999"' data-mask
-                                                                    name="phoneNo"
-                                                                    value="{{ $userData->profileDetails->phoneNo }}">
+                                                        <div class="form-group">
+                                                            <label>Learner Age</label>
+                                                            @if ($userData->learnerProfileDetails)
+                                                                <input type="text" class="form-control" name="age"
+                                                                    value="{{ $userData->learnerProfileDetails->age }}">
                                                             @else
-                                                                <input type="text" class="form-control"
-                                                                    data-inputmask='"mask": "(999) 999-9999"' data-mask
-                                                                    name="phoneNo">
+                                                                <input type="text" class="form-control" name="age"
+                                                                    disabled>
                                                             @endif
 
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i
-                                                                        class="fas fa-phone"></i></span>
-                                                            </div>
                                                         </div>
-                                                        <!-- /.input group -->
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Blood Group</label>
-                                                            @if ($userData->profileDetails)
+                                                            @if ($userData->learnerProfileDetails)
                                                                 <select class="form-control select2" style="width: 100%;"
                                                                     name="bloodGroupId">
                                                                     <option value="1"
-                                                                        {{ $userData->profileDetails->blood_group == 1 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 1 ? 'selected' : '' }}>
                                                                         O+
                                                                     </option>
                                                                     <option value="2"
-                                                                        {{ $userData->profileDetails->blood_group == 2 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 2 ? 'selected' : '' }}>
                                                                         A+
                                                                     </option>
                                                                     <option value="3"
-                                                                        {{ $userData->profileDetails->blood_group == 3 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 3 ? 'selected' : '' }}>
                                                                         B+
                                                                     </option>
                                                                     <option value="4"
-                                                                        {{ $userData->profileDetails->blood_group == 4 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 4 ? 'selected' : '' }}>
                                                                         AB+
                                                                     </option>
                                                                     <option value="5"
-                                                                        {{ $userData->profileDetails->blood_group == 5 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 5 ? 'selected' : '' }}>
                                                                         O-
                                                                     </option>
                                                                     <option value="6"
-                                                                        {{ $userData->profileDetails->blood_group == 6 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 6 ? 'selected' : '' }}>
                                                                         A-
                                                                     </option>
                                                                     <option value="7"
-                                                                        {{ $userData->profileDetails->blood_group == 7 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 7 ? 'selected' : '' }}>
                                                                         B-
                                                                     </option>
                                                                     <option value="8"
-                                                                        {{ $userData->profileDetails->blood_group == 8 ? 'selected' : '' }}>
+                                                                        {{ $userData->learnerProfileDetails->blood_group == 8 ? 'selected' : '' }}>
                                                                         AB-
                                                                     </option>
                                                                 </select>
@@ -257,33 +245,43 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label>Total Driving Expirence</label>
-                                                            @if ($userData->profileDetails)
+                                                        <label>Contact No</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">+61</span>
+                                                            </div>
+                                                            @if ($userData->learnerProfileDetails)
                                                                 <input type="text" class="form-control"
-                                                                    name="drivingExpirence"
-                                                                    value="{{ $userData->profileDetails->driving_expirence }}">
+                                                                    data-inputmask='"mask": "(999) 999-9999"' data-mask
+                                                                    name="phoneNo"
+                                                                    value="{{ $userData->learnerProfileDetails->phoneNo }}">
                                                             @else
                                                                 <input type="text" class="form-control"
-                                                                    name="drivingExpirence"
-                                                                    placeholder="Enter Your Total Expirence in Driving">
+                                                                    data-inputmask='"mask": "(999) 999-9999"' data-mask
+                                                                    name="phoneNo">
                                                             @endif
 
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i
+                                                                        class="fas fa-phone"></i></span>
+                                                            </div>
                                                         </div>
+                                                        <!-- /.input group -->
                                                     </div>
+
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <!-- textarea -->
                                                         <div class="form-group">
-                                                            <label>Present Address</label>
-                                                            @if ($userData->profileDetails)
+                                                            <label>Corresponding Address</label>
+                                                            @if ($userData->learnerProfileDetails)
                                                                 <input type="text" class="form-control"
-                                                                    name="contactAddress"
-                                                                    value="{{ $userData->profileDetails->contact_address }}">
+                                                                    name="correspondingAddress"
+                                                                    value="{{ $userData->learnerProfileDetails->corresponding_address }}">
                                                             @else
                                                                 <input type="text" class="form-control"
-                                                                    name="contactAddress",
+                                                                    name="correspondingAddress",
                                                                     placeholder="Enter Correspondence Address">
                                                             @endif
 
@@ -294,7 +292,7 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input"
-                                                                    id="exampleInputFile" name="picture">
+                                                                    id="exampleInputFile" name="profilePicture">
                                                                 <label class="custom-file-label"
                                                                     for="exampleInputFile">Choose file</label>
                                                             </div>
@@ -302,11 +300,12 @@
                                                                 <span class="input-group-text">Upload</span>
                                                             </div>
                                                         </div>
-                                                        @if ($userData->profileDetails)
+                                                        @if ($userData->learnerProfileDetails)
                                                             <div class="mt-2">
-                                                                <img src="{{ asset($userData->profileDetails->picture) }}"
+                                                                <img src="{{ asset($userData->learnerProfileDetails->profile_picture) }}"
                                                                     alt="Profile Picture" class="img-thumbnail"
                                                                     style="max-width: 150px;">
+
                                                                 <p>Current Image</p>
                                                             </div>
                                                         @endif
@@ -314,7 +313,7 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-info">Submit</button>
-                                                    <button type="reset" class="btn btn-default" onclick="window.location='{{ route('instructors.index') }}'">Cancel</button>
+                                                    <button type="reset" class="btn btn-default">Cancel</button>
                                                 </div>
                                                 <!-- /.card-footer -->
                                             </form>
@@ -330,7 +329,7 @@
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
-                                            <form action="{{ route('instructors.store') }}" method="POST"
+                                            <form action="{{ route('learners.store') }}" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="form_type" value="bank_details">
@@ -338,7 +337,7 @@
                                                     <div class="col-sm-6">
                                                         <!-- text input -->
                                                         <div class="form-group">
-                                                            <label>Account Holder</label>
+                                                            <label>Nominee</label>
                                                             <input type="hidden" class="form-control" name="user_id"
                                                                 value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
@@ -348,35 +347,35 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Salary Pay Mode</label>
-                                                            @if ($userData->bankDetails)
+                                                            @if ($userData->learnerBankDetails)
                                                                 <select class="form-control select2" style="width: 100%;"
-                                                                name="salaryPayModeId">
-                                                                    <option value="" disabled>Select a Salary Mode
-                                                                    </option>
-                                                                    <option value="1"
-                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 1 ? 'selected' : '' }}>
+                                                                    name="salaryPayModeId">
+                                                                    <option value="1">
+                                                                        {{ $userData->learnerBankDetails->salary_mode == 1 ? 'selected' : '' }}
                                                                         Direct Deposit ( EFT/NEFT )</option>
-                                                                    <option value="2"
-                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 2 ? 'selected' : '' }}>
-                                                                        Cheque</option>
-                                                                    <option value="3"
-                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 3 ? 'selected' : '' }}>
-                                                                        Cash</option>
-                                                                    <option value="4"
-                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 4 ? 'selected' : '' }}>
-                                                                        Payroll Cards</option>
-                                                                    <option value="5"
-                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 5 ? 'selected' : '' }}>
-                                                                        Superannuation Contributions</option>
-                                                                    <option value="6"
-                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 6 ? 'selected' : '' }}>
-                                                                        BPAY</option>
-                                                                </select> 
+                                                                    <option value="2">
+                                                                        {{ $userData->learnerBankDetails->salary_mode == 2 ? 'selected' : '' }}Cheque
+                                                                    </option>
+                                                                    <option value="3">
+                                                                        {{ $userData->learnerBankDetails->salary_mode == 3 ? 'selected' : '' }}Cash
+                                                                    </option>
+                                                                    <option value="4">
+                                                                        {{ $userData->learnerBankDetails->salary_mode == 4 ? 'selected' : '' }}Payroll
+                                                                        Cards</option>
+                                                                    <option value="5">
+                                                                        {{ $userData->learnerBankDetails->salary_mode == 5 ? 'selected' : '' }}Superannuation
+                                                                        Contributions</option>
+                                                                    <option value="6">
+                                                                        {{ $userData->learnerBankDetails->salary_mode == 6 ? 'selected' : '' }}BPAY
+                                                                    </option>
+                                                                </select>
                                                             @else
                                                                 <select class="form-control select2" style="width: 100%;"
-                                                                name="salaryPayModeId">
-                                                                    <option selected="selected">Select a Salary Mode</option>
-                                                                    <option value="1">Direct Deposit ( EFT/NEFT )</option>
+                                                                    name="salaryPayModeId">
+                                                                    <option selected="selected">Select a Salary Mode
+                                                                    </option>
+                                                                    <option value="1">Direct Deposit ( EFT/NEFT )
+                                                                    </option>
                                                                     <option value="2">Cheque</option>
                                                                     <option value="3">Cash</option>
                                                                     <option value="4">Payroll Cards</option>
@@ -391,75 +390,70 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryBankName">Bank Name</label>
-                                                            @if ($userData->bankDetails)
+                                                            <label for="salaryBankName">Salary Bank Name</label>
+                                                            @if ($userData->learnerBankDetails)
                                                                 <input type="text" class="form-control"
                                                                     id="salaryBankName" name="salaryBankName"
-                                                                    value="{{ $userData->bankDetails->salary_bank_name }}"
+                                                                    value="{{ $userData->learnerBankDetails->salary_bank_name }}"
                                                                     placeholder="Enter Salary Bank Name">
                                                             @else
                                                                 <input type="text" class="form-control"
                                                                     id="salaryBankName" name="salaryBankName"
                                                                     placeholder="Enter Salary Bank Name">
                                                             @endif
-                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryBranchName">Branch</label>
-                                                            @if ($userData->bankDetails)
+                                                            <label for="salaryBranchName">Salary Branch Name</label>
+                                                            @if ($userData->learnerBankDetails)
                                                                 <input type="text" class="form-control"
-                                                                id="salaryBankName" name="salaryBankName"
-                                                                value="{{ $userData->bankDetails->salary_branch_name }}"
-                                                                placeholder="Enter Salary Bank Name">
-                                                                
+                                                                    id="salaryBranchName" name="salaryBranchName"
+                                                                    value="{{ $userData->learnerBankDetails->salary_branch_name }}"
+                                                                    placeholder="Enter Salary Branch Name">
                                                             @else
                                                                 <input type="text" class="form-control"
-                                                                id="salaryBranchName" name="salaryBranchName"
-                                                                placeholder="Enter Salary Branch Name">
+                                                                    id="salaryBranchName" name="salaryBranchName"
+                                                                    placeholder="Enter Salary Branch Name">
                                                             @endif
-                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryIFSCCode">IFSC Code</label>
-                                                            @if ($userData->bankDetails)
+                                                            <label for="salaryIFSCCode">Salary IFSC Code</label>
+                                                            @if ($userData->learnerBankDetails)
                                                                 <input type="text" class="form-control"
                                                                     id="salaryIFSCCode" name="salaryIFSCCode"
-                                                                    value="{{ $userData->bankDetails->salary_ifsc_code }}"
+                                                                    value="{{ $userData->learnerBankDetails->salary_ifsc_code }}"
                                                                     placeholder="Enter Salary IFSC Code">
                                                             @else
                                                                 <input type="text" class="form-control"
-                                                                id="salaryIFSCCode" name="salaryIFSCCode"
-                                                                placeholder="Enter Salary IFSC Code">
+                                                                    id="salaryIFSCCode" name="salaryIFSCCode"
+                                                                    placeholder="Enter Salary IFSC Code">
                                                             @endif
-                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryAccountNumber">Account Number</label>
-                                                            @if ($userData->bankDetails)
+                                                            <label for="salaryAccountNumber">Salary Account Number</label>
+                                                            @if ($userData->learnerBankDetails)
                                                                 <input type="text" class="form-control"
-                                                                id="salaryAccountNumber" name="salaryAccountNumber"
-                                                                value="{{ $userData->bankDetails->salary_account_number }}"
-                                                                placeholder="Enter Salary Account Number">
+                                                                    id="salaryAccountNumber" name="salaryAccountNumber"
+                                                                    value="{{ $userData->learnerBankDetails->salary_account_number }}"
+                                                                    placeholder="Enter Salary Account Number">
                                                             @else
                                                                 <input type="text" class="form-control"
-                                                                id="salaryAccountNumber" name="salaryAccountNumber"
-                                                                placeholder="Enter Salary Account Number">
+                                                                    id="salaryAccountNumber" name="salaryAccountNumber"
+                                                                    placeholder="Enter Salary Account Number">
                                                             @endif
-                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-info">Submit</button>
-                                                    <button type="reset" class="btn btn-default" onclick="window.location='{{ route('instructors.index') }}'">Cancel</button>
+                                                    <button type="reset" class="btn btn-default">Cancel</button>
                                                 </div>
                                                 <!-- /.card-footer -->
                                             </form>
@@ -467,7 +461,6 @@
                                         <!-- /.card-body -->
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -488,17 +481,17 @@
                 format: 'L'
             });
 
-            //dateOfJoining
-            $('#dateOfJoining').datetimepicker({
+            //courseStartDate
+            $('#courseStartDate').datetimepicker({
                 format: 'L'
             });
 
-            //dateOfJoining
+            //courseStartDate
             $('#dateOfBirth').datetimepicker({
                 format: 'L'
             });
 
-            $('#dateOfResignation').datetimepicker({
+            $('#courseEndDate').datetimepicker({
                 format: 'L'
             });
 

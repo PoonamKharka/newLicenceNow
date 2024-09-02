@@ -49,7 +49,7 @@
         </li>
         <!-- Learners -->
         <li class="nav-item">
-          <a href="#" class="nav-link {{ request()->is('learners*') ? 'active' : '' }}">
+          <a href="{{ route('learners.index') }}" class="nav-link {{ request()->is('learners*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Learners
