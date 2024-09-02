@@ -20,9 +20,7 @@ class InstructorBankDetail extends Model
         'salary_bank_name',
         'salary_branch_name',
         'salary_ifsc_code',
-        'salary_account_number',
-         'state',
-        'postal_code'
+        'salary_account_number'
     ];
 
     // Define the inverse relationship

@@ -56,6 +56,58 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon far fa-plus-square"></i>
+            <p>
+              Contents
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="pages/examples/lockscreen.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>About Us</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/legacy-user-menu.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>FAQs</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="pages/examples/language-menu.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Support Page</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+                  Policies
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="pages/examples/language-menu.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Privacy Policy</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="pages/examples/language-menu.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Payment Policy</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

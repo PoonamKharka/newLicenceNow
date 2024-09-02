@@ -89,7 +89,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                       <button type="submit" class="btn btn-info">Submit</button>
-                      <button type="reset" class="btn btn-default">Cancel</button>
+                      <button type="reset" class="btn btn-default" onclick="window.location='{{ route('users.index') }}'">Cancel</button>
                     </div>
                     <!-- /.card-footer -->
                   </form>

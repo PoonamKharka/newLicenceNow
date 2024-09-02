@@ -319,8 +319,7 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-info">Submit</button>
-                                                    <button type="reset" class="btn btn-default"><a class="btn btn-default" href=""> Cancel </a></button>
-                                                    <button type="reset" class="btn btn-default">Cancel</button>
+                                                    <button type="reset" class="btn btn-default" onclick="window.location='{{ route('instructors.index') }}'">Cancel</button>
                                                 </div>
                                                 <!-- /.card-footer -->
                                             </form>
@@ -344,7 +343,7 @@
                                                     <div class="col-sm-6">
                                                         <!-- text input -->
                                                         <div class="form-group">
-                                                            <label>Nominee</label>
+                                                            <label>Account Holder</label>
                                                             <input type="hidden" class="form-control" name="user_id"
                                                                 value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
@@ -354,75 +353,118 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Salary Pay Mode</label>
-                                                            <select class="form-control select2" style="width: 100%;"
+                                                            @if ($userData->bankDetails)
+                                                                <select class="form-control select2" style="width: 100%;"
                                                                 name="salaryPayModeId">
-                                                                <option selected="selected">Select a Salary Mode</option>
-                                                                <option value="1">Direct Deposit ( EFT/NEFT )</option>
-                                                                <option value="2">Cheque</option>
-                                                                <option value="3">Cash</option>
-                                                                <option value="4">Payroll Cards</option>
-                                                                <option value="5">Superannuation Contributions
-                                                                </option>
-                                                                <option value="6">BPAY</option>
-                                                            </select>
+                                                                    <option value="" disabled>Select a Salary Mode
+                                                                    </option>
+                                                                    <option value="1"
+                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 1 ? 'selected' : '' }}>
+                                                                        Direct Deposit ( EFT/NEFT )</option>
+                                                                    <option value="2"
+                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 2 ? 'selected' : '' }}>
+                                                                        Cheque</option>
+                                                                    <option value="3"
+                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 3 ? 'selected' : '' }}>
+                                                                        Cash</option>
+                                                                    <option value="4"
+                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 4 ? 'selected' : '' }}>
+                                                                        Payroll Cards</option>
+                                                                    <option value="5"
+                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 5 ? 'selected' : '' }}>
+                                                                        Superannuation Contributions</option>
+                                                                    <option value="6"
+                                                                        {{ $userData->bankDetails->salary_pay_mode_id == 6 ? 'selected' : '' }}>
+                                                                        BPAY</option>
+                                                                </select> 
+                                                            @else
+                                                                <select class="form-control select2" style="width: 100%;"
+                                                                name="salaryPayModeId">
+                                                                    <option selected="selected">Select a Salary Mode</option>
+                                                                    <option value="1">Direct Deposit ( EFT/NEFT )</option>
+                                                                    <option value="2">Cheque</option>
+                                                                    <option value="3">Cash</option>
+                                                                    <option value="4">Payroll Cards</option>
+                                                                    <option value="5">Superannuation Contributions
+                                                                    </option>
+                                                                    <option value="6">BPAY</option>
+                                                                </select>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryBankName">Salary Bank Name</label>
-                                                            <input type="text" class="form-control"
-                                                                id="salaryBankName" name="salaryBankName"
-                                                                placeholder="Enter Salary Bank Name">
+                                                            <label for="salaryBankName">Bank Name</label>
+                                                            @if ($userData->bankDetails)
+                                                                <input type="text" class="form-control"
+                                                                    id="salaryBankName" name="salaryBankName"
+                                                                    value="{{ $userData->bankDetails->salary_bank_name }}"
+                                                                    placeholder="Enter Salary Bank Name">
+                                                            @else
+                                                                <input type="text" class="form-control"
+                                                                    id="salaryBankName" name="salaryBankName"
+                                                                    placeholder="Enter Salary Bank Name">
+                                                            @endif
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryBranchName">Salary Branch Name</label>
-                                                            <input type="text" class="form-control"
+                                                            <label for="salaryBranchName">Branch</label>
+                                                            @if ($userData->bankDetails)
+                                                                <input type="text" class="form-control"
+                                                                id="salaryBankName" name="salaryBankName"
+                                                                value="{{ $userData->bankDetails->salary_branch_name }}"
+                                                                placeholder="Enter Salary Bank Name">
+                                                                
+                                                            @else
+                                                                <input type="text" class="form-control"
                                                                 id="salaryBranchName" name="salaryBranchName"
                                                                 placeholder="Enter Salary Branch Name">
+                                                            @endif
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryIFSCCode">Salary IFSC Code</label>
-                                                            <input type="text" class="form-control"
+                                                            <label for="salaryIFSCCode">IFSC Code</label>
+                                                            @if ($userData->bankDetails)
+                                                                <input type="text" class="form-control"
+                                                                    id="salaryIFSCCode" name="salaryIFSCCode"
+                                                                    value="{{ $userData->bankDetails->salary_ifsc_code }}"
+                                                                    placeholder="Enter Salary IFSC Code">
+                                                            @else
+                                                                <input type="text" class="form-control"
                                                                 id="salaryIFSCCode" name="salaryIFSCCode"
                                                                 placeholder="Enter Salary IFSC Code">
+                                                            @endif
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label for="salaryAccountNumber">Salary Account Number</label>
-                                                            <input type="text" class="form-control"
+                                                            <label for="salaryAccountNumber">Account Number</label>
+                                                            @if ($userData->bankDetails)
+                                                                <input type="text" class="form-control"
+                                                                id="salaryAccountNumber" name="salaryAccountNumber"
+                                                                value="{{ $userData->bankDetails->salary_account_number }}"
+                                                                placeholder="Enter Salary Account Number">
+                                                            @else
+                                                                <input type="text" class="form-control"
                                                                 id="salaryAccountNumber" name="salaryAccountNumber"
                                                                 placeholder="Enter Salary Account Number">
+                                                            @endif
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="state">State</label>
-                                                            <input type="text" class="form-control" id="state"
-                                                                name="state" placeholder="Enter State">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="postalCode">Postal Code</label>
-                                                            <input type="text" class="form-control" id="postalCode"
-                                                                name="postalCode" placeholder="Enter Postal Code">
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-info">Submit</button>
-                                                    <button type="reset" class="btn btn-default">Cancel</button>
+                                                    <button type="reset" class="btn btn-default" onclick="window.location='{{ route('instructors.index') }}'">Cancel</button>
                                                 </div>
                                                 <!-- /.card-footer -->
                                             </form>

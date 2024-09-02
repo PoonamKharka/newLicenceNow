@@ -111,23 +111,26 @@ class InstructorRepository implements InstructorRepositoryInterFace
             }
             
         } elseif ($formType === 'bank_details') {
-            // Logic for processing the Bank Details form
-
-            // Create and save the InstructorBankDetail instance
-            $instructorBankDetail = new InstructorBankDetail();
-            // Assign bank-related input data to the model  
-            $instructorBankDetail->user_id = $request->input('user_id');
-            $instructorBankDetail->salary_pay_mode_id = $request->input('salaryPayModeId');
-            $instructorBankDetail->salary_bank_name = $request->input('salaryBankName');
-            $instructorBankDetail->salary_branch_name = $request->input('salaryBranchName');
-            $instructorBankDetail->salary_ifsc_code = $request->input('salaryIFSCCode');
-            $instructorBankDetail->salary_account_number = $request->input('salaryAccountNumber');
-
-            // Save the instance to the database
-            $instructorBankDetail->save();
-
-            // Redirect with success message
-            return redirect()->route('instructors.index')->with('success', 'Instructor bank details created successfully.');
+            
+            $instructorBankDetail = [
+                'user_id' => $request->input('user_id'),
+                'salary_pay_mode_id' => $request->input('salaryPayModeId'),
+                'salary_bank_name' => $request->input('salaryBankName'),
+                'salary_branch_name' => $request->input('salaryBranchName'),
+                'salary_ifsc_code' => $request->input('salaryIFSCCode'),
+                'salary_account_number' => $request->input('salaryAccountNumber'),
+            ];
+            
+            $findBankDetails = InstructorBankDetail::where('user_id', $request->input('user_id'))->first();
+            
+            if( $findBankDetails ){
+                $updateBankDetails =  $findBankDetails->update($instructorBankDetail);
+            } else {
+                $updateBankDetails =  InstructorBankDetail::create($instructorBankDetail);
+            }
+            if( $updateBankDetails ) {
+                return back()->with('success', 'Data has been added!');
+            }
         }
     }
 

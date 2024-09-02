@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('salary_ifsc_code')->nullable();
             $table->unsignedBigInteger('salary_account_number')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('state');
-            $table->unsignedBigInteger('postal_code');
             $table->timestamps();
             $table->softDeletes(); 
         });
