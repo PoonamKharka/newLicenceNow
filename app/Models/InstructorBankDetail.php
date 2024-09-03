@@ -20,11 +20,7 @@ class InstructorBankDetail extends Model
         'salary_bank_name',
         'salary_branch_name',
         'salary_ifsc_code',
-<<<<<<< HEAD
-        'salary_account_number'
-=======
         'salary_account_number',
->>>>>>> learnerA
     ];
 
     // Define the inverse relationship

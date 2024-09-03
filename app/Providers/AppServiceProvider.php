@@ -5,16 +5,19 @@ namespace App\Providers;
 
 
 
+use App\Services\FaqService;
 use App\Services\LoginService;
 use App\Services\LearnerService;
 use App\Services\RegisterService;
 use App\Services\InstructorService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Api\RegistrationService;
+use App\Repositories\Repository\FaqRepository;
 use App\Repositories\Repository\LoginRepository;
 use App\Repositories\Repository\LearnerRepository;
 use App\Repositories\Repository\RegisterRepository;
 use App\Repositories\Repository\InstructorRepository;
+use App\Repositories\InterFaces\FaqRepositoryInterface;
 use App\Repositories\InterFaces\LoginRepositoryInterFace;
 use App\Repositories\InterFaces\LearnerRepositoryInterface;
 use App\Repositories\Repository\Api\RegistrationRepository;
@@ -52,7 +55,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(LearnerRepositoryInterface::class, LearnerRepository::class);
         $this->app->bind(LearnerService::class, function($app){
             return new LearnerService($app->make(LearnerRepositoryInterface::class));
+        });
 
+        $this->app->bind(FaqRepositoryInterface::class, FaqRepository::class);
+        $this->app->bind(FaqService::class, function($app){
+            return new FaqService($app->make(FaqRepositoryInterface::class));
         });
     }
 

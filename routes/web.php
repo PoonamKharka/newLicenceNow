@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\LearnerController;
 use App\Http\Controllers\RegisterController;
@@ -31,6 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', RegisterController::class);
     Route::resource('instructors' , InstructorController::class);
     Route::resource('learners',LearnerController::class);
+    Route::resource('faqs',FaqController::class);
+    
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
