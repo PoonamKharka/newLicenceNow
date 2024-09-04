@@ -66,7 +66,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/examples/lockscreen.html" class="nav-link">
+              <a href="{{ route('aboutus.create') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>About Us</p>
               </a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\FaqController;
@@ -30,11 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('admin.dashboard');
     });
     Route::resource('users', RegisterController::class);
-    Route::resource('instructors' , InstructorController::class);
-    Route::resource('learners',LearnerController::class);
-    Route::resource('faqs',FaqController::class);
-    
+    Route::resource('instructors', InstructorController::class);
+    Route::resource('learners', LearnerController::class);
+    Route::resource('faqs', FaqController::class);
+    Route::resource('aboutus', AboutUsController::class);
+
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
-
-
