@@ -23,34 +23,37 @@ class FaqRepository implements FaqRepositoryInterface
     {
         // Validate the request data
         $request->validate([
-            'question' => 'required|string|max:255',
+            'question' => 'required|string',
             'answer' => 'required|string',
         ]);
 
-        $faqDetails = new Faq();
+        // Check if FAQ already exists by ID
+        $faqId = $request->input('id');
 
-        // Prepare FAQ details array
-        $faqDetails = [
-            'question' => $request->input('question'),
-            'answer' => $request->input('answer'),
-        ];
+        if ($faqId) {
+            // Update existing FAQ
+            $faq = Faq::find($faqId);
 
-        // Find existing FAQ or create a new one
-        $faq = Faq::where('question', $request->input('question'))->first();
+            if ($faq) {
+                $faq->question = $request->input('question');
+                $faq->answer = $request->input('answer');
+                $faq->save();
 
-        if ($faq) {
-            $updateDetails = $faq->update($faqDetails);
+                return redirect()->route('faqs.index')->with('success', 'FAQ updated successfully.');
+            } else {
+                return back()->with('error', 'FAQ not found.');
+            }
         } else {
-            $updateDetails = Faq::create($faqDetails);
-        }
-        if ($updateDetails) {
-            // Redirect with success message
-            return redirect()->route('faqs.index')->with('success', 'FAQ saved successfully.');
-        } else {
-            return back()->with('error', 'Failed to save Faq.');
-        }
+            // Create new FAQ
+            $faq = Faq::create([
+                'question' => $request->input('question'),
+                'answer' => $request->input('answer'),
+            ]);
 
+            return redirect()->route('faqs.index')->with('success', 'FAQ created successfully.');
+        }
     }
+
 
     public function edit($id)
     {

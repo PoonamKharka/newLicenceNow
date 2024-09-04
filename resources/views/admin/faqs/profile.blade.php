@@ -38,6 +38,7 @@
                                     <div class="card-body">
                                         <form action="{{ route('faqs.store') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
+                                            <input type="hidden" name="id" value="{{ $faqs->id ?? '' }}">
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
