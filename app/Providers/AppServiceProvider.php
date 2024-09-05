@@ -9,6 +9,7 @@ use App\Services\AboutUsService;
 use App\Services\LearnerService;
 use App\Services\RegisterService;
 use App\Services\InstructorService;
+use App\Services\PaymentPolicyService;
 use Illuminate\Support\ServiceProvider;
 use App\Services\Api\RegistrationService;
 use App\Repositories\Repository\FaqRepository;
@@ -18,14 +19,15 @@ use App\Repositories\Repository\LearnerRepository;
 use App\Repositories\Repository\RegisterRepository;
 use App\Repositories\Repository\InstructorRepository;
 use App\Repositories\InterFaces\FaqRepositoryInterface;
+use App\Repositories\Repository\PaymentPolicyRepository;
 use App\Repositories\InterFaces\LoginRepositoryInterFace;
 use App\Repositories\InterFaces\AboutUsRepositoryInterface;
 use App\Repositories\InterFaces\LearnerRepositoryInterface;
 use App\Repositories\Repository\Api\RegistrationRepository;
 use App\Repositories\InterFaces\RegisterRepositoryInterFace;
 use App\Repositories\InterFaces\InstructorRepositoryInterFace;
+use App\Repositories\InterFaces\PaymentPolicyRepositoryInterface;
 use App\Repositories\InterFaces\Api\RegistrationRepositoryInterFace;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -68,6 +70,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AboutUsService::class, function($app){
             return new AboutUsService($app->make(AboutUsRepositoryInterface::class));
         } );
+
+        $this->app->bind(PaymentPolicyRepositoryInterface::class, PaymentPolicyRepository::class);
+        $this->app->bind(PaymentPolicyService::class, function($app){
+            return new PaymentPolicyService($app->make(PaymentPolicyRepositoryInterface::class));
+        });
     }
 
     /**

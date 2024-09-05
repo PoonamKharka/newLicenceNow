@@ -93,13 +93,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pages/examples/language-menu.html" class="nav-link">
+                  <a href="{{route('privacy.create')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Privacy Policy</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages/examples/language-menu.html" class="nav-link">
+                  <a href="{{route('payment.create')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Payment Policy</p>
                   </a>
