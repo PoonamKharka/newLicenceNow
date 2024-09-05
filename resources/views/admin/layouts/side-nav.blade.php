@@ -56,8 +56,8 @@
             </p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link {{ request()->is('aboutus*' , 'faqs*') ? 'active' : '' }}"">
+        <li class="nav-item {{ request()->is('aboutus*' , 'faqs*') ? 'menu-open' : '' }}">
+          <a href="#" class="nav-link {{ request()->is('aboutus*' , 'faqs*') ? 'active' : '' }}">
             <i class="nav-icon far fa-plus-square"></i>
             <p>
               Pages Content
@@ -78,7 +78,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/language-menu.html" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Support Page</p>
               </a>
@@ -93,13 +93,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('privacy.create')}}" class="nav-link">
+                  <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Privacy Policy</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('payment.create')}}" class="nav-link">
+                  <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Payment Policy</p>
                   </a>
