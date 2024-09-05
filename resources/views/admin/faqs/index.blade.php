@@ -34,37 +34,44 @@
                </div>
                <!-- /.card-header -->
                <div class="card-body">
-               </div>
-               <section class="content">
-                  <div class="row">
-                     <div class="col-12" id="accordion">
-                        @foreach ($faqs as $faq)
-                        <div class="card card-primary card-outline">
-                           <a class="d-block w-100" data-toggle="collapse"
-                              href="#collapse{{ $loop->index }}">
-                              <div class="card-header">
-                                 <h4
-                                    class="card-title w-100 d-flex justify-content-between align-items-center">
-                                    <span>{{ $loop->index + 1 }}. {{ $faq->question }}</span>
-                           <a href="{{ route('faqs.edit', $faq->id) }}"
-                              class="btn btn-sm btn-info">
-                           <i class="fas fa-pencil-alt"></i>
-                           </a>
-                           </h4>
-                           </div>
-                           </a>
-                           <div id="collapse{{ $loop->index }}"
-                              class="collapse {{ $loop->first ? 'show' : '' }}" data-parent="#accordion">
-                              <div class="card-body">
-                                 {{ $faq->answer }}
+                  <section class="content">
+                     <div class="row">
+                        <div class="col-12" id="accordion">
+                           @if ($faqs)
+                              @foreach ($faqs as $faq)
+                              <div class="card card-primary card-outline">
+                                 <a class="d-block w-100" data-toggle="collapse"
+                                    href="#collapse{{ $loop->index }}">
+                                    <div class="card-header">
+                                       <h4
+                                          class="card-title w-100 d-flex justify-content-between align-items-center">
+                                          <span>{{ $loop->index + 1 }}. {{ $faq->question }}</span>
+                                 <a href="{{ route('faqs.edit', $faq->id) }}"
+                                    class="btn btn-sm btn-info">
+                                 <i class="fas fa-pencil-alt"></i>
+                                 </a>
+                                 </h4>
+                                 </div>
+                                 </a>
+                                 <div id="collapse{{ $loop->index }}"
+                                    class="collapse {{ $loop->first ? 'show' : '' }}" data-parent="#accordion">
+                                    <div class="card-body">
+                                       {{ $faq->answer }}
+                                    </div>
+                                 </div>
                               </div>
-                           </div>
+                              @endforeach
+                           @else
+                              <div class="card card-primary card-outline">
+                                 No Data Found
+                              </div>
+                           @endif
+                           
                         </div>
-                        @endforeach
                      </div>
                   </div>
+               </section>
             </div>
-            </section>
          </div>
       </div>
    </div>

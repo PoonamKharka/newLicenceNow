@@ -60,7 +60,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon far fa-plus-square"></i>
             <p>
-              Contents
+              Pages Content
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
