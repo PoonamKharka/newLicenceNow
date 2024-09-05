@@ -12,7 +12,7 @@
       <li class="nav-item dropdown">
         <form method="POST" action="{{ route('logout') }}">
           @csrf
-          <button type="submit"> <i class="fas fa-sign-out-alt"></i> </button>
+          <button type="submit" class="btn btn-sm btn-danger"> <i class="fas fa-sign-out-alt"></i> </button>
         </form>
       </li>
     </ul>

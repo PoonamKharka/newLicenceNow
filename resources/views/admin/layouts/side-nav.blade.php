@@ -57,7 +57,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="#" class="nav-link {{ request()->is('aboutus*' , 'faqs*') ? 'active' : '' }}"">
             <i class="nav-icon far fa-plus-square"></i>
             <p>
               Pages Content
@@ -66,13 +66,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('aboutus.create') }}" class="nav-link">
+              <a href="{{ route('aboutus.create') }}" class="nav-link {{ request()->is('aboutus*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>About Us</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('faqs.index') }}" class="nav-link">
+              <a href="{{ route('faqs.index') }}" class="nav-link {{ request()->is('faqs*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>FAQs</p>
               </a>

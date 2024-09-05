@@ -55,6 +55,7 @@
                                             </div>
                                             <div class="card-footer">
                                                 <button type="submit" class="btn btn-info">Submit</button>
+                                                <button type="reset" class="btn btn-default" onclick="window.location='{{ route('faqs.index') }}'">Cancel</button>
                                             </div>
                                         </form>
                                     </div>

@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-8">
-        <h1 class="m-0">Welcome to  @include('admin.layouts.title') Administrator Dashboard!</h1>
+        <h1 class="m-0">Admin Dashboard</h1>
       </div><!-- /.col -->
       <div class="col-sm-4">
         <ol class="breadcrumb float-sm-right">
@@ -23,66 +23,65 @@
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>150</h3>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-book-open"></i></span>
 
-            <p>New Bookings</p>
+          <div class="info-box-content">
+            <span class="info-box-text">Lessons</span>
+            <span class="info-box-number">
+              10
+              <small>%</small>
+            </span>
           </div>
-          <div class="icon">
-            <i class="ion ion-bag"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <!-- /.info-box-content -->
         </div>
+        <!-- /.info-box -->
       </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-success">
-          <div class="inner">
-            <h3>55</h3>
+      <!-- /.col -->
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
-            <p>Instructors</p>
+          <div class="info-box-content">
+            <span class="info-box-text">Reviews</span>
+            <span class="info-box-number">41,410</span>
           </div>
-          <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-          </div>
-          <a href="/instructor-index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <!-- /.info-box-content -->
         </div>
+        <!-- /.info-box -->
       </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3>44</h3>
+      <!-- /.col -->
 
-            <p>Learners</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-person-add"></i>
-          </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <h3>99</h3>
+      <!-- fix for small devices only -->
+      <div class="clearfix hidden-md-up"></div>
 
-            <p>Users Count</p>
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-calendar-day"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Bookings</span>
+            <span class="info-box-number">760</span>
           </div>
-          <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-          </div>
-          <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <!-- /.info-box-content -->
         </div>
+        <!-- /.info-box -->
       </div>
-      <!-- ./col -->
+      <!-- /.col -->
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Customers</span>
+            <span class="info-box-number">2,000</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
     </div>
     <!-- /.row -->
   </div>
@@ -95,7 +94,7 @@
         <!-- AREA CHART -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Area Chart</h3>
+            <h3 class="card-title">Total Learner</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -118,7 +117,7 @@
         <!-- DONUT CHART -->
         <div class="card card-danger">
           <div class="card-header">
-            <h3 class="card-title">Donut Chart</h3>
+            <h3 class="card-title">Booking Status</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -135,35 +134,13 @@
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
-        <!-- PIE CHART -->
-        <div class="card card-danger">
-          <div class="card-header">
-            <h3 class="card-title">Pie Chart</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
       </div>
       <!-- /.col (LEFT) -->
       <div class="col-md-6">
         <!-- LINE CHART -->
-        <div class="card card-info">
+        <div class="card card-success">
           <div class="card-header">
-            <h3 class="card-title">Line Chart</h3>
+            <h3 class="card-title">Total Sales</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -182,11 +159,10 @@
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
-        <!-- BAR CHART -->
-        <div class="card card-success">
+         <!-- USERS LIST -->
+         <div class="card card-warning">
           <div class="card-header">
-            <h3 class="card-title">Bar Chart</h3>
+            <h3 class="card-title">Latest Members</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -197,38 +173,39 @@
               </button>
             </div>
           </div>
-          <div class="card-body">
-            <div class="chart">
-              <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-            </div>
+          <!-- /.card-header -->
+          <div class="card-body p-0">
+            <ul class="users-list clearfix">
+              <li>
+                <img src="{{ asset('adminlte/dist/img/user1-128x128.jpg') }}" alt="User Image">
+                <a class="users-list-name" href="#">Alexander Pierce</a>
+                <span class="users-list-date">Today</span>
+              </li>
+              <li>
+                <img src="{{ asset('adminlte/dist/img/user8-128x128.jpg') }}" alt="User Image">
+                <a class="users-list-name" href="#">Norman</a>
+                <span class="users-list-date">Yesterday</span>
+              </li>
+              <li>
+                <img src="{{ asset('adminlte/dist/img/user7-128x128.jpg') }}" alt="User Image">
+                <a class="users-list-name" href="#">Jane</a>
+                <span class="users-list-date">12 Jan</span>
+              </li>
+              <li>
+                <img src="{{ asset('adminlte/dist/img/user6-128x128.jpg') }}" alt="User Image">
+                <a class="users-list-name" href="#">John</a>
+                <span class="users-list-date">12 Jan</span>
+              </li>
+            </ul>
+            <!-- /.users-list -->
           </div>
           <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <!-- STACKED BAR CHART -->
-        <div class="card card-success">
-          <div class="card-header">
-            <h3 class="card-title">Stacked Bar Chart</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
+          <div class="card-footer text-center">
+            <a href="javascript:">View All Users</a>
           </div>
-          <div class="card-body">
-            <div class="chart">
-              <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-            </div>
-          </div>
-          <!-- /.card-body -->
+          <!-- /.card-footer -->
         </div>
-        <!-- /.card -->
-
+        <!--/.card -->
       </div>
       <!-- /.col (RIGHT) -->
     </div>
@@ -328,17 +305,14 @@
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
       labels: [
-          'Chrome',
-          'IE',
-          'FireFox',
-          'Safari',
-          'Opera',
-          'Navigator',
+          'Cancelled',
+          'Completed',
+          'running',
       ],
       datasets: [
         {
-          data: [700,500,400,600,300,100],
-          backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          data: [100,700,400],
+          backgroundColor : ['#f56954', '#00a65a', '#f39c12'],
         }
       ]
     }
