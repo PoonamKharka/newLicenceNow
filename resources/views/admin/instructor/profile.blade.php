@@ -258,13 +258,13 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <label>Total Driving Expirence</label>
+                                                            <label>Total Driving Experience (in Years)</label>
                                                             @if ($userData->profileDetails)
-                                                                <input type="text" class="form-control"
+                                                                <input type="number" class="form-control"
                                                                     name="drivingExpirence"
                                                                     value="{{ $userData->profileDetails->driving_expirence }}">
                                                             @else
-                                                                <input type="text" class="form-control"
+                                                                <input type="number" class="form-control"
                                                                     name="drivingExpirence"
                                                                     placeholder="Enter Your Total Expirence in Driving">
                                                             @endif
@@ -278,13 +278,13 @@
                                                         <div class="form-group">
                                                             <label>Present Address</label>
                                                             @if ($userData->profileDetails)
-                                                                <input type="text" class="form-control"
-                                                                    name="contactAddress"
-                                                                    value="{{ $userData->profileDetails->contact_address }}">
+                                                                {{-- <input type="textarea" class="form-control"> --}}
+                                                                <textarea class="form-control" rows="3" name="contactAddress">
+                                                                    {{ $userData->profileDetails->contact_address }}
+                                                                </textarea>
                                                             @else
-                                                                <input type="text" class="form-control"
-                                                                    name="contactAddress",
-                                                                    placeholder="Enter Correspondence Address">
+                                                                {{-- <input type="textarea" class="form-control" name="contactAddress"> --}}
+                                                                <textarea class="form-control" rows="3"  name="contactAddress" placeholder="Enter Your Present Address"></textarea>
                                                             @endif
 
                                                         </div>
@@ -302,12 +302,11 @@
                                                                 <span class="input-group-text">Upload</span>
                                                             </div>
                                                         </div>
-                                                        @if ($userData->profileDetails)
+                                                        @if ($userData->profileDetails && $userData->profileDetails->picture )
                                                             <div class="mt-2">
                                                                 <img src="{{ asset($userData->profileDetails->picture) }}"
                                                                     alt="Profile Picture" class="img-thumbnail"
                                                                     style="max-width: 150px;">
-                                                                <p>Current Image</p>
                                                             </div>
                                                         @endif
                                                     </div>

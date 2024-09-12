@@ -33,7 +33,7 @@
                                     aria-selected="true">Personal</a>
                                 <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill"
                                     href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages"
-                                    aria-selected="false">Bank</a>
+                                    aria-selected="false">Payment History</a>
                             </div>
                         </div>
                         <div class="col-7 col-sm-9">
@@ -325,138 +325,43 @@
                                     aria-labelledby="vert-tabs-messages-tab">
                                     <div class="card card-info">
                                         <div class="card-header">
-                                            <h3 class="card-title">Bank Details</h3>
+                                            <h3 class="card-title">Payment History</h3>
                                         </div>
                                         <!-- /.card-header -->
-                                        <div class="card-body">
-                                            <form action="{{ route('learners.store') }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="hidden" name="form_type" value="bank_details">
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <!-- text input -->
-                                                        <div class="form-group">
-                                                            <label>Nominee</label>
-                                                            <input type="hidden" class="form-control" name="user_id"
-                                                                value="{{ $userData->id }}" />
-                                                            <input type="text" class="form-control" name="name"
-                                                                value="{{ $userData->name }}" disabled />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label>Salary Pay Mode</label>
-                                                            @if ($userData->learnerBankDetails)
-                                                                <select class="form-control select2" style="width: 100%;"
-                                                                    name="salaryPayModeId">
-                                                                    <option value="1">
-                                                                        {{ $userData->learnerBankDetails->salary_mode == 1 ? 'selected' : '' }}
-                                                                        Direct Deposit ( EFT/NEFT )</option>
-                                                                    <option value="2">
-                                                                        {{ $userData->learnerBankDetails->salary_mode == 2 ? 'selected' : '' }}Cheque
-                                                                    </option>
-                                                                    <option value="3">
-                                                                        {{ $userData->learnerBankDetails->salary_mode == 3 ? 'selected' : '' }}Cash
-                                                                    </option>
-                                                                    <option value="4">
-                                                                        {{ $userData->learnerBankDetails->salary_mode == 4 ? 'selected' : '' }}Payroll
-                                                                        Cards</option>
-                                                                    <option value="5">
-                                                                        {{ $userData->learnerBankDetails->salary_mode == 5 ? 'selected' : '' }}Superannuation
-                                                                        Contributions</option>
-                                                                    <option value="6">
-                                                                        {{ $userData->learnerBankDetails->salary_mode == 6 ? 'selected' : '' }}BPAY
-                                                                    </option>
-                                                                </select>
-                                                            @else
-                                                                <select class="form-control select2" style="width: 100%;"
-                                                                    name="salaryPayModeId">
-                                                                    <option selected="selected">Select a Salary Mode
-                                                                    </option>
-                                                                    <option value="1">Direct Deposit ( EFT/NEFT )
-                                                                    </option>
-                                                                    <option value="2">Cheque</option>
-                                                                    <option value="3">Cash</option>
-                                                                    <option value="4">Payroll Cards</option>
-                                                                    <option value="5">Superannuation Contributions
-                                                                    </option>
-                                                                    <option value="6">BPAY</option>
-                                                                </select>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="salaryBankName">Salary Bank Name</label>
-                                                            @if ($userData->learnerBankDetails)
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryBankName" name="salaryBankName"
-                                                                    value="{{ $userData->learnerBankDetails->salary_bank_name }}"
-                                                                    placeholder="Enter Salary Bank Name">
-                                                            @else
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryBankName" name="salaryBankName"
-                                                                    placeholder="Enter Salary Bank Name">
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="salaryBranchName">Salary Branch Name</label>
-                                                            @if ($userData->learnerBankDetails)
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryBranchName" name="salaryBranchName"
-                                                                    value="{{ $userData->learnerBankDetails->salary_branch_name }}"
-                                                                    placeholder="Enter Salary Branch Name">
-                                                            @else
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryBranchName" name="salaryBranchName"
-                                                                    placeholder="Enter Salary Branch Name">
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="salaryIFSCCode">Salary IFSC Code</label>
-                                                            @if ($userData->learnerBankDetails)
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryIFSCCode" name="salaryIFSCCode"
-                                                                    value="{{ $userData->learnerBankDetails->salary_ifsc_code }}"
-                                                                    placeholder="Enter Salary IFSC Code">
-                                                            @else
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryIFSCCode" name="salaryIFSCCode"
-                                                                    placeholder="Enter Salary IFSC Code">
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="salaryAccountNumber">Salary Account Number</label>
-                                                            @if ($userData->learnerBankDetails)
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryAccountNumber" name="salaryAccountNumber"
-                                                                    value="{{ $userData->learnerBankDetails->salary_account_number }}"
-                                                                    placeholder="Enter Salary Account Number">
-                                                            @else
-                                                                <input type="text" class="form-control"
-                                                                    id="salaryAccountNumber" name="salaryAccountNumber"
-                                                                    placeholder="Enter Salary Account Number">
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer">
-                                                    <button type="submit" class="btn btn-info">Submit</button>
-                                                    <button type="reset" class="btn btn-default">Cancel</button>
-                                                </div>
-                                                <!-- /.card-footer -->
-                                            </form>
+                                        <div class="card-body table-responsive p-0">
+                                            <table class="table table-hover text-nowrap">
+                                                <thead>
+                                                  <tr>
+                                                    <th>#</th>
+                                                    <th>Lesson</th>
+                                                    <th>Instructor</th>
+                                                    <th>Lesson Start</th>
+                                                    <th>Lesson End</th>
+                                                    <th>Status</th>
+                                                    <th>Payment Status</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td>1</td>
+                                                    <td>Automatic Driving Lesson</td>
+                                                    <td>Karl Turnbull</td>
+                                                    <td>01-09-2024</td>
+                                                    <td>01-12-2024</td>
+                                                    <td><span class="badge bg-warning">on-going</span></td>
+                                                    <td>Partially</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>2</td>
+                                                    <td>Manual Driving Lesson</td>
+                                                    <td>Darik</td>
+                                                    <td>01-03-2024</td>
+                                                    <td>01-06-2024</td>
+                                                    <td><span class="badge bg-success">Completed</span></td>
+                                                    <td>Fully</td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
                                         </div>
                                         <!-- /.card-body -->
                                     </div>
