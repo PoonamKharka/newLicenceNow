@@ -28,6 +28,7 @@ use App\Repositories\InterFaces\RegisterRepositoryInterFace;
 use App\Repositories\InterFaces\InstructorRepositoryInterFace;
 use App\Repositories\InterFaces\PaymentPolicyRepositoryInterface;
 use App\Repositories\InterFaces\Api\RegistrationRepositoryInterFace;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -84,6 +85,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Passport::enablePasswordGrant();
     }
 }

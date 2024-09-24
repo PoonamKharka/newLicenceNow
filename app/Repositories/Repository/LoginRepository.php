@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class LoginRepository implements LoginRepositoryInterFace {
 
@@ -33,10 +34,14 @@ class LoginRepository implements LoginRepositoryInterFace {
             'password' =>  $request->password
         ];
 
-        if( Auth::attempt($credentials)) {
-            return redirect('/admin-dashboard')->with('success', 'Login Successfully!');;
-        } 
-        return back()->with('error', 'Invalid Username or Password');
+        $data = [];
+        if(Auth::attempt($credentials)) {
+            $token = Auth::user()->createToken('passportToken')->accessToken;
+            $data = ['token' => $token, 'user' => Auth::user()];
+            return $data;
+        } else {
+            return $data;
+        }
     }
 
     public function showDashboard() 

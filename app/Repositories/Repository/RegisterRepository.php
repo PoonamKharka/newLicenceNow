@@ -6,6 +6,7 @@ use App\Repositories\InterFaces\RegisterRepositoryInterFace;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Datatables;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterRepository implements RegisterRepositoryInterFace
 {
@@ -65,7 +66,9 @@ class RegisterRepository implements RegisterRepositoryInterFace
             'email.required' => 'Email field is required.',
             'email.email' => 'Email field must be email address.'
         ]);
-
+        $request['password'] = Hash::make($request->password);
+        $request['name'] = $request->name;
+        //dd($request->all());
         $user = User::create($request->all());
 
         return $user;

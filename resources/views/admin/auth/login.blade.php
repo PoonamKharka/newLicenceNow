@@ -24,7 +24,7 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="{{  url('login') }}" method="POST">
+      <form action="{{  url('login') }}" method="POST" id="login-form">
         @csrf
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="username" placeholder="Enter Username">
@@ -42,6 +42,12 @@
             </div>
           </div>
         </div>
+        @session('error')
+          <span class="text-danger">{{ $value }}</span>
+        @endsession
+        {{-- @if($errors->any())
+          <span class="text-danger">{{ error }}</span>
+        @endif --}}
         <div class="row">
           <div class="col-12">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>

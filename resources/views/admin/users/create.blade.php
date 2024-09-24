@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.app')
 @section('content')
 <!-- Content Header (Page header) -->
@@ -55,7 +56,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                               <label>Username</label>
-                              <input type="text" class="form-control" placeholder="Enter Username" name="username" autocomplete="off">
+                              <input type="text" class="form-control" placeholder="Enter Username" name="username">
                               @error('username')
                                 <span class="text-danger">{{ $message }}</span>
                               @enderror
@@ -79,7 +80,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                               <label>Password</label>
-                              <input type="password" class="form-control" placeholder="Enter Password" name="password" autocomplete="off">
+                              <input type="password" class="form-control" placeholder="Enter Password" name="password">
                               @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                               @enderror

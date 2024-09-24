@@ -24,14 +24,15 @@ use App\Http\Controllers\PrivacyPolicyController;
 //     return view('welcome');
 // });
 
+
 Route::get('/admin', [LoginController::class, 'index']);
 
-Route::post('login', [LoginController::class, 'login']);
+Route::post('login', [LoginController::class, 'login'])->name('login');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth', 'admin.gate:admin-access'])->group( function () {
     Route::get('admin-dashboard', function () {
         return view('admin.dashboard');
-    });
+    })->name('dashboard');
     Route::resource('users', RegisterController::class);
     Route::resource('instructors', InstructorController::class);
     Route::resource('learners', LearnerController::class);

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\LoginService;
+use App\Traits\ApiResponseTrait;
 
 class LoginController extends Controller
 {
+    use ApiResponseTrait;
 
     protected $loginService;
 
@@ -20,8 +22,13 @@ class LoginController extends Controller
         return $this->loginService->loginPage();
     }
 
-    public function login(Request $request){
-        return $this->loginService->postLogin($request);
+    public function login(Request $request) {
+        $data = $this->loginService->postLogin($request);
+        if($data) {
+            return redirect()->route('dashboard');
+        } else {
+            return back()->with('error', 'Invalid Login Credentials!');
+        }
     }
 
     public function logout(){
