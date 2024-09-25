@@ -11,14 +11,13 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
 
     public function getAllDrivingLessons(Request $request)
     {
-        //$drivingLessons = DrivingLesson::all();
-        if ($request->ajax()) {
-            $drivingLessons = DrivingLesson::select('*')->get();
 
+        if ($request->ajax()) {
+            $drivingLessons = DrivingLesson::all();
             return datatables()->of($drivingLessons)
                 ->addColumn('image', function ($row) {
-                    // Assuming you're using storage to store images
-                    $imageUrl = asset('storage/' . $row->image); // Generate the full image URL
+
+                    $imageUrl = asset('storage/' . $row->image);
                     return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
                 ->addColumn('action', function ($row) {
@@ -76,10 +75,8 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
     {
         $drivingLessonId = decrypt($id);
 
-        // Find the corresponding driving lesson
         $drivingLesson = DrivingLesson::findOrFail($drivingLessonId);
 
-        // Pass the lesson to the view for editing
         return view('admin.drivinglesson.profile', compact('drivingLesson'));
     }
 }
