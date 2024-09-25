@@ -14,16 +14,15 @@ class DrivingLessonService
             $this->dlRep = $dlRepository;
       }
 
-      public function getAllDrivingLessons(Request $request)
+      public function index(Request $request)
       {
-            return $this->dlRep->getAllDrivingLessons($request);
+            return $this->dlRep->index($request);
       }
 
-      public function profile()
+      public function create()
       {
-            return $this->dlRep->profile();
+            return $this->dlRep->create();
       }
-
       public function store(Request $request)
       {
             return $this->dlRep->store($request);
@@ -31,5 +30,10 @@ class DrivingLessonService
       public function edit($id)
       {
             return $this->dlRep->edit($id);
+      }
+      
+      public function delete($id)
+      {
+            return $this->dlRep->delete($id);
       }
 }

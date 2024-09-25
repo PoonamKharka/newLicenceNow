@@ -47,7 +47,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="javascript::void(0)" class="nav-link">
+          <a href="{{ route('lessons.index') }}" class="nav-link">
             <i class="nav-icon fas fa-book-reader"></i>
             <p>
               Lessons

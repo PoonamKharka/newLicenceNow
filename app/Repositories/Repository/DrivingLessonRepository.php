@@ -3,20 +3,22 @@
 namespace App\Repositories\Repository;
 
 use App\Models\DrivingLesson;
-use Illuminate\Http\Request;
 use App\Repositories\InterFaces\DrivingLessonRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DrivingLessonRepository implements DrivingLessonRepositoryInterface
 {
-
-    public function getAllDrivingLessons(Request $request)
+    public function index(Request $request)
     {
-
         if ($request->ajax()) {
             $drivingLessons = DrivingLesson::all();
-            return datatables()->of($drivingLessons)
+            return datatables()
+                ->of($drivingLessons)
+                ->addColumn('description', function ($row) {
+                    return Str::limit(strip_tags($row->description), 50, '...');
+                })
                 ->addColumn('image', function ($row) {
-
                     $imageUrl = asset('storage/' . $row->image);
                     return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
@@ -32,12 +34,11 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
         }
         return view('admin.drivinglesson.index');
     }
-    public function profile()
+    public function create()
     {
-        $drivinglesson = DrivingLesson::first();
-        return view('admin.drivinglesson.profile', compact('drivinglesson'));
+        return view('admin.drivinglesson.create-update');
     }
-
+    // perform create and update lesson
     public function store(Request $request)
     {
         // Validate the request
@@ -57,16 +58,20 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
 
         // Determine if we're updating or creating
         $drivingLesson = DrivingLesson::updateOrCreate(
-            ['id' => $request->input('id')], // Conditions for update
-            $validatedData // Data to be inserted or updated
+            ['id' => $request->input('id')],
+            $validatedData
         );
 
         // Redirect based on update or create
         if ($request->input('id')) {
-            return view('admin.drivinglesson.profile', compact('drivingLesson'))
+           $existingID=$request->input('id');
+                       
+            return redirect()
+                ->route('lessons.edit', encrypt($existingID))
                 ->with('success', 'Data updated successfully.');
         } else {
-            return redirect()->route('lessons.index')
+            return redirect()
+                ->route('lessons.index')
                 ->with('success', 'Data created successfully.');
         }
     }
@@ -77,6 +82,13 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
 
         $drivingLesson = DrivingLesson::findOrFail($drivingLessonId);
 
-        return view('admin.drivinglesson.profile', compact('drivingLesson'));
+        return view('admin.drivinglesson.create-update', compact('drivingLesson'));
+    }
+    
+    public function delete($id)
+    {
+        $lesson = DrivingLesson::find($id);
+        $lesson->delete();
+        return redirect()->route('lessons.index')->with('status', 'User deleted successfully.');
     }
 }

@@ -60,3 +60,6 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/jquery/jquery.dataTables.min.js') }}"></script>
+
+<!-- common js -->
+<script src="{{ asset('js/common.js') }}"></script>

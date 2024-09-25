@@ -31,14 +31,24 @@
            </div>
            <!-- /.card-header -->
            <div class="card-body">
-             @if (session('status'))
-                 <div class="alert alert-success">
-                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                     <i class="fas fa-times"></i>
-                   </button>
-                     {{ session('status') }}
-                 </div>
-               @endif
+             <!-- Display Validation Errors -->
+             @if ($errors->any())
+               <div class="alert alert-danger">
+                  <ul>
+                        @foreach ($errors->all() as $error)
+                           <li>{{ $error }}</li>
+                        @endforeach
+                  </ul>
+               </div>
+            @endif
+            @if (session('success'))
+               <div class="alert alert-success">
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="fas fa-times"></i>
+               </button>
+                  {{ session('success') }}
+               </div>
+            @endif
              <button type="submit" class="btn btn-success"><a href="{{ route('lessons.create') }}" style="text-decoration: none; color:aliceblue">Add More</a></button>
              <br><br>
              <table id="y_dataTables" class="table table-bordered table-striped">
@@ -82,30 +92,22 @@
  
       // Handle delete button click
       $(document).on('click', '.delete-btn', function() {
-         let lessonId = $(this).data('id');
-         
-         // Show confirmation dialog
-         if (confirm('Are you sure you want to delete this lesson?')) {
-            $.ajax({
-                  url: '/lessons/' + lessonId, // Assuming route('lessons.destroy', lessonId)
-                  type: 'DELETE',
-                  data: {
-                     _token: '{{ csrf_token() }}'
-                  },
-                  success: function(response) {
-                     if (response.success) {
-                        alert('Lesson deleted successfully!');
-                        $('#y_dataTables').DataTable().ajax.reload(); // Reload DataTables
-                     } else {
-                        alert('Failed to delete the lesson.');
-                     }
-                  },
-                  error: function(xhr) {
-                     console.error('Error:', xhr);
-                     alert('An error occurred.');
-                  }
+        let lessonId = $(this).data('id');
+        
+        // Show confirmation dialog
+        if (confirm('Are you sure you want to delete this lesson?')) {
+            // Create a form dynamically
+            var form = $('<form>', {
+                action: "{{ route('lessons.destroy', '') }}"+ '/' + lessonId,
+                method: 'POST'
             });
-         }
+            
+            form.append('@csrf');
+            form.append('@method("DELETE")');
+            
+            $('body').append(form);
+            form.submit();
+        }
       });
 
    });

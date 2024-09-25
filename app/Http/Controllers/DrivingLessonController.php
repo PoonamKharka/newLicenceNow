@@ -19,15 +19,15 @@ class DrivingLessonController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->dlService->getAllDrivingLessons($request);
+        return $this->dlService->index($request);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
-        return $this->dlService->profile();
+        return $this->dlService->create();
     }
 
     /**
@@ -36,6 +36,7 @@ class DrivingLessonController extends Controller
     public function store(Request $request)
     {
         return $this->dlService->store($request);
+        
     }
 
     /**
@@ -52,21 +53,13 @@ class DrivingLessonController extends Controller
     public function edit($id)
     {
         return $this->dlService->edit($id);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    }    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        return $this->dlService->delete($id);
     }
 }
