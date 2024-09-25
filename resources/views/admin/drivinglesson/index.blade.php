@@ -55,10 +55,10 @@
                   @if ($drivingLessons)
                   @foreach ($drivingLessons as $drivingLesson)
                   <tr>
-                     <td><img src="{{$drivingLesson->image}}" alt="{{$drivingLesson->title}}"></td>
+                     <td><img src="{{ asset('storage/' . $drivingLesson->image) }}" alt="{{$drivingLesson->title}}" width="100" height="100"></td>
                        <td>{{$drivingLesson->title}}</td>
                        <td>{{$drivingLesson->price}}</td>
-                       <td>{{$drivingLesson->description}}</td>
+                       <td>{{ Str::limit($drivingLesson->description, 50, '...') }}</td>
                      <td><a href="{{ route('lessons.index') }}/{{$drivingLesson->id}}/edit" class=" edit-btn btn btn-primary">Edit</a>
                         <a href="{{ route('lessons.index') }}/{{$drivingLesson->id}}" class=" delete-btn btn btn-danger">Delete</a>
                      </td>
