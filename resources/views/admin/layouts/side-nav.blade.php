@@ -39,7 +39,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="javascript::void(0)" class="nav-link">
+          <a href="{{ route('location.index')  }}" class="nav-link {{ request()->is('location*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-map-marked-alt"></i>
             <p>
               Locations
@@ -47,7 +47,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="javascript::void(0)" class="nav-link">
+          <a href="{{ route('price.index') }}" class="nav-link {{ request()->is('price*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-dollar-sign"></i>
+            <p>
+              Pricing
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('lessons.index') }}" class="nav-link {{ request()->is('lessons*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-book-reader"></i>
             <p>
               Lessons

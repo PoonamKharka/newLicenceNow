@@ -3,7 +3,7 @@
 <head>
   @include('admin.layouts.head')
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" style="background-image: asset('images/banner.png') ">
 <div class="wrapper">
   <!-- Navbar -->
   @include('admin.layouts.top-nav')

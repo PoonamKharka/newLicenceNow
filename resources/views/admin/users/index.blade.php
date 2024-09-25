@@ -83,12 +83,12 @@
      // Handle delete button click
     $(document).on('click', '.delete-btn', function() {
         let userId = $(this).data('id');
-        
+        let url = $(this).data('url');
         // Show confirmation dialog
         if (confirm('Are you sure you want to delete this user?')) {
             // Create a form dynamically
             var form = $('<form>', {
-                action: route('users.destroy', userId),
+                action: url,
                 method: 'POST'
             });
 

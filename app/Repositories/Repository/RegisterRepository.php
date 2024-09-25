@@ -38,7 +38,7 @@ class RegisterRepository implements RegisterRepositoryInterFace
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' . route('users.show', encrypt($row->id)) . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
-                    $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i></button>';
+                    $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '" data-url="' . route('users.destroy', encrypt($row->id)) . '"><i class="fas fa-trash"></i></button>';
 
                     return $btn;
                 })
