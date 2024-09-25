@@ -44,14 +44,13 @@
              <table id="y_dataTables" class="table table-bordered table-striped">
                <thead>
                <tr>
-                 <th>Image</th>
+                  <th>Image</th>
                    <th>Title</th>
                    <th>Price</th>
                    <th>Description</th>
-                 <th>Action</th>
+                  <th>Action</th>
                </tr>
                </thead>
-               
              </table>
            </div>
            <!-- /.card-body -->
@@ -69,34 +68,15 @@
   
      $(document).ready( function () {
       $('#y_dataTables').DataTable({
-         processing: true, // true enables DataTables 'Processing' indicator
-         serverSide: true, // Enables server-side processing mode
-         ajax: {
-            url: "{{ route('lessons.index') }}", // Adjust this route if needed
-            type: "GET" // Ensure correct HTTP method
-         },
-         columns: [
-            {
-               data: 'image', 
-               name: 'image',
-               render: function(data, type, full, meta) {
-                  return '<img src="' + data + '" alt="Image" width="50"/>';
-               }
-            },
+         processing: true, 
+         serverSide: true, 
+         ajax: "{{ route('lessons.index') }}",
+         columns: [           
+            { data: 'image', name: 'image', orderable: false, searchable: false },
             { data: 'title', name: 'title' },
             { data: 'price', name: 'price' },
             { data: 'description', name: 'description' },
-            { data: 'action', name: 'action', orderable: false, searchable: false},
-            // {
-            //    data: 'action', 
-            //    name: 'action', 
-            //    orderable: false, 
-            //    searchable: false,
-            //    render: function(data, type, row, meta) {
-            //       return '<button class="edit-btn btn btn-primary" data-id="' + row.id + '">Edit</button>' +
-            //             '<button class="delete-btn btn btn-danger" data-id="' + row.id + '">Delete</button>';
-            //    }
-            // }
+            { data: 'action', name: 'action', orderable: false, searchable: false},            
          ]
       });
  

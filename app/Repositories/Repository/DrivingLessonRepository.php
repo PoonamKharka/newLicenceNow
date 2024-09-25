@@ -13,14 +13,13 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
     {
         //$drivingLessons = DrivingLesson::all();
         if ($request->ajax()) {
-            $drivingLessons = DrivingLesson::select('*');
-            return datatables()->of($drivingLessons)
+            $drivingLessons = DrivingLesson::select('*')->get();
 
-                // Add an image column
+            return datatables()->of($drivingLessons)
                 ->addColumn('image', function ($row) {
-                    // Check if the image exists and render it
-                    $imageUrl = asset('storage/' . $row->image);
-                    return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100">';
+                    // Assuming you're using storage to store images
+                    $imageUrl = asset('storage/' . $row->image); // Generate the full image URL
+                    return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
                 ->addColumn('action', function ($row) {
                     $editUrl = route('lessons.edit', encrypt($row->id));
@@ -29,7 +28,7 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
 
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['image', 'action'])
                 ->make(true);
         }
         return view('admin.drivinglesson.index');
