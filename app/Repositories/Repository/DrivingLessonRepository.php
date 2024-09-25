@@ -11,8 +11,22 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
 
     public function getAllDrivingLessons(Request $request)
     {
-        $drivingLessons = DrivingLesson::all();
-        return view('admin.drivinglesson.index', compact('drivingLessons'));
+        //$drivingLessons = DrivingLesson::all();
+        if ($request->ajax()) {
+            $drivingLessons = DrivingLesson::select('*');
+            return datatables()->of($drivingLessons)
+
+                ->addColumn('action', function ($row) {
+                    $editUrl = route('lessons.edit', encrypt($row->id));
+                    $btn = '<a href="' . $editUrl . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
+                    $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i></button>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('admin.drivinglesson.index');
     }
     public function profile()
     {
@@ -55,7 +69,12 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
 
     public function edit($id)
     {
-        $drivingLesson = DrivingLesson::findOrFail($id);
+        $drivingLessonId = decrypt($id);
+
+        // Find the corresponding driving lesson
+        $drivingLesson = DrivingLesson::findOrFail($drivingLessonId);
+
+        // Pass the lesson to the view for editing
         return view('admin.drivinglesson.profile', compact('drivingLesson'));
     }
 }
