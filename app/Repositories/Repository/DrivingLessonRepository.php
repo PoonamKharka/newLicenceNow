@@ -16,6 +16,12 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
             $drivingLessons = DrivingLesson::select('*');
             return datatables()->of($drivingLessons)
 
+                // Add an image column
+                ->addColumn('image', function ($row) {
+                    // Check if the image exists and render it
+                    $imageUrl = asset('storage/' . $row->image);
+                    return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100">';
+                })
                 ->addColumn('action', function ($row) {
                     $editUrl = route('lessons.edit', encrypt($row->id));
                     $btn = '<a href="' . $editUrl . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
