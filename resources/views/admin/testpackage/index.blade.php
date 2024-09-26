@@ -5,13 +5,13 @@
    <div class="container-fluid">
       <div class="row mb-2">
          <div class="col-sm-6">
-            <h1 class="m-0">Driving Lesson</h1>
+            <h1 class="m-0">Test Package</h1>
          </div>
          <!-- /.col -->
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                <li class="breadcrumb-item"><a href="#">Home</a></li>
-               <li class="breadcrumb-item active">Driving Lesson</li>
+               <li class="breadcrumb-item active">Test Package</li>
             </ol>
          </div>
          <!-- /.col -->
@@ -27,7 +27,7 @@
          <div class="col-12">
          <div class="card">
            <div class="card-header">
-             <h3 class="card-title">List of All Driving Lessons</h3>
+             <h3 class="card-title">List of All Test Packages</h3>
            </div>
            <!-- /.card-header -->
            <div class="card-body">
@@ -49,7 +49,7 @@
                   {{ session('success') }}
                </div>
             @endif
-             <button type="submit" class="btn btn-success"><a href="{{ route('lessons.create') }}" style="text-decoration: none; color:aliceblue">Add More</a></button>
+             <button type="submit" class="btn btn-success"><a href="{{ route('testpackages.create') }}" style="text-decoration: none; color:aliceblue">Add More</a></button>
              <br><br>
              <table id="y_dataTables" class="table table-bordered table-striped">
                <thead>
@@ -80,7 +80,7 @@
       $('#y_dataTables').DataTable({
          processing: true, 
          serverSide: true, 
-         ajax: "{{ route('lessons.index') }}",
+         ajax: "{{ route('testpackages.index') }}",
          columns: [           
             { data: 'image', name: 'image', orderable: false, searchable: false },
             { data: 'title', name: 'title' },
@@ -92,13 +92,13 @@
  
       // Handle delete button click
       $(document).on('click', '.delete-btn', function() {
-        let lessonId = $(this).data('id');
+        let testpackageId = $(this).data('id');
         
         // Show confirmation dialog
-        if (confirm('Are you sure you want to delete this lesson?')) {
+        if (confirm('Are you sure you want to delete this test package?')) {
             // Create a form dynamically
             var form = $('<form>', {
-                action: "{{ route('lessons.destroy', '') }}"+ '/' + lessonId,
+                action: "{{ route('testpackages.destroy', '') }}"+ '/' + testpackageId,
                 method: 'POST'
             });
             

@@ -6,7 +6,7 @@ namespace App\Providers;
 use App\Services\FaqService;
 use App\Services\LoginService;
 use App\Services\AboutUsService;
-use App\Services\DrivingLessonService;
+use App\Services\TestPackageService;
 use App\Services\LearnerService;
 use App\Services\RegisterService;
 use App\Services\InstructorService;
@@ -16,7 +16,7 @@ use App\Services\Api\RegistrationService;
 use App\Repositories\Repository\FaqRepository;
 use App\Repositories\Repository\LoginRepository;
 use App\Repositories\Repository\AboutUsRepository;
-use App\Repositories\Repository\DrivingLessonRepository;
+use App\Repositories\Repository\TestPackageRepository;
 use App\Repositories\Repository\LearnerRepository;
 use App\Repositories\Repository\RegisterRepository;
 use App\Repositories\Repository\InstructorRepository;
@@ -24,7 +24,7 @@ use App\Repositories\InterFaces\FaqRepositoryInterface;
 use App\Repositories\Repository\PaymentPolicyRepository;
 use App\Repositories\InterFaces\LoginRepositoryInterFace;
 use App\Repositories\InterFaces\AboutUsRepositoryInterface;
-use App\Repositories\InterFaces\DrivingLessonRepositoryInterface;
+use App\Repositories\InterFaces\TestPackageRepositoryInterface;
 use App\Repositories\InterFaces\LearnerRepositoryInterface;
 use App\Repositories\Repository\Api\RegistrationRepository;
 use App\Repositories\InterFaces\RegisterRepositoryInterFace;
@@ -80,9 +80,9 @@ class AppServiceProvider extends ServiceProvider
             return new PaymentPolicyService($app->make(PaymentPolicyRepositoryInterface::class));
         });
 
-        $this->app->bind(DrivingLessonRepositoryInterface::class, DrivingLessonRepository::class);
-        $this->app->bind(DrivingLessonService::class, function ($app) {
-            return new DrivingLessonService($app->make(DrivingLessonRepositoryInterface::class));
+        $this->app->bind(TestPackageRepositoryInterface::class, TestPackageRepository::class);
+        $this->app->bind(TestPackageService::class, function ($app) {
+            return new TestPackageService($app->make(TestPackageRepositoryInterface::class));
         });
     }
 

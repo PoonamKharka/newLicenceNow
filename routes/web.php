@@ -9,7 +9,7 @@ use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\PaymentPolicyController;
 use App\Http\Controllers\PrivacyPolicyController;
-use App\Http\Controllers\DrivingLessonController;
+use App\Http\Controllers\TestPackageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +36,7 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     })->name('dashboard');
     Route::resource('users', RegisterController::class);
     Route::resource('instructors', InstructorController::class);
-    Route::resource('lessons', DrivingLessonController::class);
+    Route::resource('testpackages', TestPackageController::class);
     Route::resource('learners', LearnerController::class);
     Route::resource('faqs', FaqController::class);
     Route::resource('aboutus', AboutUsController::class);

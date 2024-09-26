@@ -2,19 +2,19 @@
 
 namespace App\Repositories\Repository;
 
-use App\Models\DrivingLesson;
-use App\Repositories\InterFaces\DrivingLessonRepositoryInterface;
+use App\Models\TestPackage;
+use App\Repositories\InterFaces\TestPackageRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class DrivingLessonRepository implements DrivingLessonRepositoryInterface
+class TestPackageRepository implements TestPackageRepositoryInterface
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $drivingLessons = DrivingLesson::all();
+            $testPackages = TestPackage::all();
             return datatables()
-                ->of($drivingLessons)
+                ->of($testPackages)
                 ->addColumn('description', function ($row) {
                     return Str::limit(strip_tags($row->description), 50, '...');
                 })
@@ -23,7 +23,7 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
                     return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
                 ->addColumn('action', function ($row) {
-                    $editUrl = route('lessons.edit', encrypt($row->id));
+                    $editUrl = route('testpackages.edit', encrypt($row->id));
                     $btn = '<a href="' . $editUrl . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
                     $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i></button>';
 
@@ -32,11 +32,11 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
                 ->rawColumns(['image', 'action'])
                 ->make(true);
         }
-        return view('admin.drivinglesson.index');
+        return view('admin.testpackage.index');
     }
     public function create()
     {
-        return view('admin.drivinglesson.create-update');
+        return view('admin.testpackage.create-update');
     }
     // perform create and update lesson
     public function store(Request $request)
@@ -53,11 +53,11 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_image.' . $image->getClientOriginalExtension();
-            $validatedData['image'] = $image->storeAs('drivingLessonProfile', $imageName, 'public');
+            $validatedData['image'] = $image->storeAs('testPackages', $imageName, 'public');
         }
 
         // Determine if we're updating or creating
-        $drivingLesson = DrivingLesson::updateOrCreate(
+        $testPackage = TestPackage::updateOrCreate(
             ['id' => $request->input('id')],
             $validatedData
         );
@@ -67,28 +67,28 @@ class DrivingLessonRepository implements DrivingLessonRepositoryInterface
            $existingID=$request->input('id');
                        
             return redirect()
-                ->route('lessons.edit', encrypt($existingID))
+                ->route('testpackages.edit', encrypt($existingID))
                 ->with('success', 'Data updated successfully.');
         } else {
             return redirect()
-                ->route('lessons.index')
+                ->route('testpackages.index')
                 ->with('success', 'Data created successfully.');
         }
     }
 
     public function edit($id)
     {
-        $drivingLessonId = decrypt($id);
+        $testPackageId = decrypt($id);
 
-        $drivingLesson = DrivingLesson::findOrFail($drivingLessonId);
+        $testPackage = TestPackage::findOrFail($testPackageId);
 
-        return view('admin.drivinglesson.create-update', compact('drivingLesson'));
+        return view('admin.testpackage.create-update', compact('testPackage'));
     }
     
     public function delete($id)
     {
-        $lesson = DrivingLesson::find($id);
+        $lesson = TestPackage::find($id);
         $lesson->delete();
-        return redirect()->route('lessons.index')->with('status', 'User deleted successfully.');
+        return redirect()->route('testpackages.index')->with('status', 'User deleted successfully.');
     }
 }

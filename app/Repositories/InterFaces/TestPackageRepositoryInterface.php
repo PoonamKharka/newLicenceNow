@@ -4,7 +4,7 @@ namespace App\Repositories\InterFaces;
 
 use Illuminate\Http\Request;
 
-interface DrivingLessonRepositoryInterface
+interface TestPackageRepositoryInterface
 {
     public function index(Request $request);    
     public function create();

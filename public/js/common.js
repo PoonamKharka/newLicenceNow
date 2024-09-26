@@ -2,12 +2,26 @@ $(document).ready(function () {
 
     /* Initialize editor */
     $('.summernote').summernote({
-        height: 200,
-        focus: true
+        height: 300,   // Set the height of the editor
+        placeholder: 'Enter description here...',
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['fontsize', ['fontsize']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']]
+        ],
+        callbacks: {
+            onKeyup: function (e) {
+                let content = $(this).val();
+                content = content.replace(/&nbsp;/g, ' ');
+                $(this).val(content);
+            }
+        }
     });
 
-    /* lesson module */
-    $('#lessonForm').on('submit', function (e) {
+
+    /* test package module */
+    $('#testpackageForm').on('submit', function (e) {
         let isValid = true;
 
 

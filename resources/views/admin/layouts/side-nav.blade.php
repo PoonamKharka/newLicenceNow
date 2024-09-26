@@ -47,10 +47,18 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('lessons.index') }}" class="nav-link">
+          <a href="#" class="nav-link">
             <i class="nav-icon fas fa-book-reader"></i>
             <p>
               Lessons
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('testpackages.index') }}" class="nav-link {{ request()->is('testpackages*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-book-reader"></i>
+            <p>
+              Test Packages 
             </p>
           </a>
         </li>

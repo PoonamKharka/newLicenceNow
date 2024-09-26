@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DrivingLesson extends Model
+class TestPackage extends Model
 {
     use HasFactory;
 
-    protected $table = 'driving_lessons';
+    protected $table = 'test_packages';
 
     protected $fillable = [
         'title',

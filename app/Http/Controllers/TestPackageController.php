@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\DrivingLessonService;
+use App\Services\TestPackageService;
 use Illuminate\Http\Request;
 
-class DrivingLessonController extends Controller
+class TestPackageController extends Controller
 {
-    protected $dlService;
+    protected $tpService;
 
-    public function __construct(DrivingLessonService $dlService)
+    public function __construct(TestPackageService $tpService)
     {
-        return $this->dlService = $dlService;
+        return $this->tpService = $tpService;
     }
 
     /**
@@ -19,7 +19,7 @@ class DrivingLessonController extends Controller
      */
     public function index(Request $request)
     {
-        return $this->dlService->index($request);
+        return $this->tpService->index($request);
     }
 
     /**
@@ -27,7 +27,7 @@ class DrivingLessonController extends Controller
      */
     public function create()
     {
-        return $this->dlService->create();
+        return $this->tpService->create();
     }
 
     /**
@@ -35,7 +35,7 @@ class DrivingLessonController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->dlService->store($request);
+        return $this->tpService->store($request);
         
     }
 
@@ -52,7 +52,7 @@ class DrivingLessonController extends Controller
      */
     public function edit($id)
     {
-        return $this->dlService->edit($id);
+        return $this->tpService->edit($id);
     }    
 
     /**
@@ -60,6 +60,6 @@ class DrivingLessonController extends Controller
      */
     public function destroy($id)
     {
-        return $this->dlService->delete($id);
+        return $this->tpService->delete($id);
     }
 }
