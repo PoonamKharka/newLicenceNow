@@ -14,12 +14,16 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: asset('images/banner.png')">
 <div class="login-box">
+  <div class="login-logo">
+    <a href="javascript::void(0)"><b>Admin Login</b></a>
+  </div>
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="#" class="h3"><b>{{ ucwords (str_replace('-', ' ', config('app.name'))) , 'License Now' }}</b></a>
+      <img src="{{ asset('images/icon.svg') }}"/> &nbsp;&nbsp;
+      <a href="#" class="h3">{{ ucwords (str_replace('-', ' ', config('app.name'))) , 'License Now' }}</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
@@ -55,9 +59,9 @@
         </div>
       </form>
 
-      {{-- <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
-      </p> --}}
+      <p class="mb-1">
+        <a href="javascript::void(0)">Forgot Password</a>
+      </p>
     </div>
     <!-- /.card-body -->
   </div>

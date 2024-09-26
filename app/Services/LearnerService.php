@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class  LearnerService
 {
       protected $learnRep;
+      
       public function __construct(LearnerRepositoryInterface $learnerRepository)
       {
             $this->learnRep = $learnerRepository;

@@ -23,6 +23,10 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.css') }}">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/toastr/toastr.min.css') }}">
 
   {{-- All Common Scripts --}}
   <!-- jQuery -->
@@ -37,7 +41,10 @@
 <!-- my custom script for chart-->
 <!-- Bootstrap 4 -->
 <script src="{{  asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
+<!-- SweetAlert2 -->
+<script src="{{  asset('adminlte/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{ asset('adminlte/plugins/toastr/toastr.min.js"') }}></script>
 
 <!-- ChartJS -->
 <script src="{{  asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>

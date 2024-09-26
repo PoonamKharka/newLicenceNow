@@ -32,6 +32,15 @@ use App\Repositories\InterFaces\InstructorRepositoryInterFace;
 use App\Repositories\InterFaces\PaymentPolicyRepositoryInterface;
 use App\Repositories\InterFaces\Api\RegistrationRepositoryInterFace;
 use Laravel\Passport\Passport;
+use App\Repositories\InterFaces\LocationRepositoryInterface;
+use App\Repositories\Repository\LocationRepository;
+use App\Services\LocationService;
+use App\Repositories\InterFaces\LessonRepositoryInterface;
+use App\Repositories\Repository\LessonRepository;
+use App\Services\LessonService;
+use App\Repositories\InterFaces\PricingRepositoryInterface;
+use App\Repositories\Repository\PricingRepository;
+use App\Services\PricingService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -83,6 +92,21 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TestPackageRepositoryInterface::class, TestPackageRepository::class);
         $this->app->bind(TestPackageService::class, function ($app) {
             return new TestPackageService($app->make(TestPackageRepositoryInterface::class));
+        });
+        
+        $this->app->bind(LocationRepositoryInterface::class, LocationRepository::class);
+        $this->app->bind(LocationService::class, function($app){
+            return new LocationService($app->make(LocationRepositoryInterface::class));
+        });
+
+        $this->app->bind(LessonRepositoryInterface::class, LessonRepository::class);
+        $this->app->bind(LessonService::class, function($app){
+            return new LessonService($app->make(LessonRepositoryInterface::class));
+        });
+
+        $this->app->bind(PricingRepositoryInterface::class, PricingRepository::class);
+        $this->app->bind(PricingService::class, function($app){
+            return new PricingService($app->make(PricingRepositoryInterface::class));
         });
     }
 

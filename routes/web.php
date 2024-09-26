@@ -10,6 +10,9 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\PaymentPolicyController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\TestPackageController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\PricingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,8 +43,10 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::resource('learners', LearnerController::class);
     Route::resource('faqs', FaqController::class);
     Route::resource('aboutus', AboutUsController::class);
-    Route::resource('privacy', PrivacyPolicyController::class);
-    Route::resource('payment', PaymentPolicyController::class);
-
+    Route::resource('privacy',PrivacyPolicyController::class);
+    Route::resource('payment',PaymentPolicyController::class);
+    Route::resource('location',LocationController::class);
+    Route::resource('lessons',LessonController::class);
+    Route::resource('price',PricingController::class);
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
