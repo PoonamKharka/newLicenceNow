@@ -13,6 +13,8 @@ use App\Http\Controllers\TestPackageController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\PricingController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\FeaturesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +42,7 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::resource('users', RegisterController::class);
     Route::resource('instructors', InstructorController::class);
     Route::resource('testpackages', TestPackageController::class);
+    Route::resource('articles', ArticleController::class);
     Route::resource('learners', LearnerController::class);
     Route::resource('faqs', FaqController::class);
     Route::resource('aboutus', AboutUsController::class);
@@ -48,5 +51,6 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::resource('location',LocationController::class);
     Route::resource('lessons',LessonController::class);
     Route::resource('price',PricingController::class);
+    Route::resource('features',FeaturesController::class);
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

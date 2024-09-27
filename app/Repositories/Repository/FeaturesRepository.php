@@ -2,19 +2,19 @@
 
 namespace App\Repositories\Repository;
 
-use App\Models\TestPackage;
-use App\Repositories\InterFaces\TestPackageRepositoryInterface;
+use App\Models\Feature;
+use App\Repositories\InterFaces\FeaturesRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class TestPackageRepository implements TestPackageRepositoryInterface
+class FeaturesRepository implements FeaturesRepositoryInterface
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $testPackages = TestPackage::all();
+            $features = Feature::all();
             return datatables()
-                ->of($testPackages)
+                ->of($features)
                 ->addColumn('description', function ($row) {
                     return Str::limit(strip_tags($row->description), 50, '...');
                 })
@@ -23,7 +23,7 @@ class TestPackageRepository implements TestPackageRepositoryInterface
                     return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
                 ->addColumn('action', function ($row) {
-                    $editUrl = route('testpackages.edit', encrypt($row->id));
+                    $editUrl = route('features.edit', encrypt($row->id));
                     $btn = '<a href="' . $editUrl . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
                     $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i></button>';
 
@@ -32,11 +32,11 @@ class TestPackageRepository implements TestPackageRepositoryInterface
                 ->rawColumns(['image', 'action'])
                 ->make(true);
         }
-        return view('admin.testpackage.index');
+        return view('admin.features.index');
     }
     public function create()
     {
-        return view('admin.testpackage.create-update');
+        return view('admin.features.create-update');
     }
     // perform create and update lesson
     public function store(Request $request)
@@ -44,8 +44,7 @@ class TestPackageRepository implements TestPackageRepositoryInterface
         // Validate the request
         $validatedData = $request->validate([
             'title' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required',
+            'image' => 'nullable|mimes:svg|max:2048',
             'description' => 'required',
         ]);
 
@@ -53,11 +52,11 @@ class TestPackageRepository implements TestPackageRepositoryInterface
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_image.' . $image->getClientOriginalExtension();
-            $validatedData['image'] = $image->storeAs('testPackages', $imageName, 'public');
+            $validatedData['image'] = $image->storeAs('features', $imageName, 'public');
         }
 
         // Determine if we're updating or creating
-        $testPackage = TestPackage::updateOrCreate(
+        $feature = Feature::updateOrCreate(
             ['id' => $request->input('id')],
             $validatedData
         );
@@ -67,28 +66,28 @@ class TestPackageRepository implements TestPackageRepositoryInterface
            $existingID=$request->input('id');
                        
             return redirect()
-                ->route('testpackages.edit', encrypt($existingID))
+                ->route('features.edit', encrypt($existingID))
                 ->with('success', 'Data updated successfully.');
         } else {
             return redirect()
-                ->route('testpackages.index')
+                ->route('features.index')
                 ->with('success', 'Data created successfully.');
         }
     }
 
     public function edit($id)
     {
-        $testPackageId = decrypt($id);
+        $featureId = decrypt($id);
 
-        $testPackage = TestPackage::findOrFail($testPackageId);
+        $feature = Feature::findOrFail($featureId);
 
-        return view('admin.testpackage.create-update', compact('testPackage'));
+        return view('admin.features.create-update', compact('feature'));
     }
     
     public function delete($id)
     {
-        $testPackage = TestPackage::find($id);
-        $testPackage->delete();
-        return redirect()->route('testpackages.index')->with('status', 'Test Package deleted successfully.');
+        $feature = Feature::find($id);
+        $feature->delete();
+        return redirect()->route('features.index')->with('status', 'Test Package deleted successfully.');
     }
 }

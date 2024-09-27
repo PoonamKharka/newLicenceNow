@@ -45,7 +45,7 @@
                                             
                                             <div class="form-group">
                                                 <label>Description</label>
-                                                <textarea class="form-control" name="description" placeholder="Enter Description">{{ $abtUs->description ?? '' }}</textarea>
+                                                <textarea class="form-control summernote" name="description" placeholder="Enter Description">{{ $abtUs->description ?? '' }}</textarea>
                                             </div>
                                             
                                             <div class="card-footer">

@@ -88,6 +88,23 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('articles.index') }}" class="nav-link {{ request()->is('articles*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Articles
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('features.index') }}" class="nav-link {{ request()->is('features*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Features
+            </p>
+          </a>
+        </li>
+        
         <li class="nav-item {{ request()->is('aboutus*' , 'faqs*') ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ request()->is('aboutus*' , 'faqs*') ? 'active' : '' }}">
             <i class="nav-icon far fa-plus-square"></i>

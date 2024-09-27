@@ -41,6 +41,12 @@ use App\Services\LessonService;
 use App\Repositories\InterFaces\PricingRepositoryInterface;
 use App\Repositories\Repository\PricingRepository;
 use App\Services\PricingService;
+use App\Repositories\InterFaces\ArticleRepositoryInterface;
+use App\Repositories\Repository\ArticleRepository;
+use App\Services\ArticleService;
+use App\Repositories\InterFaces\FeaturesRepositoryInterface;
+use App\Repositories\Repository\FeaturesRepository;
+use App\Services\FeaturesService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -107,6 +113,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PricingRepositoryInterface::class, PricingRepository::class);
         $this->app->bind(PricingService::class, function($app){
             return new PricingService($app->make(PricingRepositoryInterface::class));
+        });
+
+        $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
+        $this->app->bind(ArticleService::class, function($app){
+            return new ArticleService($app->make(ArticleRepositoryInterface::class));
+        });
+
+        $this->app->bind(FeaturesRepositoryInterface::class, FeaturesRepository::class);
+        $this->app->bind(FeaturesService::class, function($app){
+            return new FeaturesService($app->make(FeaturesRepositoryInterface::class));
         });
     }
 
