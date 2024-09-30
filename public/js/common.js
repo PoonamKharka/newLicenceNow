@@ -11,10 +11,11 @@ $(document).ready(function () {
             ['height', ['height']]
         ],
         callbacks: {
-            onKeyup: function (e) {
-                let content = $(this).val();
-                content = content.replace(/&nbsp;/g, ' ');
-                $(this).val(content);
+            onBlur: function () {
+                var contents = $('.summernote').summernote('code');
+                var cleanContent = contents.replace(/&nbsp;/g, ' ');
+                $('.summernote').summernote('code', cleanContent);
+                $('.summernote').next('textarea').val(cleanContent);
             }
         }
     });
@@ -128,10 +129,14 @@ $(document).ready(function () {
         if (imageInput.get(0).files.length > 0) {
             const file = imageInput.get(0).files[0];
             const validImageTypes = ['image/svg+xml'];
+            const validFileExtensions = ['svg'];
             const maxSizeInBytes = 2048 * 1024; // 2MB
 
-            // Validate image type
-            if (!validImageTypes.includes(file.type)) {
+            // Get file extension
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+
+            // Validate image type (only SVG) by MIME type or extension
+            if (!validImageTypes.includes(file.type) || !validFileExtensions.includes(fileExtension)) {
                 isValid = false;
                 imageInput.addClass('is-invalid').after('<div class="error-message text-danger">Please upload a valid SVG image.</div>');
             }

@@ -16,7 +16,7 @@ class FeaturesRepository implements FeaturesRepositoryInterface
             return datatables()
                 ->of($features)
                 ->addColumn('description', function ($row) {
-                    return Str::limit(strip_tags($row->description), 50, '...');
+                    return Str::limit(html_entity_decode(strip_tags($row->description)), 50, '...');
                 })
                 ->addColumn('image', function ($row) {
                     $imageUrl = asset('storage/' . $row->image);
