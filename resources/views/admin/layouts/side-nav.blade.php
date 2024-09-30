@@ -88,22 +88,48 @@
             </p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="{{ route('articles.index') }}" class="nav-link {{ request()->is('articles*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-copy"></i>
+        <li class="nav-item {{ request()->is('articles*', 'features*','learner-terms-and-condition*','instructor-terms-and-condition*') ? 'menu-open' : '' }}">
+          <a href="javascript:void(0)" class="nav-link {{ request()->is('articles*','features*','learner-terms-and-condition*','instructor-terms-and-condition*') ? 'active' : '' }}">
+            <i class="nav-icon far fa-plus-square"></i>
             <p>
               Articles
+              <i class="fas fa-angle-left right"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview">
+            {{-- <li class="nav-item">
+              <a href="{{ route('articles.index') }}" class="nav-link {{ request()->routeIs('articles.index') ? 'active' : '' }}">
+                <i class="far {{ request()->routeIs('articles.index') ? 'fa-check-circle' : 'fa-circle' }}  nav-icon"></i>
+                <p>Articles</p>
+              </a>
+            </li> --}}
+            <li class="nav-item">
+              <a href="{{ route('features.index') }}" class="nav-link {{ request()->is('features*') ? 'active' : '' }}">
+                <i class="far {{ request()->is('features*') ? 'fa-check-circle' : 'fa-circle' }}  nav-icon"></i>
+                <p>
+                  Features
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('learner-terms-and-condition.index') }}" class="nav-link {{ request()->is('learner-terms-and-condition*') ? 'active' : '' }}">
+                <i class="far {{ request()->is('learner-terms-and-condition*') ? 'fa-check-circle' : 'fa-circle' }}  nav-icon"></i>
+                <p>
+                  Learner Terms and Conditions
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('instructor-terms-and-condition.index') }}" class="nav-link {{ request()->is('instructor-terms-and-condition*') ? 'active' : '' }}">
+                <i class="far {{ request()->is('instructor-terms-and-condition*') ? 'fa-check-circle' : 'fa-circle' }}  nav-icon"></i>
+                <p>
+                  Instructor Terms and Conditions
+                </p>
+              </a>
+            </li>
+          </ul>
         </li>
-        <li class="nav-item">
-          <a href="{{ route('features.index') }}" class="nav-link {{ request()->is('features*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-copy"></i>
-            <p>
-              Features
-            </p>
-          </a>
-        </li>
+        
         
         <li class="nav-item {{ request()->is('aboutus*' , 'faqs*') ? 'menu-open' : '' }}">
           <a href="#" class="nav-link {{ request()->is('aboutus*' , 'faqs*') ? 'active' : '' }}">

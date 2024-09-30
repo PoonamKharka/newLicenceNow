@@ -32,11 +32,11 @@ class FeaturesRepository implements FeaturesRepositoryInterface
                 ->rawColumns(['image', 'action'])
                 ->make(true);
         }
-        return view('admin.features.index');
+        return view('admin.article.features.index');
     }
     public function create()
     {
-        return view('admin.features.create-update');
+        return view('admin.article.features.create-update');
     }
     // perform create and update lesson
     public function store(Request $request)
@@ -81,7 +81,7 @@ class FeaturesRepository implements FeaturesRepositoryInterface
 
         $feature = Feature::findOrFail($featureId);
 
-        return view('admin.features.create-update', compact('feature'));
+        return view('admin.article.features.create-update', compact('feature'));
     }
     
     public function delete($id)

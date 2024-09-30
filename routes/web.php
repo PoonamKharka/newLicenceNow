@@ -15,6 +15,9 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\FeaturesController;
+use App\Http\Controllers\LearnerTermsAndConditionsController;
+use App\Http\Controllers\InstructorTermsAndConditionsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,5 +55,8 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::resource('lessons',LessonController::class);
     Route::resource('price',PricingController::class);
     Route::resource('features',FeaturesController::class);
+    Route::resource('learner-terms-and-condition',LearnerTermsAndConditionsController::class);
+    Route::resource('instructor-terms-and-condition',InstructorTermsAndConditionsController::class);
+   
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
