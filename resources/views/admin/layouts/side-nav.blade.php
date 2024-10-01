@@ -88,8 +88,8 @@
             </p>
           </a>
         </li>
-        <li class="nav-item {{ request()->is('articles*', 'features*','learner-terms-and-condition*','instructor-terms-and-condition*') ? 'menu-open' : '' }}">
-          <a href="javascript:void(0)" class="nav-link {{ request()->is('articles*','features*','learner-terms-and-condition*','instructor-terms-and-condition*') ? 'active' : '' }}">
+        <li class="nav-item {{ request()->is('articles*', 'features*','learner-terms-and-condition*','instructor-terms-and-condition*','privacy-policy-articles*','payment-policy-articles*') ? 'menu-open' : '' }}">
+          <a href="javascript:void(0)" class="nav-link {{ request()->is('articles*','features*','learner-terms-and-condition*','instructor-terms-and-condition*','privacy-policy-articles*','payment-policy-articles*') ? 'active' : '' }}">
             <i class="nav-icon far fa-plus-square"></i>
             <p>
               Articles
@@ -124,6 +124,22 @@
                 <i class="far {{ request()->is('instructor-terms-and-condition*') ? 'fa-check-circle' : 'fa-circle' }}  nav-icon"></i>
                 <p>
                   Instructor Terms and Conditions
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('privacy-policy-articles.index') }}" class="nav-link {{ request()->is('privacy-policy-articles*') ? 'active' : '' }}">
+                <i class="far {{ request()->is('privacy-policy-articles*') ? 'fa-check-circle' : 'fa-circle' }}  nav-icon"></i>
+                <p>
+                  Privacy Policy
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('payment-policy-articles.index') }}" class="nav-link {{ request()->is('payment-policy-articles*') ? 'active' : '' }}">
+                <i class="far {{ request()->is('payment-policy-articles*') ? 'fa-check-circle' : 'fa-circle' }}  nav-icon"></i>
+                <p>
+                  Payment Policy
                 </p>
               </a>
             </li>

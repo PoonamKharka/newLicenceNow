@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PrivacyPolicyArticle;
+use App\Models\PaymentPolicyArticle;
 use Illuminate\Support\Str;
 
-class PrivacyPolicyArticleController extends Controller
+class PaymentPolicyArticleController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $privacyPolicyArticles = PrivacyPolicyArticle::all();
+            $paymentPolicyArticle = PaymentPolicyArticle::all();
             return datatables()
-                ->of($privacyPolicyArticles)
+                ->of($paymentPolicyArticle)
                 ->addColumn('description', function ($row) {
                     return Str::limit(strip_tags($row->description), 50, '...');
                 })                
                 ->addColumn('action', function ($row) {
-                    $editUrl = route('privacy-policy-articles.edit', encrypt($row->id));
+                    $editUrl = route('payment-policy-articles.edit', encrypt($row->id));
                     $btn = '<a href="' . $editUrl . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
                     $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i></button>';
 
@@ -27,11 +27,11 @@ class PrivacyPolicyArticleController extends Controller
                 ->rawColumns(['description','action'])
                 ->make(true);
         }
-        return view('admin.article.privacypolicyarticles.index');
+        return view('admin.article.paymentpolicyarticles.index');
     }
     public function create()
     {
-        return view('admin.article.privacypolicyarticles.create-update');
+        return view('admin.article.paymentpolicyarticles.create-update');
     }
     // perform create and update lesson
     public function store(Request $request)
@@ -44,7 +44,7 @@ class PrivacyPolicyArticleController extends Controller
 
        
         // Determine if we're updating or creating
-        $privacyPolicyArticles = PrivacyPolicyArticle::updateOrCreate(
+        $paymentPolicyArticle = PaymentPolicyArticle::updateOrCreate(
             ['id' => $request->input('id')],
             $validatedData
         );
@@ -54,28 +54,28 @@ class PrivacyPolicyArticleController extends Controller
            $existingID=$request->input('id');
                        
             return redirect()
-                ->route('privacy-policy-articles.edit', encrypt($existingID))
+                ->route('payment-policy-articles.edit', encrypt($existingID))
                 ->with('success', 'Data updated successfully.');
         } else {
             return redirect()
-                ->route('privacy-policy-articles.index')
+                ->route('payment-policy-articles.index')
                 ->with('success', 'Data created successfully.');
         }
     }
 
     public function edit($id)
     {
-        $privacyPolicyArticlesId = decrypt($id);
+        $paymentPolicyArticleId = decrypt($id);
 
-        $privacyPolicyArticles = PrivacyPolicyArticle::findOrFail($privacyPolicyArticlesId);
+        $paymentPolicyArticles = PaymentPolicyArticle::findOrFail($paymentPolicyArticleId);
 
-        return view('admin.article.privacypolicyarticles.create-update', compact('privacyPolicyArticles'));
+        return view('admin.article.paymentpolicyarticles.create-update', compact('paymentPolicyArticles'));
     }
     
     public function destroy($id)
     {
-        $privacyPolicyArticles = PrivacyPolicyArticle::find($id);
-        $privacyPolicyArticles->delete();
-        return redirect()->route('privacy-policy-articles.index')->with('status', 'Privacy policy deleted successfully.');
+        $paymentPolicyArticle = PaymentPolicyArticle::find($id);
+        $paymentPolicyArticle->delete();
+        return redirect()->route('payment-policy-articles.index')->with('status', 'Payment policy deleted successfully.');
     }
 }
