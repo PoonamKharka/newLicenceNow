@@ -22,4 +22,8 @@ class Location extends Model
         'latitude',
         'longitude'
     ];
+
+    public function lessonsLocation() {
+        return $this->hasMany(LessonLocation::class, 'location_id');
+    }
 }

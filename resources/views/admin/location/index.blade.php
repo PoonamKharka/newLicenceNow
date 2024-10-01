@@ -38,6 +38,14 @@
                     {{ session('status') }}
                 </div>
               @endif
+              @if (session('warning'))
+                <div class="alert alert-warning">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                  </button>
+                    <i class="icon fas fa-exclamation-triangle"></i>{{ session('warning') }}
+                </div>
+              @endif
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="y_dataTables" class="table table-bordered table-hover">

@@ -67,10 +67,10 @@
                             <div class="form-group">
                             <label>Select User Type</label>
                             <select class="form-control" name="userType_id">
-                              <option value = 0  selected>Select User Type</option>
+                              <option value = 0  selected>User Type</option>
                               <option value = 1>Admin</option>
                               <option value = 2>Instructor</option>
-                              <option value = 3>Learner</option>
+                              {{-- <option value = 3>Learner</option> --}}
                             </select>
                             </div>
                       </div>

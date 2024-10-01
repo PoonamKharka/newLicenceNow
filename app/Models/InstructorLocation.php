@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Price extends Model
+class InstructorLocation extends Model
 {
     use HasFactory;
 
@@ -14,16 +14,12 @@ class Price extends Model
      *
      * @var string
      */
-    protected $table = 'pricing';
+    protected $table = 'instructor_locations';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['hours' , 'price'];
-
-    public function lessonsPrice() {
-        return $this->hasMany(LessonPrice::class, 'pricing_id');
-    }
+    protected $fillable = ['location_id' , 'instructor_id' ];
 }

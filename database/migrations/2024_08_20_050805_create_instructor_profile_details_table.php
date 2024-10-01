@@ -18,17 +18,20 @@ class CreateInstructorProfileDetailsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('std_code')->default('+61');
             $table->unsignedBigInteger('phoneNo')->unique();
-            $table->binary('picture')->nullable();
+            $table->binary('profile_picture')->nullable();
             $table->string('contact_address');
-            $table->date('dob');
-            $table->date('doj');
-            $table->date('dot')->nullable();
+            $table->date('date_of_birth');
+            $table->date('date_of_joining');
+            $table->date('date_of_termination')->nullable();
             $table->string('driving_expirence');
             $table->unsignedBigInteger('blood_group_id');
             $table->foreign('blood_group_id')->references('id')->on('blood_groups');
             $table->unsignedBigInteger('gender_id');
             $table->foreign('gender_id')->references('id')->on('genders');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('languages');
+            $table->boolean('isAuto');
+            $table->boolean('isManual');
             $table->timestamps();
         });
     }

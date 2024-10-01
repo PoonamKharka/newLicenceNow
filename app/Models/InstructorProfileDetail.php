@@ -26,14 +26,22 @@ class InstructorProfileDetail extends Model
         'user_id',
         'std_code',
         'phoneNo',
-        'picture',
+        'profile_picture',
         'contact_address',
-        'dob',
-        'doj',
-        'dot',
+        'date_of_birth',
+        'date_of_joining',
+        'date_of_termination',
         'blood_group_id',
         'driving_expirence',
-        'gender_id'
+        'gender_id',
+        'languages',
+        'isAuto',
+        'isManual'
     ];
+
+    // public function setLanguageData($value) {
+    //     //$this->attributes['languages'] = implode(" , " , $values[]);
+    //     $this->attributes['languages'] = is_array($value) ? implode(',', $value) : $value;
+    // }
     
 }

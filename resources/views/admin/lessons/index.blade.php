@@ -42,14 +42,22 @@
                     {{ session('status') }}
                     </div>
                 @endif
+                @if (session('warning'))
+                  <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="fas fa-times"></i>
+                    </button>
+                      <i class="icon fas fa-exclamation-triangle"></i>{{ session('warning') }}
+                  </div>
+                @endif
                 <table id="lesson-table" class="table table-bordered table-hover">
                   <thead>
                   <tr>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Location</th>
-                    <th>Price</th>
+                    <th>Locations</th>
+                    <th>Prices</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -76,9 +84,9 @@ $(function() {
              columns: [
                       { data: 'title', name: 'title' },
                       { data: 'description', name: 'description' },
-                      { data: 'status', name: 'status' },
-                      { data: 'location_id', name: 'location_id' },
-                      { data: 'pricing_id', name: 'pricing_id' },
+                      { data: 'lesson_status', name: 'lesson_status' },
+                      { data: 'locations-list', name: 'locations-list' },
+                      { data: 'price-list', name: 'price-list' },
                       { data: 'action', name: 'action', orderable: false, searchable: false},
                    ]
           });
@@ -86,11 +94,11 @@ $(function() {
 
 
      // Handle delete button click
-     $(document).on('click', '.delete-location', function() {
+     $(document).on('click', '.delete-lesson', function() {
         let locationId = $(this).data('id');
         let deleteUrl = $(this).data('url');
         // Show confirmation dialog
-        if (confirm('Are you sure you want to delete this location?')) {
+        if (confirm('Are you sure you want to delete this lesson?')) {
             // Create a form dynamically
             var form = $('<form>', {
                 action: deleteUrl,

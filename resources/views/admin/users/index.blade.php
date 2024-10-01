@@ -25,7 +25,9 @@
         <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">List of All Users</h3>
+            <h3 class="card-title">
+              <a href="{{ route('users.create') }}" class="btn btn-block btn-sm btn-success"> Add Customers </a>
+            </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -37,8 +39,8 @@
                     {{ session('status') }}
                 </div>
               @endif
-            <button type="submit" class="btn btn-success"><a href="{{ route('users.create') }}" style="text-decoration: none; color:aliceblue">Add More</a></button>
-            <br><br>
+           
+            {{-- <br><br> --}}
             <table id="y_dataTables" class="table table-bordered table-striped">
               <thead>
               <tr>

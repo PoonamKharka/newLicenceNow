@@ -72,6 +72,11 @@ class PricingController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'hours' => 'required',
+            'price' => 'required'
+        ]);
+        
         $data =  $this->pricingService->updatePrice($request->all(), $id);
         if($data){
           return redirect()->route('price.index')->with('status', 'Price Updated!');
@@ -83,6 +88,15 @@ class PricingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $priceData = Price::find($id)->with('lessonsPrice')->get();
+        
+        if($priceData){
+            return redirect()->route('price.index')->with('warning', 'Cant perform operation as Data is linked with other tables');
+           
+        } else {
+            $priceData->delete();
+            return redirect()->route('price.index')->with('status', 'Price deleted!');
+        }
+       
     }
 }

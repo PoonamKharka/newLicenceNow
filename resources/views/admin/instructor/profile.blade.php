@@ -31,8 +31,14 @@
                                 <a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill"
                                     href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile"
                                     aria-selected="true">Personal</a>
-                                <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill"
-                                    href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages"
+                                <a class="nav-link" id="vert-tabs-vehical-tab" data-toggle="pill"
+                                    href="#vert-tabs-vehical" role="tab" aria-controls="vert-tabs-vehical"
+                                    aria-selected="false">Vehical</a>
+                                <a class="nav-link" id="vert-tabs-suburbs-tab" data-toggle="pill"
+                                    href="#vert-tabs-suburbs" role="tab" aria-controls="vert-tabs-suburbs"
+                                    aria-selected="false">Suburbs</a>
+                                <a class="nav-link" id="vert-tabs-bank-tab" data-toggle="pill"
+                                    href="#vert-tabs-bank" role="tab" aria-controls="vert-tabs-bank"
                                     aria-selected="false">Bank</a>
                             </div>
                         </div>
@@ -40,6 +46,14 @@
                             <div class="tab-content" id="vert-tabs-tabContent">
                                 <div class="tab-pane text-left fade show active" id="vert-tabs-profile" role="tabpanel"
                                     aria-labelledby="vert-tabs-profile-tab">
+                                    @if (session('success'))
+                                        <div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        {{ session('success') }}
+                                        </div>
+                                    @endif
                                     <div class="card card-info">
                                         <div class="card-header">
                                             <h3 class="card-title">Personal Details</h3>
@@ -59,6 +73,7 @@
                                                                 value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
                                                                 value="{{ $userData->name }}" disabled />
+                                                                
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -69,13 +84,13 @@
                                                                 @if ($userData->profileDetails)
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="dob" data-target="#dateOfBirth"
+                                                                        name="date_of_birth" data-target="#dateOfBirth"
                                                                         placeholder="Enter Date Of Birth"
-                                                                        value="{{ $userData->profileDetails->dob }}" />
+                                                                        value="{{ Carbon\Carbon::parse($userData->profileDetails->date_of_birth)->format('d/m/Y') }}" />
                                                                 @else
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="dob" data-target="#dateOfBirth"
+                                                                        name="date_of_birth" data-target="#dateOfBirth"
                                                                         placeholder="Enter Date Of Birth" />
                                                                 @endif
                                                                 <div class="input-group-append" data-target="#dateOfBirth"
@@ -83,6 +98,62 @@
                                                                     <div class="input-group-text"><i
                                                                             class="fa fa-calendar"></i></div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Transmission</label>
+                                                            <div class="form-check">
+                                                                @if ($userData->profileDetails)
+                                                                   <input class="form-check-input" type="checkbox" id="text" name="isAuto" value=true {{ $userData->profileDetails->isAuto == 1 ? 'checked' : '' }}>
+                                                                @else
+                                                                    <input class="form-check-input" type="checkbox" checked id="text" name="isAuto" value=true>
+                                                                @endif
+                                                                
+                                                                <label class="form-check-label">Automatic</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                @if ($userData->profileDetails)
+                                                                    <input class="form-check-input" type="checkbox" id="text" name="isManual" value=true {{ $userData->profileDetails->isManual == 1 ? 'checked' : '' }}> 
+                                                                @else
+                                                                    <input class="form-check-input" type="checkbox" id="text" name="isManual" value=true>
+                                                                @endif
+                                                                
+                                                                <label class="form-check-label">Manual</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Spoken Languages</label>
+                                                            <div class="form-check">
+                                                                @if ($userData->profileDetails && strpos( $userData->profileDetails->languages, "English") !== false )
+                                                                    <input class="form-check-input" type="checkbox" name="languages[]" value="English" checked>
+                                                                @else
+                                                                    <input class="form-check-input" type="checkbox" name="languages[]" value="English" >
+                                                                @endif
+                                                                <label class="form-check-label">English</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                @if ($userData->profileDetails && strpos( $userData->profileDetails->languages, "Mandarin") !== false )
+                                                                    <input class="form-check-input" type="checkbox" name="languages[]" value="Mandarin" checked>
+                                                                @else
+                                                                    <input class="form-check-input" type="checkbox" name="languages[]" value="Mandarin">
+                                                                @endif
+                                                                
+                                                                <label class="form-check-label">Mandarin</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                @if ($userData->profileDetails && strpos( $userData->profileDetails->languages, "Italian") !== false )
+                                                                    <input class="form-check-input" type="checkbox" name="languages[]" value="Italian" checked>
+                                                                @else
+                                                                    <input class="form-check-input" type="checkbox" name="languages[]" value="Italian">
+                                                                @endif
+                                                               
+                                                                <label class="form-check-label">Italian</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -97,13 +168,13 @@
                                                                 @if ($userData->profileDetails)
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="doj" data-target="#dateOfJoining"
-                                                                        value="{{ $userData->profileDetails->doj }}"
+                                                                        name="date_of_joining" data-target="#dateOfJoining"
+                                                                        value="{{ Carbon\Carbon::parse($userData->profileDetails->date_of_joining)->format('d/m/Y') }}"
                                                                         placeholder="Enter Date Of Joining" />
                                                                 @else
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="doj" data-target="#dateOfBirth"
+                                                                        name="date_of_joining" data-target="#dateOfBirth"
                                                                         placeholder="Enter Date Of Joining" />
                                                                 @endif
                                                                 <div class="input-group-append"
@@ -123,13 +194,13 @@
                                                                 @if ($userData->profileDetails)
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="dot" data-target="#dateOfResignation"
-                                                                        value="{{ $userData->profileDetails->doj }}"
+                                                                        name="date_of_termination" data-target="#dateOfResignation"
+                                                                        value="{{ Carbon\Carbon::parse($userData->profileDetails->date_of_termination)->format('d/m/Y') }}"
                                                                         placeholder="Enter Date Of Resignation" />
                                                                 @else
                                                                     <input type="text"
                                                                         class="form-control datetimepicker-input"
-                                                                        name="dot" data-target="#dateOfResignation"
+                                                                        name="date_of_termination" data-target="#dateOfResignation"
                                                                         placeholder="Enter Date Of Resignation" />
                                                                 @endif
                                                                 <div class="input-group-append"
@@ -148,7 +219,7 @@
                                                             <label>Gender</label>
                                                             @if ($userData->profileDetails)
                                                                 <select class="form-control select2" style="width: 100%;"
-                                                                    name="genderId">
+                                                                    name="gender_id">
                                                                     <option value="1"
                                                                         {{ $userData->profileDetails->gender_id == 1 ? 'selected' : '' }}>
                                                                         Female
@@ -164,7 +235,7 @@
                                                                 </select>
                                                             @else
                                                                 <select class="form-control select2" style="width: 100%;"
-                                                                    name="genderId">
+                                                                    name="gender_id">
                                                                     <option selected="selected">Select a Gender</option>
                                                                     <option value="1">Female</option>
                                                                     <option value="2">Male</option>
@@ -205,7 +276,7 @@
                                                             <label>Blood Group</label>
                                                             @if ($userData->profileDetails)
                                                                 <select class="form-control select2" style="width: 100%;"
-                                                                    name="bloodGroupId">
+                                                                    name="blood_group_id">
                                                                     <option value="1"
                                                                         {{ $userData->profileDetails->blood_group == 1 ? 'selected' : '' }}>
                                                                         O+
@@ -241,7 +312,7 @@
                                                                 </select>
                                                             @else
                                                                 <select class="form-control select2" style="width: 100%;"
-                                                                    name="bloodGroupId">
+                                                                    name="blood_group_id">
                                                                     <option selected="selected">Select a Blood Group
                                                                     </option>
                                                                     <option value="1">O+</option>
@@ -261,11 +332,11 @@
                                                             <label>Total Driving Experience (in Years)</label>
                                                             @if ($userData->profileDetails)
                                                                 <input type="number" class="form-control"
-                                                                    name="drivingExpirence"
+                                                                    name="driving_expirence"
                                                                     value="{{ $userData->profileDetails->driving_expirence }}">
                                                             @else
                                                                 <input type="number" class="form-control"
-                                                                    name="drivingExpirence"
+                                                                    name="driving_expirence"
                                                                     placeholder="Enter Your Total Expirence in Driving">
                                                             @endif
 
@@ -279,12 +350,12 @@
                                                             <label>Present Address</label>
                                                             @if ($userData->profileDetails)
                                                                 {{-- <input type="textarea" class="form-control"> --}}
-                                                                <textarea class="form-control" rows="3" name="contactAddress">
+                                                                <textarea class="form-control" rows="3" name="contact_address">
                                                                     {{ $userData->profileDetails->contact_address }}
                                                                 </textarea>
                                                             @else
                                                                 {{-- <input type="textarea" class="form-control" name="contactAddress"> --}}
-                                                                <textarea class="form-control" rows="3"  name="contactAddress" placeholder="Enter Your Present Address"></textarea>
+                                                                <textarea class="form-control" rows="3"  name="contact_address" placeholder="Enter Your Present Address"></textarea>
                                                             @endif
 
                                                         </div>
@@ -321,8 +392,8 @@
                                         <!-- /.card-body -->
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel"
-                                    aria-labelledby="vert-tabs-messages-tab">
+                                <div class="tab-pane fade" id="vert-tabs-bank" role="tabpanel"
+                                    aria-labelledby="vert-tabs-bank-tab">
                                     <div class="card card-info">
                                         <div class="card-header">
                                             <h3 class="card-title">Bank Details</h3>

@@ -27,7 +27,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  <a href="{{ route('users.create') }}" class="btn btn-block btn-sm btn-success"> Add Instructors </a>
+                  {{-- <a href="{{ route('users.create') }}" class="btn btn-block btn-sm btn-success"> Add Instructors </a> --}}
                 </h3>
               </div>
               <!-- /.card-header -->

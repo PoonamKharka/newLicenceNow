@@ -23,7 +23,7 @@ class PricingService {
                         $btn = '<a href="' . route('price.edit', encrypt($row)) . '" class="btn btn-sm btn-success">
                             <i class="fas fa-pencil-alt"></i></a>';
                         $btn .= '&nbsp';
-                        $btn .= '<button class="btn btn-danger btn-sm delete-location" data-id="' . $row->id . '" data-url="' . route('price.destroy', $row->id) . '"><i class="fas fa-trash"></i></button>';
+                        $btn .= '<button class="btn btn-danger btn-sm delete-price" data-id="' . $row->id . '" data-url="' . route('price.destroy', $row->id) . '"><i class="fas fa-trash"></i></button>';
 
                         return $btn;
                     })

@@ -1,8 +1,8 @@
 <aside class="main-sidebar elevation-4">
   <!-- Brand Logo -->
   <a href="#" class="brand-link">
-    <img src="{{ asset('images/icon.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light"> @include('admin.layouts.title') </span>
+    <img src="{{ asset('images/icon.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+    <span class="d-block"> @include('admin.layouts.title') </span>
   </a>
 
   <!-- Sidebar -->
@@ -34,7 +34,7 @@
           <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-users"></i>
             <p>
-              Users
+              Total Customers
             </p>
           </a>
         </li>
@@ -42,7 +42,7 @@
           <a href="{{ route('location.index')  }}" class="nav-link {{ request()->is('location*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-map-marked-alt"></i>
             <p>
-              Locations
+              Service Locations
             </p>
           </a>
         </li>
@@ -50,7 +50,7 @@
           <a href="{{ route('price.index') }}" class="nav-link {{ request()->is('price*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-dollar-sign"></i>
             <p>
-              Pricing
+              Our Prices
             </p>
           </a>
         </li>
@@ -58,7 +58,7 @@
           <a href="{{ route('lessons.index') }}" class="nav-link {{ request()->is('lessons*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-book-reader"></i>
             <p>
-              Lessons
+            Providing Lessons
             </p>
           </a>
         </li>
@@ -67,7 +67,7 @@
           <a href="{{ route('instructors.index') }}" class="nav-link {{ request()->is('instructors*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-chalkboard-teacher"></i>
             <p>
-              Instructors
+              Our Instructors
             </p>
           </a>
         </li>

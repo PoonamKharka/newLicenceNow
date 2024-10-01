@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Instructor;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -28,14 +28,18 @@ class InstructorController extends Controller
       return $this->instService->getAllInstructors($request);
    }
 
-   public function show(Request $request, $id)
+   public function show($id)
    {
-      return $this->instService->profile($request, $id);
+      $userData = $this->instService->profile($id);
+      return view('admin.instructor.profile', compact('userData'));
    }
 
-   public function store(Request  $request)
+   public function store(Request $request)
    {
-      return $this->instService->store($request);
+      $status = $this->instService->store($request);
+      if($status){
+         return redirect()->route('instructors.show' , encrypt($request->user_id))->with('success', 'Action completed!');
+      }
    }
 
 }

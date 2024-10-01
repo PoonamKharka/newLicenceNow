@@ -33,7 +33,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
                     }
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('instructors.show', encrypt($row)) . '" class="btn btn-sm btn-success">
+                    $btn = '<a href="' . route('instructors.show', encrypt($row->id)) . '" class="btn btn-sm btn-success">
                         <i class="fas fa-plus"></i>
                         <span>More Details</span></a>';
                     $btn .= '&nbsp';
@@ -49,81 +49,47 @@ class InstructorRepository implements InstructorRepositoryInterFace
         return view('admin.instructor.index');
     }
 
-    public function profile($request, $data)
+    public function profile($id)
     {
-        $users = decrypt($data);
-        $userData =  User::with('bankDetails', 'profileDetails')->findOrFail($users->id);
+        $userId = decrypt($id);
+        $userData =  User::with('bankDetails', 'profileDetails')->findOrFail($userId);
+        
         if ($userData->profileDetails) {
             $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
             $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
             $userData->profileDetails->dot = Carbon::parse($userData->profileDetails->dot)->format('d/m/Y');
         }
 
-        return view('admin.instructor.profile', compact('userData'));
+        return $userData;
     }
 
     public function store(Request $request)
     {
-        // Determine which form was submitted
-        $formType = $request->input('form_type');
-
-        if ($formType === 'personal_details') {
-            // Logic for processing the Personal Details form
-
-            // Convert dates from d/m/Y to Y-m-d using Carbon
-            $dob = Carbon::createFromFormat('d/m/Y', $request->input('dob'))->format('Y-m-d');
-            $doj = Carbon::createFromFormat('d/m/Y', $request->input('doj'))->format('Y-m-d');
-            $dot = $request->input('dot') ? Carbon::createFromFormat('d/m/Y', $request->input('dot'))->format('Y-m-d') : null;
-
-            // Create and save the InstructorProfileDetail instance
-            $instructorProfileDetail = new InstructorProfileDetail();
-
-            $instructorProfileDetail = [
-                'user_id' => $request->input('user_id'),
-                'phoneNo' => $request->input('phoneNo'),
-                'contact_address' => $request->input('contactAddress'),
-                'dob' => $dob,
-                'doj' => $doj,
-                'dot' => $dot,
-                'blood_group_id' => $request->input('bloodGroupId'),
-                'driving_expirence' => $request->input('drivingExpirence'),
-                'gender_id' => $request->input('genderId'),
-            ];
-
-            // Save the instance to the database
-            $findUser = InstructorProfileDetail::where('user_id', '=' , $request->input('user_id'))->first();
+        $user = InstructorProfileDetail::where('user_id', '=' , $request->user_id)->first();
+        
+        return $user;
+       // } elseif ($formType === 'bank_details') {
             
-                if( $findUser ){
-                    $updateDetails =  $findUser->update($instructorProfileDetail);
-                } else {
-                    $updateDetails =  InstructorProfileDetail::create($instructorProfileDetail);
-                }
-            if( $updateDetails ) {
+        //     $instructorBankDetail = [
+        //         'user_id' => $request->input('user_id'),
+        //         'salary_pay_mode_id' => $request->input('salaryPayModeId'),
+        //         'salary_bank_name' => $request->input('salaryBankName'),
+        //         'salary_branch_name' => $request->input('salaryBranchName'),
+        //         'salary_ifsc_code' => $request->input('salaryIFSCCode'),
+        //         'salary_account_number' => $request->input('salaryAccountNumber'),
+        //     ];
+            
+        //     $findBankDetails = InstructorBankDetail::where('user_id', $request->input('user_id'))->first();
+            
+        //     if( $findBankDetails ){
+        //         $updateBankDetails =  $findBankDetails->update($instructorBankDetail);
+        //     } else {
+        //         $updateBankDetails =  InstructorBankDetail::create($instructorBankDetail);
+        //     }
+            //if( $updateBankDetails ) {
                 return back()->with('success', 'Data has been added!');
-            }
-            
-        } elseif ($formType === 'bank_details') {
-            
-            $instructorBankDetail = [
-                'user_id' => $request->input('user_id'),
-                'salary_pay_mode_id' => $request->input('salaryPayModeId'),
-                'salary_bank_name' => $request->input('salaryBankName'),
-                'salary_branch_name' => $request->input('salaryBranchName'),
-                'salary_ifsc_code' => $request->input('salaryIFSCCode'),
-                'salary_account_number' => $request->input('salaryAccountNumber'),
-            ];
-            
-            $findBankDetails = InstructorBankDetail::where('user_id', $request->input('user_id'))->first();
-            
-            if( $findBankDetails ){
-                $updateBankDetails =  $findBankDetails->update($instructorBankDetail);
-            } else {
-                $updateBankDetails =  InstructorBankDetail::create($instructorBankDetail);
-            }
-            if( $updateBankDetails ) {
-                return back()->with('success', 'Data has been added!');
-            }
-        }
+            //}
+        //}
     }
 
     public function view($id)

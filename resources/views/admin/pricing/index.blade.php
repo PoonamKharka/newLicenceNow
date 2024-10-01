@@ -42,6 +42,14 @@
                     {{ session('status') }}
                     </div>
                 @endif
+                @if (session('warning'))
+                  <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <i class="fas fa-times"></i>
+                    </button>
+                      <i class="icon fas fa-exclamation-triangle"></i>{{ session('warning') }}
+                  </div>
+                @endif
                 <table id="price-table" class="table table-bordered table-hover">
                   <thead>
                   <tr>
@@ -80,11 +88,11 @@ $(function() {
 
 
      // Handle delete button click
-     $(document).on('click', '.delete-location', function() {
+     $(document).on('click', '.delete-price', function() {
         let locationId = $(this).data('id');
         let deleteUrl = $(this).data('url');
         // Show confirmation dialog
-        if (confirm('Are you sure you want to delete this location?')) {
+        if (confirm('Are you sure you want to delete this price detail?')) {
             // Create a form dynamically
             var form = $('<form>', {
                 action: deleteUrl,

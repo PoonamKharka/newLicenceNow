@@ -83,8 +83,15 @@ class LocationController extends Controller
      */
     public function destroy(string $id)
     {
-        $location = Location::find($id)->delete();
-    
-        return redirect()->route('location.index')->with('status', 'Location deleted!');
+        $location = Location::find($id)->with('lessonsLocation')->get();
+        
+        if($location){
+            return redirect()->route('location.index')->with('warning', 'Cant perform operation as Data is linked with other tables');
+           
+        } else {
+            $location->delete();
+            return redirect()->route('location.index')->with('status', 'Location deleted!');
+        }
+       
     }
 }

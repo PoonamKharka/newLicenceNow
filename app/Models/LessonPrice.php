@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Price extends Model
+class LessonPrice extends Model
 {
     use HasFactory;
 
@@ -14,16 +14,20 @@ class Price extends Model
      *
      * @var string
      */
-    protected $table = 'pricing';
+    protected $table = 'lesson_prices';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['hours' , 'price'];
+    protected $fillable = ['lesson_id' , 'pricing_id' ];
 
-    public function lessonsPrice() {
-        return $this->hasMany(LessonPrice::class, 'pricing_id');
+    public function lessons() {
+        return $this->belongsTo(Lesson::class);
+    }
+
+    public function prices() {
+        return $this->belongsTo(Price::class,'pricing_id');
     }
 }

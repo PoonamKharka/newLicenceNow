@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Services\LessonService;
 use App\Models\Location;
 use App\Models\Price;
+use App\Models\Lesson;
+use Illuminate\Support\Facades\Log;
 
 class LessonController extends Controller
 {
@@ -41,16 +43,11 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|unique:lessons',
         ]);
-        //dd($request->all());
-        try {
-            $insert = $this->lessonService->addLesson($request->all());
-        } catch (\Exception $ex) {
-            dd($ex);
-        }
         
-       // dd($insert);
+        $insert = $this->lessonService->addLesson($request->all());
+
         if($insert) {
             return redirect()->route('lessons.index')->with('status', 'Lesson Added');
         }
@@ -69,7 +66,7 @@ class LessonController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       return  $this->lessonService->getEditData($id);
     }
 
     /**
@@ -77,7 +74,11 @@ class LessonController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $updateVals = $this->lessonService->updateLesson($request->all(), $id);
+        
+        if($updateVals) {
+            return redirect()->route('lessons.index')->with('status', 'Lesson Updated');
+        } 
     }
 
     /**
@@ -85,6 +86,14 @@ class LessonController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $lessonData = Lesson::find($id)->with('lessonLocations')->get();
+        
+        if($lessonData){
+            return redirect()->route('lessons.index')->with('warning', 'Cant perform operation as Data is linked with other tables');
+           
+        } else {
+            $lessonData->delete();
+            return redirect()->route('lessons.index')->with('status', 'Lesson deleted!');
+        }
     }
 }

@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/toastr/toastr.min.css') }}">
-
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   {{-- All Common Scripts --}}
   <!-- jQuery -->
 <script src="{{  asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
@@ -67,3 +68,5 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/jquery/jquery.dataTables.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
