@@ -70,3 +70,6 @@
 <script src="{{ asset('adminlte/plugins/jquery/jquery.dataTables.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+
+<!-- common js -->
+<script src="{{ asset('js/common.js') }}"></script>

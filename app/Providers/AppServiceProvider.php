@@ -6,6 +6,7 @@ namespace App\Providers;
 use App\Services\FaqService;
 use App\Services\LoginService;
 use App\Services\AboutUsService;
+use App\Services\TestPackageService;
 use App\Services\LearnerService;
 use App\Services\RegisterService;
 use App\Services\InstructorService;
@@ -15,6 +16,7 @@ use App\Services\Api\RegistrationService;
 use App\Repositories\Repository\FaqRepository;
 use App\Repositories\Repository\LoginRepository;
 use App\Repositories\Repository\AboutUsRepository;
+use App\Repositories\Repository\TestPackageRepository;
 use App\Repositories\Repository\LearnerRepository;
 use App\Repositories\Repository\RegisterRepository;
 use App\Repositories\Repository\InstructorRepository;
@@ -22,6 +24,7 @@ use App\Repositories\InterFaces\FaqRepositoryInterface;
 use App\Repositories\Repository\PaymentPolicyRepository;
 use App\Repositories\InterFaces\LoginRepositoryInterFace;
 use App\Repositories\InterFaces\AboutUsRepositoryInterface;
+use App\Repositories\InterFaces\TestPackageRepositoryInterface;
 use App\Repositories\InterFaces\LearnerRepositoryInterface;
 use App\Repositories\Repository\Api\RegistrationRepository;
 use App\Repositories\InterFaces\RegisterRepositoryInterFace;
@@ -38,6 +41,12 @@ use App\Services\LessonService;
 use App\Repositories\InterFaces\PricingRepositoryInterface;
 use App\Repositories\Repository\PricingRepository;
 use App\Services\PricingService;
+use App\Repositories\InterFaces\ArticleRepositoryInterface;
+use App\Repositories\Repository\ArticleRepository;
+use App\Services\ArticleService;
+use App\Repositories\InterFaces\FeaturesRepositoryInterface;
+use App\Repositories\Repository\FeaturesRepository;
+use App\Services\FeaturesService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -61,31 +70,36 @@ class AppServiceProvider extends ServiceProvider
             return new InstructorService($app->make(InstructorRepositoryInterFace::class));
         });
 
-        $this->app->bind( RegisterRepositoryInterFace::class, RegisterRepository::class);
+        $this->app->bind(RegisterRepositoryInterFace::class, RegisterRepository::class);
         $this->app->bind(RegisterService::class, function ($app) {
             return new RegisterService($app->make(RegisterRepositoryInterFace::class));
         });
 
         $this->app->bind(LearnerRepositoryInterface::class, LearnerRepository::class);
-        $this->app->bind(LearnerService::class, function($app){
+        $this->app->bind(LearnerService::class, function ($app) {
             return new LearnerService($app->make(LearnerRepositoryInterface::class));
         });
 
         $this->app->bind(FaqRepositoryInterface::class, FaqRepository::class);
-        $this->app->bind(FaqService::class, function($app){
+        $this->app->bind(FaqService::class, function ($app) {
             return new FaqService($app->make(FaqRepositoryInterface::class));
         });
 
         $this->app->bind(AboutUsRepositoryInterface::class, AboutUsRepository::class);
-        $this->app->bind(AboutUsService::class, function($app){
+        $this->app->bind(AboutUsService::class, function ($app) {
             return new AboutUsService($app->make(AboutUsRepositoryInterface::class));
-        } );
+        });
 
         $this->app->bind(PaymentPolicyRepositoryInterface::class, PaymentPolicyRepository::class);
-        $this->app->bind(PaymentPolicyService::class, function($app){
+        $this->app->bind(PaymentPolicyService::class, function ($app) {
             return new PaymentPolicyService($app->make(PaymentPolicyRepositoryInterface::class));
         });
 
+        $this->app->bind(TestPackageRepositoryInterface::class, TestPackageRepository::class);
+        $this->app->bind(TestPackageService::class, function ($app) {
+            return new TestPackageService($app->make(TestPackageRepositoryInterface::class));
+        });
+        
         $this->app->bind(LocationRepositoryInterface::class, LocationRepository::class);
         $this->app->bind(LocationService::class, function($app){
             return new LocationService($app->make(LocationRepositoryInterface::class));
@@ -99,6 +113,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PricingRepositoryInterface::class, PricingRepository::class);
         $this->app->bind(PricingService::class, function($app){
             return new PricingService($app->make(PricingRepositoryInterface::class));
+        });
+
+        $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
+        $this->app->bind(ArticleService::class, function($app){
+            return new ArticleService($app->make(ArticleRepositoryInterface::class));
+        });
+
+        $this->app->bind(FeaturesRepositoryInterface::class, FeaturesRepository::class);
+        $this->app->bind(FeaturesService::class, function($app){
+            return new FeaturesService($app->make(FeaturesRepositoryInterface::class));
         });
     }
 
