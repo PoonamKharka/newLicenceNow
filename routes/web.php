@@ -19,6 +19,7 @@ use App\Http\Controllers\LearnerTermsAndConditionsController;
 use App\Http\Controllers\InstructorTermsAndConditionsController;
 use App\Http\Controllers\PrivacyPolicyArticleController;
 use App\Http\Controllers\PaymentPolicyArticleController;
+use App\Http\Controllers\auth\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,14 @@ use App\Http\Controllers\PaymentPolicyArticleController;
 Route::get('/admin', [LoginController::class, 'index']);
 
 Route::post('login', [LoginController::class, 'login'])->name('login');
+
+//Rest the password
+Route::middleware(['web'])->group(function () {
+    Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.forgot');
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name('password.update');
+});
 
 Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::get('admin-dashboard', function () {

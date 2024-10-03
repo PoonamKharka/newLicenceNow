@@ -47,6 +47,9 @@ use App\Services\ArticleService;
 use App\Repositories\InterFaces\FeaturesRepositoryInterface;
 use App\Repositories\Repository\FeaturesRepository;
 use App\Services\FeaturesService;
+use App\Repositories\InterFaces\ForgotPasswordRepositoryInterface;
+use App\Repositories\Repository\ForgotPasswordRepository;
+use App\Services\ForgotPasswordService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -123,6 +126,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FeaturesRepositoryInterface::class, FeaturesRepository::class);
         $this->app->bind(FeaturesService::class, function($app){
             return new FeaturesService($app->make(FeaturesRepositoryInterface::class));
+        });
+
+        $this->app->bind(ForgotPasswordRepositoryInterface::class, ForgotPasswordRepository::class);
+        $this->app->bind(ForgotPasswordService::class, function($app){
+            return new ForgotPasswordService($app->make(ForgotPasswordRepositoryInterface::class));
         });
     }
 
