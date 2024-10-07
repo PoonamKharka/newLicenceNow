@@ -43,7 +43,12 @@ class InstructorRepository implements InstructorRepositoryInterFace
 
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('username', function ($row) {
+                    $name = $row->first_name . ' ' . $row->last_name;
+
+                    return $name;
+                })
+                ->rawColumns(['action' , 'username'])
                 ->make(true);
         }
         return view('admin.instructor.index');
@@ -52,8 +57,8 @@ class InstructorRepository implements InstructorRepositoryInterFace
     public function profile($id)
     {
         $userId = decrypt($id);
-        $userData =  User::with('bankDetails', 'profileDetails')->findOrFail($userId);
-        
+        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle')->findOrFail($userId);
+        //dd($userData);
         if ($userData->profileDetails) {
             $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
             $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
@@ -68,28 +73,6 @@ class InstructorRepository implements InstructorRepositoryInterFace
         $user = InstructorProfileDetail::where('user_id', '=' , $request->user_id)->first();
         
         return $user;
-       // } elseif ($formType === 'bank_details') {
-            
-        //     $instructorBankDetail = [
-        //         'user_id' => $request->input('user_id'),
-        //         'salary_pay_mode_id' => $request->input('salaryPayModeId'),
-        //         'salary_bank_name' => $request->input('salaryBankName'),
-        //         'salary_branch_name' => $request->input('salaryBranchName'),
-        //         'salary_ifsc_code' => $request->input('salaryIFSCCode'),
-        //         'salary_account_number' => $request->input('salaryAccountNumber'),
-        //     ];
-            
-        //     $findBankDetails = InstructorBankDetail::where('user_id', $request->input('user_id'))->first();
-            
-        //     if( $findBankDetails ){
-        //         $updateBankDetails =  $findBankDetails->update($instructorBankDetail);
-        //     } else {
-        //         $updateBankDetails =  InstructorBankDetail::create($instructorBankDetail);
-        //     }
-            //if( $updateBankDetails ) {
-                return back()->with('success', 'Data has been added!');
-            //}
-        //}
     }
 
     public function view($id)

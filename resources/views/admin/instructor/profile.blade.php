@@ -31,9 +31,9 @@
                                 <a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill"
                                     href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile"
                                     aria-selected="true">Personal</a>
-                                <a class="nav-link" id="vert-tabs-vehical-tab" data-toggle="pill"
-                                    href="#vert-tabs-vehical" role="tab" aria-controls="vert-tabs-vehical"
-                                    aria-selected="false">Vehical</a>
+                                <a class="nav-link" id="vert-tabs-vehicle-tab" data-toggle="pill"
+                                    href="#vert-tabs-vehicle" role="tab" aria-controls="vert-tabs-vehicle"
+                                    aria-selected="false">Vehicle</a>
                                 <a class="nav-link" id="vert-tabs-suburbs-tab" data-toggle="pill"
                                     href="#vert-tabs-suburbs" role="tab" aria-controls="vert-tabs-suburbs"
                                     aria-selected="false">Suburbs</a>
@@ -44,6 +44,7 @@
                         </div>
                         <div class="col-7 col-sm-9">
                             <div class="tab-content" id="vert-tabs-tabContent">
+                                {{-- profile starts --}}
                                 <div class="tab-pane text-left fade show active" id="vert-tabs-profile" role="tabpanel"
                                     aria-labelledby="vert-tabs-profile-tab">
                                     @if (session('success'))
@@ -72,7 +73,7 @@
                                                             <input type="hidden" class="form-control" name="user_id"
                                                                 value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
-                                                                value="{{ $userData->name }}" disabled />
+                                                                value="{{ $userData->first_name . ' ' . $userData->last_name }}" disabled />
                                                                 
                                                         </div>
                                                     </div>
@@ -218,7 +219,7 @@
                                                         <div class="form-group">
                                                             <label>Gender</label>
                                                             @if ($userData->profileDetails)
-                                                                <select class="form-control select2" style="width: 100%;"
+                                                                <select class="select2" style="width: 100%;"
                                                                     name="gender_id">
                                                                     <option value="1"
                                                                         {{ $userData->profileDetails->gender_id == 1 ? 'selected' : '' }}>
@@ -234,7 +235,7 @@
                                                                     </option>
                                                                 </select>
                                                             @else
-                                                                <select class="form-control select2" style="width: 100%;"
+                                                                <select class="select2" style="width: 100%;"
                                                                     name="gender_id">
                                                                     <option selected="selected">Select a Gender</option>
                                                                     <option value="1">Female</option>
@@ -365,17 +366,23 @@
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input"
-                                                                    id="exampleInputFile" name="picture">
-                                                                <label class="custom-file-label"
-                                                                    for="exampleInputFile">Choose file</label>
+                                                                    id="exampleInputFile" name="profile_picture">
+                                                                @if($userData->profileDetails && $userData->profileDetails->profile_picture)
+                                                                    <label class="custom-file-label"
+                                                                for="exampleInputFile">{{ $userData->profileDetails->profile_picture }}</label>
+                                                                @else
+                                                                    <label class="custom-file-label"
+                                                                for="exampleInputFile">Choose file</label>
+                                                                @endif
+                                                                
                                                             </div>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text">Upload</span>
                                                             </div>
                                                         </div>
-                                                        @if ($userData->profileDetails && $userData->profileDetails->picture )
+                                                        @if ( $userData->profileDetails && $userData->profileDetails->profile_picture )
                                                             <div class="mt-2">
-                                                                <img src="{{ asset($userData->profileDetails->picture) }}"
+                                                                <img src="{{ asset('profile/'.$userData->profileDetails->profile_picture) }}"
                                                                     alt="Profile Picture" class="img-thumbnail"
                                                                     style="max-width: 150px;">
                                                             </div>
@@ -392,6 +399,142 @@
                                         <!-- /.card-body -->
                                     </div>
                                 </div>
+                                {{-- profile ends --}}
+                                {{-- vehicle starts --}}
+                                <div class="tab-pane fade" id="vert-tabs-vehicle" role="tabpanel"
+                                    aria-labelledby="vert-tabs-vehicle-tab">
+                                    <div class="card card-warning">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Vehicle Details</h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <form action="{{ route('instructors.store') }}" method="POST"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="form_type" value="vehicle_details">
+                                                <input type="hidden" class="form-control" name="instructor_id" value="{{ $userData->id }}" />
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <!-- text input -->
+                                                        <div class="form-group">
+                                                            <label>Vehicle Brand/Name</label>
+                                                            @if ($userData->instructorVehicle)
+                                                                <input type="text" class="form-control" name="vehicle_name" placeholder="Vehicle brand/name" value="{{ $userData->instructorVehicle->vehicle_name }}"/>
+                                                            @else
+                                                                <input type="text" class="form-control" name="vehicle_name" placeholder="Vehicle brand/name"/>
+                                                            @endif
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Vehicle Number</label>
+                                                            @if ($userData->instructorVehicle)
+                                                                <input type="text" class="form-control" name="vehicle_no" placeholder="Vehicle Number" value="{{ $userData->instructorVehicle->vehicle_no }}"/>
+                                                            @else
+                                                                <input type="text" class="form-control" name="vehicle_no" placeholder="Vehicle Number"/>
+                                                            @endif
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label for="salaryBankName">ANCAP Rating</label>
+                                                            @if ($userData->instructorVehicle)
+                                                                <input type="number" class="form-control" name="ancap_rating" placeholder="ANCAP Rating" min="1" max="5" value="{{ $userData->instructorVehicle->ancap_rating }}">
+                                                            @else
+                                                                <input type="number" class="form-control" name="ancap_rating" placeholder="ANCAP Rating" min="1" max="5">
+                                                            @endif
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Vehicle Image</label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                               <input type="file" class="custom-file-input"
+                                                                id="exampleInputFile" name="vehicle_image">
+                                                                
+                                                                @if ($userData->instructorVehicle)
+                                                                <label class="custom-file-label"
+                                                                    for="exampleInputFile">{{ $userData->instructorVehicle->vehicle_image }}</label>
+                                                                @else
+                                                                <label class="custom-file-label"
+                                                                for="exampleInputFile">Choose file</label>
+                                                                @endif
+                                                                
+                                                            </div>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">Upload</span>
+                                                            </div>
+                                                        </div>
+                                                        @if ($userData->instructorVehicle && $userData->instructorVehicle->vehicle_image )
+                                                            <div class="mt-2">
+                                                                <img src="{{ asset('vehicles/'. $userData->instructorVehicle->vehicle_image)}}"
+                                                                    alt="vehicleImg" class="img-thumbnail"
+                                                                    style="max-width: 150px;">
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-info">Submit</button>
+                                                    <button type="reset" class="btn btn-default" onclick="window.location='{{ route('instructors.index') }}'">Cancel</button>
+                                                </div>
+                                                <!-- /.card-footer -->
+                                            </form>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                </div>
+                                {{-- vehicle ends --}}
+                                 {{-- suburbs starts --}}
+                                 <div class="tab-pane fade" id="vert-tabs-suburbs" role="tabpanel"
+                                 aria-labelledby="vert-tabs-suburbs-tab">
+                                 <div class="card card-info">
+                                     <div class="card-header">
+                                         <h3 class="card-title">Suburbs Details</h3>
+                                     </div>
+                                     <!-- /.card-header -->
+                                     <div class="card-body">
+                                         <form action="{{ route('instructors.store') }}" method="POST"
+                                             enctype="multipart/form-data">
+                                             @csrf
+                                             <input type="hidden" name="form_type" value="suburbs_details">
+                                             <div class="row">
+                                                 <div class="col-sm-6">
+                                                     <!-- text input -->
+                                                     <div class="form-group">
+                                                        <label>Select Suburbs</label>
+                                                        <input type="hidden" class="form-control" name="user_id"
+                                                             value="{{ $userData->id }}" />
+                                                        <select class="select2" multiple="multiple" data-placeholder="Select a Location" style="width: 100%;"
+                                                                name="location_id[]">
+                                                            @if ($allLocation)
+                                                                @foreach ( $allLocation as $location)
+                                                                    <option value ="{{ $location->id }}">{{ $location->street . ' - ' . $location->city . ' , ' . $location->postcode }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                         
+                                                     </div>
+                                                    </div>
+                                             </div>
+                                            <div class="card-footer">
+                                                 <button type="submit" class="btn btn-info">Submit</button>
+                                                 <button type="reset" class="btn btn-default" onclick="window.location='{{ route('instructors.index') }}'">Cancel</button>
+                                             </div>
+                                             <!-- /.card-footer -->
+                                         </form>
+                                     </div>
+                                     <!-- /.card-body -->
+                                 </div>
+                             </div>
+                             {{-- suburbs ends --}}
+                                {{-- bank starts --}}
                                 <div class="tab-pane fade" id="vert-tabs-bank" role="tabpanel"
                                     aria-labelledby="vert-tabs-bank-tab">
                                     <div class="card card-info">
@@ -418,7 +561,7 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Salary Pay Mode</label>
-                                                            @if ($userData->bankDetails)
+                                                             @if ($userData->bankDetails)
                                                                 <select class="form-control select2" style="width: 100%;"
                                                                 name="salaryPayModeId">
                                                                     <option value="" disabled>Select a Salary Mode
@@ -480,7 +623,7 @@
                                                             <label for="salaryBranchName">Branch</label>
                                                             @if ($userData->bankDetails)
                                                                 <input type="text" class="form-control"
-                                                                id="salaryBankName" name="salaryBankName"
+                                                                id="salaryBranchName" name="salaryBranchName"
                                                                 value="{{ $userData->bankDetails->salary_branch_name }}"
                                                                 placeholder="Enter Salary Bank Name">
                                                                 
@@ -537,7 +680,7 @@
                                         <!-- /.card-body -->
                                     </div>
                                 </div>
-
+                                {{-- bank ends --}}
                             </div>
                         </div>
                     </div>
@@ -552,7 +695,8 @@
     <script>
         $(function() {
             //bsCustomFileInput.init();
-
+            //Initialize Select2 Elements
+            $('.select2').select2()
             //Date picker
             $('#reservationdate').datetimepicker({
                 format: 'L'

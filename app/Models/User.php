@@ -18,8 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'username',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'isAdmin',
@@ -75,5 +75,9 @@ class User extends Authenticatable
     public function learnerBankDetails()
     {
         return $this->hasOne(LearnerBankDetails::class, 'user_id', 'id');
+    }
+
+    public function instructorVehicle() {
+        return $this->hasOne(InstructorVehicle::class, 'instructor_id', 'id');
     }
 }

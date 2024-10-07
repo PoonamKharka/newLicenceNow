@@ -61,7 +61,7 @@ $(function() {
              serverSide: true,
              ajax: "{{ route('instructors.index') }}",
              columns: [
-                      { data: 'name', name: 'name' },
+                      { data: 'username', name: 'username' },
                       { data: 'status', name: 'status' },
                       { data: 'action', name: 'action', orderable: false, searchable: false},
                    ]
