@@ -23,8 +23,8 @@ class ForgotPasswordService {
         return $this->forgotPasswordRep->sendResetLinkEmail($request);
     }
 
-    public function showResetForm(Request $request) {
-        return $this->forgotPasswordRep->showResetForm($request);
+    public function showResetForm(Request $request, $token = null) {
+        return $this->forgotPasswordRep->showResetForm($request,$token);
     }
     public function reset(Request $request) {
         return $this->forgotPasswordRep->reset($request);

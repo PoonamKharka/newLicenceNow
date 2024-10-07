@@ -26,6 +26,11 @@
       <a href="#" class="h3">{{ ucwords (str_replace('-', ' ', config('app.name'))) , 'License Now' }}</a>
     </div>
     <div class="card-body">
+      @if (session('status'))
+        <div class="alert alert-success" role="alert">
+          {{ session('status') }}
+        </div>
+      @endif
       <p class="login-box-msg">Sign in to start your session</p>
 
       <form action="{{  url('login') }}" method="POST" id="login-form">
@@ -60,7 +65,7 @@
       </form>
 
       <p class="mb-1">
-        <a href="javascript::void(0)">Forgot Password</a>
+        <a href="{{ route('password.forgot') }}">Forgot Password</a>
       </p>
     </div>
     <!-- /.card-body -->

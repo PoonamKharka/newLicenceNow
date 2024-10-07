@@ -27,8 +27,8 @@ class ForgotPasswordController extends Controller
         
     }
 
-    public function showResetForm(Request $request){
-        return $this->forgotPasswordService->showResetForm($request);
+    public function showResetForm(Request $request, $token = null){
+        return $this->forgotPasswordService->showResetForm($request,$token);
     }
     public function reset(Request $request){
         return $this->forgotPasswordService->reset($request);

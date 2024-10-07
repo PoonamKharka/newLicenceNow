@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class ForgotPasswordRepository implements ForgotPasswordRepositoryInterFace {
 
@@ -93,6 +94,7 @@ class ForgotPasswordRepository implements ForgotPasswordRepositoryInterFace {
         $user->email_verified_at = now();         
         $user->save();       
         $this->guard()->login($user);
+        
     }
 
     /**
@@ -104,7 +106,7 @@ class ForgotPasswordRepository implements ForgotPasswordRepositoryInterFace {
      */
     protected function sendResetResponse(Request $request, $response)
     {
-        return redirect()->route('login')->with('status', __($response));
+        return redirect('/admin-dashboard')->with('status', __($response));
     }
 
     /**
@@ -117,6 +119,16 @@ class ForgotPasswordRepository implements ForgotPasswordRepositoryInterFace {
     protected function sendResetFailedResponse(Request $request, $response)
     {
         return back()->withErrors(['email' => __($response)]);
+    }
+    
+    /**
+     * Get logs in the user after resetting their password.
+     *
+     */
+    protected function guard()
+    {
+        // Return the default guard
+        return Auth::guard();
     }
 }
 
