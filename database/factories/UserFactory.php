@@ -15,12 +15,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Admin admin',
+            'first_name' => 'admin',
+            'last_name' => 'admin',
             'email' => 'adminln@yopmail.com',
             'email_verified_at' => now(),
             'isAdmin' => 1,
             'userType_id' => 1,
-            'username' => 'admin',
             'password' => '$2a$10$S6RAT1YG2dQ2mnzXJp1xEOsXppcmygjMcO2KQGAqWE7WLJOWuJPuG', // admin
             'remember_token' => Str::random(10),
         ];

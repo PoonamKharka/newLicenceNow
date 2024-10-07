@@ -32,17 +32,11 @@ class StoreInstructorRequest extends FormRequest
         if ($formType === 'personal_details') {
             $rules = array_merge($rules, [
                 'user_id' => 'required|exists:users,id',
-                'phoneNo' => 'required|unique:instructor_profile_details,phoneNo',
-                'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'contactAddress' => 'required',
-                'state' => 'required',
-                'postalCode' => 'nullable',
-                'dob' => 'required|date_format:d/m/Y',
-                'doj' => 'required|date_format:d/m/Y',
-                'dot' => 'nullable|date_format:d/m/Y',
-                'drivingExpirence' => 'required',
-                'bloodGroupId' => 'required|exists:blood_groups,id',
-                'genderId' => 'required|exists:genders,id',
+                'phoneNo' => 'required|unique:instructor_profile_details',
+                'profile_picture' => 'image|mimes:jpeg,png,jpg|max:2048',
+                'isAuto' => 'required',
+                'isManual' => 'required',
+                'driving_expirence' => 'required'
             ]);
         } elseif ($formType === 'bank_details') {
             $rules = array_merge($rules, [
@@ -52,8 +46,6 @@ class StoreInstructorRequest extends FormRequest
                 'salaryBranchName' => 'required',
                 'salaryIFSCCode' => 'required',
                 'salaryAccountNumber' => 'required',
-                'postalCode' => 'nullable',
-                'state' => 'required',
             ]);
         }
 

@@ -9,7 +9,7 @@ class ApiResponse extends JsonResource {
 
     public static function success($data, $message = null)
     {
-        return response()->json([
+        response()->json([
             'success' => true,
             'message' => $message,
             'data' => $data

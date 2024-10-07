@@ -2,16 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\RegistrationController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\LearnerController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\auth\LoginController;
-use App\Http\Controllers\InstructorController;
-use App\Http\Controllers\PaymentPolicyController;
-use App\Http\Controllers\PrivacyPolicyController;
-
+use App\Http\Controllers\API\RegistrationController;
+use App\Http\Controllers\API\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,8 +15,15 @@ use App\Http\Controllers\PrivacyPolicyController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('docs', function () {
+    return view('swagger');
 });
 
+# Authentication Route
 Route::post('register', [RegistrationController::class, 'registration']);
+Route::post('login', [RegistrationController::class, 'login']);
+
+# public wesite apis
+Route::middleware('auth:api')->group( function() {
+    Route::get('about', [ArticleController::class, 'getDataOfAboutUs']);
+});

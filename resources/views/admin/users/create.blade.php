@@ -35,59 +35,59 @@
                     @csrf
                     <div class="row">
                       <div class="col-sm-6">
-                        <!-- text input -->
-                        <div class="form-group">
-                          <label>Name</label>
-                          <input type="text" class="form-control" placeholder="Enter Name" name="name">
-                        </div>
+                        <label>First Name</label>
+                        <input type="text" class="form-control" placeholder="John" name="first_name">
+                          @error('first_name')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
                       </div>
+                      <div class="col-sm-6">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" placeholder="Deo" name="last_name">
+                          @error('last_name')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label>Select User Type</label>
+                          <select class="form-control select" name="userType_id">
+                            <option value = 1>Admin</option>
+                            <option value = 2 selected>Instructor</option>
+                          </select>
+                        </div>
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label>Email</label>
-                          <input type="email" class="form-control" placeholder="Enter Email" name="email">
+                          <input type="email" class="form-control" placeholder="test@yopmail.com" name="email">
                           @error('email')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
                         </div>
                       </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                              <label>Username</label>
-                              <input type="text" class="form-control" placeholder="Enter Username" name="username">
-                              @error('username')
-                                <span class="text-danger">{{ $message }}</span>
-                              @enderror
-                            </div>
-                          </div>
-                        <div class="col-sm-6">
-                            <!-- select -->
-                            <div class="form-group">
-                            <label>Select User Type</label>
-                            <select class="form-control" name="userType_id">
-                              <option value = 0  selected>User Type</option>
-                              <option value = 1>Admin</option>
-                              <option value = 2>Instructor</option>
-                              {{-- <option value = 3>Learner</option> --}}
-                            </select>
-                            </div>
-                      </div>
-                    </div>
-
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                               <label>Password</label>
-                              <input type="password" class="form-control" placeholder="Enter Password" name="password">
+                              <input type="password" class="form-control" placeholder="****" name="password">
                               @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                               @enderror
                             </div>
                           </div>
-                    </div>
-                    <!-- /.card-body -->
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>Confirm Password</label>
+                              <input type="password" class="form-control" name="password_confirmation" placeholder="****">
+                              @error('password_confirmation')
+                                <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /.card-body -->
                     <div class="card-footer">
                       <button type="submit" class="btn btn-info">Submit</button>
                       <button type="reset" class="btn btn-default" onclick="window.location='{{ route('users.index') }}'">Cancel</button>

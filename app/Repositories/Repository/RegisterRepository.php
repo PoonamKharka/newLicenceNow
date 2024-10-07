@@ -32,17 +32,19 @@ class RegisterRepository implements RegisterRepositoryInterFace
                     if ($row->userType_id == 2) {
                         return 'Instructor';
                     }
-                    if ($row->userType_id == 3) {
-                        return 'Learner';
-                    }
+                })
+                ->addColumn('username', function ($row) {
+                    $name = $row->first_name . ' ' . $row->last_name;
+                    return $name;
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' . route('users.show', encrypt($row->id)) . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
+                    $btn .= '&nbsp;&nbsp;';
                     $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '" data-url="' . route('users.destroy', encrypt($row->id)) . '"><i class="fas fa-trash"></i></button>';
 
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'username'])
                 ->make(true);
         }
 
@@ -57,18 +59,18 @@ class RegisterRepository implements RegisterRepositoryInterFace
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|unique:users',
-            'password' => 'required|min:4',
+            'first_name' => 'required',
+            'password' => 'required|confirmed|min:4',
+            'password_confirmation' => 'required',
             'email' => 'required|email|unique:users'
         ], [
-            'username.required' => 'User Name field is required.',
+            'first_name.required' => 'First Name field is required.',
             'password.required' => 'Password field is required.',
+            'password_confirmation' => 'Password not matched',
             'email.required' => 'Email field is required.',
             'email.email' => 'Email field must be email address.'
         ]);
         $request['password'] = Hash::make($request->password);
-        $request['name'] = $request->name;
-        //dd($request->all());
         $user = User::create($request->all());
 
         return $user;

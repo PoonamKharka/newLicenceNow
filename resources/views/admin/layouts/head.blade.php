@@ -45,7 +45,7 @@
 <!-- SweetAlert2 -->
 <script src="{{  asset('adminlte/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <!-- Toastr -->
-<script src="{{ asset('adminlte/plugins/toastr/toastr.min.js"') }}></script>
+<script src="{{ asset('adminlte/plugins/toastr/toastr.min.js') }}"></script>
 
 <!-- ChartJS -->
 <script src="{{  asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>

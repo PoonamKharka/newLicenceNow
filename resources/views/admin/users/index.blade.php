@@ -26,7 +26,7 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">
-              <a href="{{ route('users.create') }}" class="btn btn-block btn-sm btn-success"> Add Customers </a>
+              <a href="{{ route('users.create') }}" class="btn btn-block btn-sm btn-success"> Add User </a>
             </h3>
           </div>
           <!-- /.card-header -->
@@ -44,7 +44,7 @@
             <table id="y_dataTables" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Name</th>
+                <th>Username</th>
                 <th>Email</th>
                 <th>User Type</th>
                 <th>Status</th>
@@ -72,8 +72,7 @@
            serverSide: true,
            ajax: "{{ route('users.index') }}",
            columns: [
-                    // { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
+                    { data: 'username', name: 'username' },
                     { data: 'email', name: 'email' },
                     { data: 'userType_id' , name: 'userType_id'},
                     { data: 'status', name: 'status' },
