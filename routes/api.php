@@ -15,9 +15,9 @@ use App\Http\Controllers\API\ArticleController;
 |
 */
 
-Route::get('docs', function () {
-    return view('swagger');
-});
+// Route::get('docs', function () {
+//     return view('swagger');
+// });
 
 # Authentication Route
 Route::post('register', [RegistrationController::class, 'registration']);
@@ -26,4 +26,6 @@ Route::post('login', [RegistrationController::class, 'login']);
 # public wesite apis
 Route::middleware('auth:api')->group( function() {
     Route::get('about', [ArticleController::class, 'getDataOfAboutUs']);
+    Route::get('faqs', [ArticleController::class, 'getAllFaqs']);
+    Route::get('features', [ArticleController::class, 'getAllFeatures']);
 });

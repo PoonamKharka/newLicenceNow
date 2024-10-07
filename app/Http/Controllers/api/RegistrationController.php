@@ -51,26 +51,38 @@ class RegistrationController extends BaseController
 
    
     /**
-     * @OA\Put(
-     *     path="/users/{id}",
-     *     summary="Updates a user",
-     *     @OA\Parameter(
-     *         description="Parameter with mutliple examples",
-     *         in="path",
-     *         name="id",
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="User login",
+     *     @OA\RequestBody(
      *         required=true,
-     *         @OA\Schema(type="string"),
-     *         @OA\Examples(example="int", value="1", summary="An int value."),
-     *         @OA\Examples(example="uuid", value="0006faf6-7a61-426c-9034-579f2cfcfa83", summary="An UUID value."),
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", example="your_password")
+     *         )
      *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="OK"
-     *     )
-     * )
-     */
+    *     @OA\Response(
+    *         response=200,
+    *         description="Successful login",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="token", type="string", example="Bearer your_token_here")
+    *         )
+    *     ),
+    *     @OA\Response(
+    *         response=401,
+    *         description="Unauthorized",
+    *         @OA\JsonContent(
+    *             type="object",
+    *             @OA\Property(property="error", type="string", example="Unauthorized")
+    *         )
+    *     )
+    * )
+    */ 
     public function login(Request $request): JsonResponse
     {
+        
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('access-token')-> accessToken; 
