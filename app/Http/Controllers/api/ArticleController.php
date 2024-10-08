@@ -9,6 +9,8 @@ use Illuminate\Http\JsonResponse;
 use App\Models\AboutUs;
 use App\Models\Faq;
 use App\Models\Feature;
+use App\Models\NavMenu;
+use App\Models\PrivacyPolicyArticle;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends BaseController
@@ -66,6 +68,47 @@ class ArticleController extends BaseController
         try {
             $feature = Feature::get();
             return $this->successResponse($feature, "Data Found");
+        } catch (\Exception $ex) {
+            return $this->errorResponse($ex);
+        }
+    }
+    /**
+     * @OA\Get(
+     *     path="/api/article/privacy-policies",
+     *     summary="Get all article privacy policies",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
+    public function getAllPrivacyPolicies(): JsonResponse {
+       
+        try {
+            $privacyPolicyArticle = PrivacyPolicyArticle::get();
+            return $this->successResponse($privacyPolicyArticle, "Data Found");
+        } catch (\Exception $ex) {
+            return $this->errorResponse($ex);
+        }
+    }
+    
+    /**
+     * @OA\Get(
+     *     path="/api/nav-menu",
+     *     summary="Get all menu items",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
+    public function getAllMenu(): JsonResponse {
+       
+        try {
+            $navMenu = NavMenu::get();
+            return $this->successResponse($navMenu, "Data Found");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex);
         }

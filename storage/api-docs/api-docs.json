@@ -38,6 +38,38 @@
                 ]
             }
         },
+        "/api/article/privacy-policies": {
+            "get": {
+                "summary": "Get all article privacy policies",
+                "operationId": "0022035189a397504c037d76f744d489",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/nav-menu": {
+            "get": {
+                "summary": "Get all menu items",
+                "operationId": "e6375aef53cf2190e67ec8d1b26b8530",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/login": {
             "post": {
                 "summary": "User login",
