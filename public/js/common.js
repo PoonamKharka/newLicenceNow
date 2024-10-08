@@ -283,5 +283,22 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
+    /* Nav menu module */
+    $('#navMenuForm').on('submit', function (e) {
+        let isValid = true;
+        $('.error-message').remove();
+        $('.form-control').removeClass('is-invalid');
+        if ($('input[name="title"]').val().trim() === '') {
+            isValid = false;
+            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+        }
+        if ($('input[name="slug"]').val().trim() === '') {
+            isValid = false;
+            $('input[name="slug"]').addClass('is-invalid').after('<div class="error-message text-danger">Slug is required.</div>');
+        }
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
 
 });

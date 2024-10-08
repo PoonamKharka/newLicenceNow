@@ -20,6 +20,7 @@ use App\Http\Controllers\InstructorTermsAndConditionsController;
 use App\Http\Controllers\PrivacyPolicyArticleController;
 use App\Http\Controllers\PaymentPolicyArticleController;
 use App\Http\Controllers\auth\ForgotPasswordController;
+use App\Http\Controllers\NavMenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,7 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::resource('instructor-terms-and-condition',InstructorTermsAndConditionsController::class);
     Route::resource('privacy-policy-articles',PrivacyPolicyArticleController::class);
     Route::resource('payment-policy-articles',PaymentPolicyArticleController::class);
+    Route::resource('nav-menu',NavMenuController::class);
    
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

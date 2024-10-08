@@ -79,12 +79,22 @@
             </p>
           </a>
         </li>
+        
         <!-- Learners -->
         <li class="nav-item">
           <a href="{{ route('learners.index') }}" class="nav-link {{ request()->is('learners*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Learners
+            </p>
+          </a>
+        </li>
+        <!-- Nav Menu -->
+        <li class="nav-item">
+          <a href="{{ route('nav-menu.index') }}" class="nav-link {{ request()->is('nav-menu*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-chalkboard-teacher"></i>
+            <p>
+              Nav Menu
             </p>
           </a>
         </li>
