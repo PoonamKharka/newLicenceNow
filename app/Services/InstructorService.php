@@ -76,12 +76,15 @@ class InstructorService
                     'isManual' => $isManualVal
                 ];
                 $userData = $this->instRep->store($request);
-                
+               
                 if( $userData ){
                     $updateDetails =  $userData->update($instructorProfileDetail);
                 } else {
+                    dd($instructorProfileDetail);
                     $updateDetails =  InstructorProfileDetail::create($instructorProfileDetail);
+                    
                 }
+               
                 return $updateDetails;
             } 
 

@@ -13,6 +13,23 @@
                         <li class="breadcrumb-item active">Instructors</li>
                     </ol>
                 </div>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                </div>
+            @endif
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
                 <!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -25,6 +42,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="row">
+                       
                         <div class="col-5 col-sm-3">
                             <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist"
                                 aria-orientation="vertical">
@@ -61,8 +79,9 @@
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
+                                            
                                             <form action="{{ route('instructors.store') }}" method="POST"
-                                                enctype="multipart/form-data">
+                                                enctype="multipart/form-data" id="personal_details">
                                                 @csrf
                                                 <input type="hidden" name="form_type" value="personal_details">
                                                 <div class="row">
@@ -73,7 +92,7 @@
                                                             <input type="hidden" class="form-control" name="user_id"
                                                                 value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
-                                                                value="{{ $userData->first_name . ' ' . $userData->last_name }}" disabled />
+                                                                value="{{ $userData->name . ' ' . $userData->last_name }}" disabled />
                                                                 
                                                         </div>
                                                     </div>
@@ -237,7 +256,7 @@
                                                             @else
                                                                 <select class="select2" style="width: 100%;"
                                                                     name="gender_id">
-                                                                    <option selected="selected">Select a Gender</option>
+                                                                    <option selected="selected" value="">Select a Gender</option>
                                                                     <option value="1">Female</option>
                                                                     <option value="2">Male</option>
                                                                     <option value="3">Others</option>
@@ -314,7 +333,7 @@
                                                             @else
                                                                 <select class="form-control select2" style="width: 100%;"
                                                                     name="blood_group_id">
-                                                                    <option selected="selected">Select a Blood Group
+                                                                    <option selected="selected" value="">Select a Blood Group
                                                                     </option>
                                                                     <option value="1">O+</option>
                                                                     <option value="2">A+</option>

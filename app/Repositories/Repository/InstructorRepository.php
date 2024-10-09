@@ -96,7 +96,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
             $doj = $request->input('doj') ? Carbon::createFromFormat('d/m/Y', $request->input('doj'))->format('Y-m-d') : null;
             $dot = $request->input('dot') ? Carbon::createFromFormat('d/m/Y', $request->input('dot'))->format('Y-m-d') : null;
 
-            $instructorProfileDetail = InstructorProfileDetail::where('user_id', $userId)->firstOrFail();
+            $instructorProfileDetail = InstructorProfileDetail::where('user_id', $userId)->firstOrFail();            
 
             if ($request->hasFile('picture')) {
                 $imageFileName = time() . '_image.' . $request->file('picture')->getClientOriginalExtension();

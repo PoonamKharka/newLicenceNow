@@ -27,6 +27,7 @@ Route::post('login', [RegistrationController::class, 'login']);
 Route::middleware('auth:api')->group( function() {
     Route::get('about', [ArticleController::class, 'getDataOfAboutUs']);
     Route::get('faqs', [ArticleController::class, 'getAllFaqs']);
+    Route::get('articles-data', [ArticleController::class, 'getAllArticleModules']);
     Route::get('features', [ArticleController::class, 'getAllFeatures']);
     Route::get('article/privacy-policies',[ArticleController::class,'getAllPrivacyPolicies']);
     Route::get('nav-menu',[ArticleController::class,'getAllMenu']);

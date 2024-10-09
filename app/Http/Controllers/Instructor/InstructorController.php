@@ -38,6 +38,7 @@ class InstructorController extends Controller
 
    public function store(StoreInstructorRequest $request)
    {
+      
       $status = $this->instService->store($request);
      
       if($status && $request->form_type == "vehicle_details") {
@@ -45,6 +46,8 @@ class InstructorController extends Controller
       }
       if($status){
          return redirect()->route('instructors.show' , encrypt($request->user_id))->with('success', 'Action completed!');
+      }else{
+         return back()->with('error', 'Failed to save instructor details.');
       }
    }
 

@@ -29,6 +29,9 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/toastr/toastr.min.css') }}">
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <!-- common css -->
+  <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+  
   {{-- All Common Scripts --}}
   <!-- jQuery -->
 <script src="{{  asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
@@ -73,3 +76,4 @@
 
 <!-- common js -->
 <script src="{{ asset('js/common.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>

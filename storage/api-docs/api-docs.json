@@ -6,6 +6,38 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/articles-data?features=true&learnerTC=true&instructorTC=true&paymentPolicy=true": {
+            "get": {
+                "summary": "Get all article modules based on parameters( 1.Features 2.Learner Terms and Conditions 3.Instructor Terms and Conditions 4.Privacy Policy 5.Payment Policy )",
+                "operationId": "9da6500bd4d46170d18adb088d61aee8",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/about": {
+            "get": {
+                "summary": "Get About us page data",
+                "operationId": "b22068b2a7d0924cf976dfbc5bf0f19d",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/faqs": {
             "get": {
                 "summary": "Get all FAQs",
