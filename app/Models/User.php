@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -79,5 +80,13 @@ class User extends Authenticatable
 
     public function instructorVehicle() {
         return $this->hasOne(InstructorVehicle::class, 'instructor_id', 'id');
+    }
+    /**
+     * The locations associated with the user.
+     */
+    public function instructorLocations()
+    {
+        return $this->belongsToMany(Location::class, 'instructor_locations', 'instructor_id', 'location_id');
+        //return $this->hasMany(InstructorLocation::class, 'instructor_id', 'id');
     }
 }

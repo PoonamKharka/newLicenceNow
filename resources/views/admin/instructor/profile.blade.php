@@ -13,23 +13,7 @@
                         <li class="breadcrumb-item active">Instructors</li>
                     </ol>
                 </div>
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                </div>
-            @endif
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
+               
                 <!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -65,14 +49,24 @@
                                 {{-- profile starts --}}
                                 <div class="tab-pane text-left fade show active" id="vert-tabs-profile" role="tabpanel"
                                     aria-labelledby="vert-tabs-profile-tab">
-                                    @if (session('success'))
-                                        <div class="alert alert-success">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <i class="fas fa-times"></i>
-                                        </button>
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    </div>
+                                @endif
+                                @if(session('success'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         {{ session('success') }}
-                                        </div>
-                                    @endif
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+                                    
                                     <div class="card card-info">
                                         <div class="card-header">
                                             <h3 class="card-title">Personal Details</h3>
@@ -271,6 +265,8 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">+61</span>
                                                             </div>
+                                                            <input type="hidden" name="existing_phoneNo" value="{{ $userData->profileDetails->phoneNo??'' }}">
+
                                                             @if ($userData->profileDetails)
                                                                 <input type="text" class="form-control"
                                                                     data-inputmask='"mask": "(999) 999-9999"' data-mask
@@ -298,35 +294,35 @@
                                                                 <select class="form-control select2" style="width: 100%;"
                                                                     name="blood_group_id">
                                                                     <option value="1"
-                                                                        {{ $userData->profileDetails->blood_group == 1 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 1 ? 'selected' : '' }}>
                                                                         O+
                                                                     </option>
                                                                     <option value="2"
-                                                                        {{ $userData->profileDetails->blood_group == 2 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 2 ? 'selected' : '' }}>
                                                                         A+
                                                                     </option>
                                                                     <option value="3"
-                                                                        {{ $userData->profileDetails->blood_group == 3 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 3 ? 'selected' : '' }}>
                                                                         B+
                                                                     </option>
                                                                     <option value="4"
-                                                                        {{ $userData->profileDetails->blood_group == 4 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 4 ? 'selected' : '' }}>
                                                                         AB+
                                                                     </option>
                                                                     <option value="5"
-                                                                        {{ $userData->profileDetails->blood_group == 5 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 5 ? 'selected' : '' }}>
                                                                         O-
                                                                     </option>
                                                                     <option value="6"
-                                                                        {{ $userData->profileDetails->blood_group == 6 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 6 ? 'selected' : '' }}>
                                                                         A-
                                                                     </option>
                                                                     <option value="7"
-                                                                        {{ $userData->profileDetails->blood_group == 7 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 7 ? 'selected' : '' }}>
                                                                         B-
                                                                     </option>
                                                                     <option value="8"
-                                                                        {{ $userData->profileDetails->blood_group == 8 ? 'selected' : '' }}>
+                                                                        {{ $userData->profileDetails->blood_group_id == 8 ? 'selected' : '' }}>
                                                                         AB-
                                                                     </option>
                                                                 </select>
@@ -384,6 +380,7 @@
                                                         <label>Profile Picture</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
+                                                                <input type="hidden" name="existing_profile_picture" value="{{ $userData->profileDetails->profile_picture??'' }}">
                                                                 <input type="file" class="custom-file-input"
                                                                     id="exampleInputFile" name="profile_picture">
                                                                 @if($userData->profileDetails && $userData->profileDetails->profile_picture)
@@ -429,7 +426,7 @@
                                         <!-- /.card-header -->
                                         <div class="card-body">
                                             <form action="{{ route('instructors.store') }}" method="POST"
-                                                enctype="multipart/form-data">
+                                                enctype="multipart/form-data" id="vehicle_details">
                                                 @csrf
                                                 <input type="hidden" name="form_type" value="vehicle_details">
                                                 <input type="hidden" class="form-control" name="instructor_id" value="{{ $userData->id }}" />
@@ -474,6 +471,7 @@
                                                         <label>Vehicle Image</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
+                                                                <input type="hidden" name="existing_vehicle_image" value="{{ $userData->instructorVehicle->vehicle_image??'' }}">
                                                                <input type="file" class="custom-file-input"
                                                                 id="exampleInputFile" name="vehicle_image">
                                                                 
@@ -520,7 +518,7 @@
                                      <!-- /.card-header -->
                                      <div class="card-body">
                                          <form action="{{ route('instructors.store') }}" method="POST"
-                                             enctype="multipart/form-data">
+                                             enctype="multipart/form-data" id="suburbs_details">
                                              @csrf
                                              <input type="hidden" name="form_type" value="suburbs_details">
                                              <div class="row">
@@ -534,7 +532,11 @@
                                                                 name="location_id[]">
                                                             @if ($allLocation)
                                                                 @foreach ( $allLocation as $location)
-                                                                    <option value ="{{ $location->id }}">{{ $location->street . ' - ' . $location->city . ' , ' . $location->postcode }}</option>
+                                                                    {{-- <option value ="{{ $location->id }}">{{ $location->street . ' - ' . $location->city . ' , ' . $location->postcode }}</option> --}}
+                                                                    <option value="{{ $location->id }}" 
+                                                                        @if (in_array($location->id, $selectedLocationIds)) selected @endif>
+                                                                        {{ $location->street . ' - ' . $location->city . ' , ' . $location->postcode }}
+                                                                    </option>
                                                                 @endforeach
                                                             @endif
                                                         </select>
@@ -563,7 +565,7 @@
                                         <!-- /.card-header -->
                                         <div class="card-body">
                                             <form action="{{ route('instructors.store') }}" method="POST"
-                                                enctype="multipart/form-data">
+                                                enctype="multipart/form-data" id="bank_details">
                                                 @csrf
                                                 <input type="hidden" name="form_type" value="bank_details">
                                                 <div class="row">

@@ -56,6 +56,8 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     })->name('dashboard');
     Route::resource('users', RegisterController::class);
     Route::resource('instructors', InstructorController::class);
+    Route::post('/validate-phone', [InstructorController::class, 'validatePhone']);
+    Route::post('/validate-salary-pay-mode', [InstructorController::class, 'validateSalaryPayModeId']);
     Route::resource('testpackages', TestPackageController::class);
     Route::resource('articles', ArticleController::class);
     Route::resource('learners', LearnerController::class);

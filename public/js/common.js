@@ -367,7 +367,24 @@ $(document).ready(function () {
             },
             phoneNo: {
                 required: true,
-                phoneAU: true
+                //phoneAU: true,
+                remote: {
+                    url: "/validate-phone", // Server-side route to validate uniqueness
+                    type: "POST",
+                    data: {
+                        phoneNo: function () {
+                            return $("input[name='phoneNo']").val();
+                        },
+                        _token: $("input[name='_token']").val(),
+                        original_phoneNo: function () {
+                            return $("input[name='existing_phoneNo']").val();
+                        }
+                    },
+                    // Only validate uniqueness if the phone number has been changed
+                    depends: function () {
+                        return $("input[name='phoneNo']").val() !== $("input[name='existing_phoneNo']").val();
+                    }
+                }
             },
             blood_group_id: {
                 required: true
@@ -379,7 +396,10 @@ $(document).ready(function () {
                 required: true,
             },
             profile_picture: {
-                required: true,
+                required: function (element) {
+                    // Check if the user already has a profile picture or not
+                    return $('input[name="existing_profile_picture"]').val() === "";
+                },
                 fileExtension: "jpeg|jpg|png",
                 fileSize: true
             }
@@ -393,6 +413,10 @@ $(document).ready(function () {
                 required: "Please enter your date of birth",
                 date: "Please enter a valid date"
             },
+            phoneNo: {
+                required: "Please enter a phone number.",
+                remote: "This phone number is already in use."
+            },
             profile_picture: {
                 required: "Please upload a profile picture.",
                 fileExtension: "Only JPG, JPEG, and PNG files are allowed.",
@@ -402,9 +426,8 @@ $(document).ready(function () {
         submitHandler: function (form, event) {
             //event.preventDefault();
             console.log("Form validated successfully");
-            setTimeout(() => {
-                form.submit();
-            }, 1000);
+            form.submit();
+
         }
     });
 
@@ -416,6 +439,126 @@ $(document).ready(function () {
         $(this).valid();
     });
 
+    // Form validation
+    $("#vehicle_details").validate({
+        rules: {
+            vehicle_name: {
+                required: true,
+            },
+            vehicle_no: {
+                required: true,
+            },
+            ancap_rating: {
+                required: true,
+                number: true,
+                min: 1,
+                max: 5
+            },
+            vehicle_image: {
+                required: function (element) {
+                    // Check if the user already has a profile picture or not
+                    return $('input[name="existing_vehicle_image"]').val() === "";
+                },
+                fileExtension: "jpeg|jpg|png",
+                fileSize: true
+            }
+        },
+        messages: {
 
+            vehicle_image: {
+                required: "Please upload a profile picture.",
+                fileExtension: "Only JPG, JPEG, and PNG files are allowed.",
+                filesize: "The file size must be less than 2MB."
+            }
+        },
+        submitHandler: function (form, event) {
+            //event.preventDefault();
+            console.log("Form validated successfully");
+            form.submit();
+
+        }
+    });
+
+    $("#suburbs_details").validate({
+        rules: {
+            'location_id[]': {
+                required: true
+            },
+
+        },
+        messages: {
+            'location_id[]': {
+                required: "Please select at least one suburb."
+            }
+        },
+        submitHandler: function (form) {
+            console.log("Form validated successfully");
+            form.submit();
+        }
+    });
+    $("#bank_details").validate({
+        rules: {
+            salaryPayModeId: {
+                required: true,
+                remote: {
+                    url: "/validate-salary-pay-mode",
+                    type: "POST",
+                    data: {
+                        salaryPayModeId: function () {
+                            return $("select[name='salaryPayModeId']").val();
+                        },
+                        _token: $("input[name='_token']").val()
+                    },
+                    dataFilter: function (response) {
+
+                        var jsonResponse = JSON.parse(response);
+
+                        if (jsonResponse.errors && jsonResponse.errors.salaryPayModeId) {
+                            return "\"" + jsonResponse.errors.salaryPayModeId[0] + "\"";
+                        }
+
+                        return true;
+                    }
+                }
+            },
+            salaryBankName: {
+                required: true
+            },
+            salaryBranchName: {
+                required: true
+            },
+            salaryIFSCCode: {
+                required: true
+            },
+            salaryAccountNumber: {
+                required: true,
+                digits: true,
+                maxlength: 20
+            }
+        },
+        messages: {
+            salaryPayModeId: {
+                required: "Please select a salary pay mode.",
+                remote: "The selected salary pay mode is invalid."
+            },
+            salaryBankName: {
+                required: "Please enter the bank name."
+            },
+            salaryBranchName: {
+                required: "Please enter the branch name."
+            },
+            salaryIFSCCode: {
+                required: "Please enter the IFSC code."
+            },
+            salaryAccountNumber: {
+                required: "Please enter the account number.",
+                digits: "Please enter only numbers.",
+                maxlength: "Account number must be at most 20 digits long."
+            }
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
 
 });

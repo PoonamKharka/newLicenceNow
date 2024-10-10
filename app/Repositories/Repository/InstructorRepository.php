@@ -57,8 +57,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
     public function profile($id)
     {
         $userId = decrypt($id);
-        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle')->findOrFail($userId);
-        //dd($userData);
+        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle','instructorLocations')->findOrFail($userId);        
         if ($userData->profileDetails) {
             $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
             $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
@@ -130,8 +129,9 @@ class InstructorRepository implements InstructorRepositoryInterFace
 
             // Check if the record exists
             $findUser = InstructorBankDetail::where('user_id', '=', $request->input('user_id'))->first();
-
+            
             if ($findUser) {
+                
                 // Update the existing record
                 $updateDetails = $findUser->update($instructorBankDetail);
             } else {
@@ -147,5 +147,23 @@ class InstructorRepository implements InstructorRepositoryInterFace
                 return back()->with('error', 'Failed to save instructor bank details.');
             }
         }
+    }
+    public function validatePhone($phoneNo)
+    {
+        $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)->exists();
+        return !$exists; // Return true if not exists, false otherwise
+    }
+    public function validateSalaryPayModeId(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'salaryPayModeId' => 'required|exists:salary_pay_modes,id',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+    
+
+        return true;
     }
 }
