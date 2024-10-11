@@ -20,9 +20,38 @@ class ArticleController extends BaseController
 {
     /**
      * @OA\Get(
-     *     path="/api/articles-data?features=true&learnerTC=true&instructorTC=true&paymentPolicy=true",
-     *     summary="Get all article modules based on parameters( 1.Features 2.Learner Terms and Conditions 3.Instructor Terms and Conditions 4.Privacy Policy 5.Payment Policy )",
-     *     security={{"bearerAuth": {}}},
+     *     path="/api/articles-data",
+     *     summary="Get all article modules based on parameters",
+     *     description="Retrieve a list of all modules of article based on parameters and you can pass any specific parameter to get specic module",
+     *     security={{"bearerAuth": {}}},  
+     *     @OA\Parameter(
+     *         name="features",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="boolean"),
+     *         description="Add this parameter true if you want to get features list"
+     *     ),
+     *     @OA\Parameter(
+     *         name="learnerTC",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="boolean"),
+     *         description="Add this parameter true if you want to get Learner Terms and Conditions list"
+     *     ),
+     * @OA\Parameter(
+     *         name="instructorTC",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="boolean"),
+     *         description="Add this parameter true if you want to get Instructor Terms and Conditions list"
+     *     ),
+     * @OA\Parameter(
+     *         name="paymentPolicy",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="boolean"),
+     *         description="Add this parameter true if you want to get Payment Policy list"
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK"

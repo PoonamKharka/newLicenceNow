@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegistrationController;
 use App\Http\Controllers\API\ArticleController;
+use App\Http\Controllers\API\SearchController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,4 +32,7 @@ Route::middleware('auth:api')->group( function() {
     Route::get('features', [ArticleController::class, 'getAllFeatures']);
     Route::get('article/privacy-policies',[ArticleController::class,'getAllPrivacyPolicies']);
     Route::get('nav-menu',[ArticleController::class,'getAllMenu']);
+    Route::get('instructor-search',[SearchController::class,'getAvailableInstructors']);
+    Route::get('instructors',[SearchController::class,'getAllInstructors']);
+    Route::get('suburbs-search',[SearchController::class,'getAvailableSuburbs']);
 });

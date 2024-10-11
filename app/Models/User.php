@@ -81,6 +81,7 @@ class User extends Authenticatable
     public function instructorVehicle() {
         return $this->hasOne(InstructorVehicle::class, 'instructor_id', 'id');
     }
+    
     /**
      * The locations associated with the user.
      */

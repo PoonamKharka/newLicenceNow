@@ -6,10 +6,49 @@
         "version": "1.0"
     },
     "paths": {
-        "/api/articles-data?features=true&learnerTC=true&instructorTC=true&paymentPolicy=true": {
+        "/api/articles-data": {
             "get": {
-                "summary": "Get all article modules based on parameters( 1.Features 2.Learner Terms and Conditions 3.Instructor Terms and Conditions 4.Privacy Policy 5.Payment Policy )",
-                "operationId": "9da6500bd4d46170d18adb088d61aee8",
+                "summary": "Get all article modules based on parameters",
+                "description": "Retrieve a list of all modules of article based on parameters and you can pass any specific parameter to get specic module",
+                "operationId": "ee0c6b2cf5b83ab5303b1cf324b0b638",
+                "parameters": [
+                    {
+                        "name": "features",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get features list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "learnerTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Learner Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "instructorTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Instructor Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "paymentPolicy",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Payment Policy list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -164,6 +203,79 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/instructor-search": {
+            "get": {
+                "summary": "Search all instructors based on location and transmission type",
+                "description": "Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",
+                "operationId": "fe02144dd7f24346c4b2a4e1599f4335",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "query",
+                        "description": "ID of the location (suburb)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "transmissionType",
+                        "in": "query",
+                        "description": "Transmission type of the instructor (e.g. 'auto' or 'manual')",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/instructors": {
+            "get": {
+                "summary": "Get all instructors",
+                "description": "Retrieve a list of all instructors",
+                "operationId": "029801c2258b7fe8b583b9b3247f262c",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/suburbs-search": {
+            "get": {
+                "summary": "Search all available locations",
+                "operationId": "5497230cf10e5ab6f67502553e28f315",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
