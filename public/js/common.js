@@ -365,27 +365,27 @@ $(document).ready(function () {
             gender_id: {
                 required: true
             },
-            phoneNo: {
-                required: true,
-                //phoneAU: true,
-                remote: {
-                    url: "/validate-phone", // Server-side route to validate uniqueness
-                    type: "POST",
-                    data: {
-                        phoneNo: function () {
-                            return $("input[name='phoneNo']").val();
-                        },
-                        _token: $("input[name='_token']").val(),
-                        original_phoneNo: function () {
-                            return $("input[name='existing_phoneNo']").val();
-                        }
-                    },
-                    // Only validate uniqueness if the phone number has been changed
-                    depends: function () {
-                        return $("input[name='phoneNo']").val() !== $("input[name='existing_phoneNo']").val();
-                    }
-                }
-            },
+            // phoneNo: {
+            //     required: true,
+            //     //phoneAU: true,
+            //     remote: {
+            //         url: "/validate-phone", // Server-side route to validate uniqueness
+            //         type: "POST",
+            //         data: {
+            //             phoneNo: function () {
+            //                 return $("input[name='phoneNo']").val();
+            //             },
+            //             _token: $("input[name='_token']").val(),
+            //             original_phoneNo: function () {
+            //                 return $("input[name='existing_phoneNo']").val();
+            //             }
+            //         },
+            //         // Only validate uniqueness if the phone number has been changed
+            //         // depends: function () {
+            //         //     return $("input[name='phoneNo']").val() !== $("input[name='existing_phoneNo']").val();
+            //         // }
+            //     }
+            // },
             blood_group_id: {
                 required: true
             },

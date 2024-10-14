@@ -32,6 +32,7 @@ class StoreInstructorRequest extends FormRequest
 
         // Extend base rules with form-specific rules
         if ($formType === 'personal_details') {
+            
             $rules = array_merge($rules, [
                 'user_id' => 'required|exists:users,id',
                 'phoneNo' => [

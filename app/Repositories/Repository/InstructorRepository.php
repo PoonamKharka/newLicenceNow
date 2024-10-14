@@ -148,10 +148,24 @@ class InstructorRepository implements InstructorRepositoryInterFace
             }
         }
     }
+    // public function validatePhone1($phoneNo)
+    // {
+        
+    //     $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)->exists();
+    //     return !$exists; // Return true if not exists, false otherwise
+    // }
     public function validatePhone($phoneNo)
-    {
-        $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)->exists();
-        return !$exists; // Return true if not exists, false otherwise
+    {   
+        dd("hiii");
+        $phoneExists = InstructorProfileDetail::where('phoneNo', $phoneNo->phoneNo)->exists();
+
+        if ($phoneExists && $phoneNo->phoneNo !== $phoneNo->original_phoneNo) {
+            return response()->json(false); // Invalid, phone number is already in use
+        }
+
+        return response()->json(true); // Valid, phone number is not in use
+        
+        
     }
     public function validateSalaryPayModeId(Request $request)
     {

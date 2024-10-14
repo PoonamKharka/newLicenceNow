@@ -57,7 +57,9 @@ class InstructorController extends Controller
    public function validatePhone(Request $request)
     {
       return $this->instService->validatePhone($request);
+      
     }
+    
     public function validateSalaryPayModeId(Request $request)
     {
       return $this->instService->validateSalaryPayModeId($request);

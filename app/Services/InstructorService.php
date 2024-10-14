@@ -34,7 +34,7 @@ class InstructorService
     public function store(Request $request)
     {
         try {
-            
+           
             // Determine which form was submitted
             $formType = $request->input('form_type');
 
@@ -49,6 +49,7 @@ class InstructorService
                 } else{
                     $isAutoVal = false;
                 }
+
                 $dob = Carbon::createFromFormat('d/m/Y', $request->input('date_of_birth'))->format('Y-m-d');
                 $doj = Carbon::createFromFormat('d/m/Y', $request->input('date_of_joining'))->format('Y-m-d');
                 $dot = $request->input('date_of_termination') ? Carbon::createFromFormat('d/m/Y', $request->input('date_of_termination'))->format('Y-m-d') : null;
@@ -70,7 +71,7 @@ class InstructorService
                     'isAuto' => $isAutoVal,
                     'isManual' => $isManualVal
                 ];
-               
+              
                 if ($request->hasFile('profile_picture')) {
                     $imageFileName = time() . $request->file('profile_picture')->getClientOriginalExtension();
                     $request->file('profile_picture')->move(public_path('profile'), $imageFileName);
@@ -197,6 +198,7 @@ class InstructorService
             }
            
         } catch(\Exception $ex){
+            dd( $ex);
             Log::error("Getting some error while adding instructor details =>" . $ex );
         } 
     }
