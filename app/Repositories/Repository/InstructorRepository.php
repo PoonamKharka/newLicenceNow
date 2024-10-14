@@ -148,25 +148,18 @@ class InstructorRepository implements InstructorRepositoryInterFace
             }
         }
     }
-    // public function validatePhone1($phoneNo)
-    // {
+    public function validatePhone($myRequest)
+    {
+        $phoneNo = $myRequest->input('phoneNo');
+        $originalPhoneNo = $myRequest->input('original_phoneNo');      
         
-    //     $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)->exists();
-    //     return !$exists; // Return true if not exists, false otherwise
-    // }
-    public function validatePhone($phoneNo)
-    {   
-        dd("hiii");
-        $phoneExists = InstructorProfileDetail::where('phoneNo', $phoneNo->phoneNo)->exists();
-
-        if ($phoneExists && $phoneNo->phoneNo !== $phoneNo->original_phoneNo) {
-            return response()->json(false); // Invalid, phone number is already in use
-        }
-
-        return response()->json(true); // Valid, phone number is not in use
-        
-        
+        $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)
+        ->where('phoneNo', '!=', $originalPhoneNo) 
+        ->exists();
+       
+        return response()->json(!$exists, $exists ? 200 : 200);
     }
+    
     public function validateSalaryPayModeId(Request $request)
     {
         $validator = Validator::make($request->all(), [

@@ -40,8 +40,8 @@ class StoreInstructorRequest extends FormRequest
                     Rule::unique('instructor_profile_details')->ignore($userId, 'user_id'), // Ignore current user's phone number during update
                 ],
                 //'profile_picture' => 'image|mimes:jpeg,png,jpg|max:2048',
-                'isAuto' => 'required',
-                'isManual' => 'required',
+                'isAuto' => 'required_without:isManual',
+                'isManual' => 'required_without:isAuto',
                 'driving_expirence' => 'required'
             ]);
         } elseif ($formType === 'bank_details') {
