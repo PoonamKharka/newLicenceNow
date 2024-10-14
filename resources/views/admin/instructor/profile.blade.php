@@ -86,7 +86,7 @@
                                                             <input type="hidden" class="form-control" name="user_id"
                                                                 value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
-                                                                value="{{ $userData->name . ' ' . $userData->last_name }}" disabled />
+                                                                value="{{ $userData->first_name . ' ' . $userData->last_name }}" disabled />
                                                                 
                                                         </div>
                                                     </div>
