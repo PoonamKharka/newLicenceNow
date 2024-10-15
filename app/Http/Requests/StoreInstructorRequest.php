@@ -27,7 +27,7 @@ class StoreInstructorRequest extends FormRequest
 
         // Base rules that apply to all requests
         $rules = [
-            'form_type' => 'required|in:personal_details,vehicle_details,suburbs_details,bank_details',
+            'form_type' => 'required|in:personal_details,vehicle_details,suburbs_details,bank_details,price_details',
         ];
 
         // Extend base rules with form-specific rules

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\InstructorService;
 use App\Http\Requests\StoreInstructorRequest;
 use App\Models\Location;
+use App\Models\Price;
 
 class InstructorController extends Controller
 {
@@ -38,7 +39,14 @@ class InstructorController extends Controller
          $selectedLocationIds = $userData->instructorLocations->pluck('id')->toArray();
       }     
       $allLocation = Location::get();
-      return view('admin.instructor.profile', compact('userData', 'allLocation','selectedLocationIds'));
+
+      $selectedPriceIds = [];
+      if (isset($userData->instructorPrices)) {         
+         $selectedPriceIds = $userData->instructorPrices->pluck('id')->toArray();
+      }   
+
+      $allPrices = Price::get();
+      return view('admin.instructor.profile', compact('userData', 'allLocation','selectedLocationIds','allPrices','selectedPriceIds'));
    }
 
    public function store(StoreInstructorRequest $request)

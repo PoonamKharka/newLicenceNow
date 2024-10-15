@@ -99,7 +99,50 @@ class SearchController extends BaseController
             return $this->errorResponse($ex);
         }
     }
-    
+     /**
+     * @OA\Get(
+     *     path="/api/instructors/{id}",
+     *     summary="Get instructor details",
+     *     description="Retrieve detailed information of a specific instructor by their ID.",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the instructor",
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful retrieval of instructor details",     *         
+     *     )
+     * )
+     */
+
+    public function getInstructorDetails($id): JsonResponse {       
+       
+        try {
+            $instructor = User::where('userType_id', 2)
+            ->where('id', $id)  
+            ->with('profileDetails')               
+            ->with('instructorLocations')  
+            ->with('instructorVehicle')  
+            ->with('bankDetails')
+            ->with('instructorPrices')   
+            ->get();
+           
+                       
+            if (!$instructor) {                
+                return $this->successResponse($instructor, "Instructor not found");
+            }
+            return $this->successResponse($instructor, "Data Found");
+        }catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+            return $this->errorResponse($ex);
+        }
+    }
     /**
      * @OA\Get(
      *     path="/api/location-search",

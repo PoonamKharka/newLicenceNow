@@ -57,13 +57,13 @@ class InstructorRepository implements InstructorRepositoryInterFace
     public function profile($id)
     {
         $userId = decrypt($id);
-        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle','instructorLocations')->findOrFail($userId);        
+        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle','instructorLocations','instructorPrices')->findOrFail($userId);        
         if ($userData->profileDetails) {
             $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
             $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
             $userData->profileDetails->dot = Carbon::parse($userData->profileDetails->dot)->format('d/m/Y');
         }
-
+        
         return $userData;
     }
 

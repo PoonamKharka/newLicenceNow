@@ -566,4 +566,22 @@ $(document).ready(function () {
         }
     });
 
+    $("#price_details").validate({
+        rules: {
+            'price_id[]': {
+                required: true
+            },
+
+        },
+        messages: {
+            'price_id[]': {
+                required: "Please select at least one price."
+            }
+        },
+        submitHandler: function (form) {
+            console.log("Form validated successfully");
+            form.submit();
+        }
+    });
+
 });
