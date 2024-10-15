@@ -1,0 +1,16 @@
+[15-Oct-2024 02:50:29 UTC] PHP Warning:  require(/home/readysetdrivings/public_html/license-now/vendor/composer/../../app/Http/Controllers/API/BaseController): Failed to open stream: No such file or directory in /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php on line 41
+[15-Oct-2024 02:50:29 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/readysetdrivings/public_html/license-now/vendor/composer/../../app/Http/Controllers/API/BaseController' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php(45): {closure}('94cd550bc33d915...', '/home/readysetd...')
+#1 /home/readysetdrivings/public_html/license-now/vendor/autoload.php(25): ComposerAutoloaderInit2e7df5677ce9218077c26ce340e9cd46::getLoader()
+#2 /home/readysetdrivings/public_html/license-now/artisan(18): require('/home/readysetd...')
+#3 {main}
+  thrown in /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php on line 41
+[15-Oct-2024 02:51:48 UTC] PHP Warning:  require(/home/readysetdrivings/public_html/license-now/vendor/composer/../../app/Http/Controllers/API/BaseController): Failed to open stream: No such file or directory in /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php on line 41
+[15-Oct-2024 02:51:48 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/readysetdrivings/public_html/license-now/vendor/composer/../../app/Http/Controllers/API/BaseController' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php(45): {closure}('94cd550bc33d915...', '/home/readysetd...')
+#1 /home/readysetdrivings/public_html/license-now/vendor/autoload.php(25): ComposerAutoloaderInit2e7df5677ce9218077c26ce340e9cd46::getLoader()
+#2 /home/readysetdrivings/public_html/license-now/artisan(18): require('/home/readysetd...')
+#3 {main}
+  thrown in /home/readysetdrivings/public_html/license-now/vendor/composer/autoload_real.php on line 41

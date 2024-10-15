@@ -50,6 +50,7 @@ use App\Services\FeaturesService;
 use App\Repositories\InterFaces\ForgotPasswordRepositoryInterface;
 use App\Repositories\Repository\ForgotPasswordRepository;
 use App\Services\ForgotPasswordService;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -142,5 +143,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Passport::enablePasswordGrant();
+        Schema::defaultStringLength(191); // Limit string length for MySQL compatibility
     }
 }
