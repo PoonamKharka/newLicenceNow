@@ -34,5 +34,5 @@ Route::middleware('auth:api')->group( function() {
     Route::get('nav-menu',[ArticleController::class,'getAllMenu']);
     Route::get('instructor-search',[SearchController::class,'getAvailableInstructors']);
     Route::get('instructors',[SearchController::class,'getAllInstructors']);
-    Route::get('suburbs-search',[SearchController::class,'getAvailableSuburbs']);
+    Route::get('location-search',[SearchController::class,'getAvailableSuburbs']);
 });

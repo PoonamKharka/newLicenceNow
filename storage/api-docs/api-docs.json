@@ -262,13 +262,41 @@
                 ]
             }
         },
-        "/api/suburbs-search": {
+        "/api/location-search": {
             "get": {
-                "summary": "Search all available locations",
-                "operationId": "5497230cf10e5ab6f67502553e28f315",
+                "summary": "Search all location based on street,city or postcode",
+                "description": "Retrieve a list of all locations street,city or postcode ",
+                "operationId": "d1396448bc8bd31238afd15090a95fa8",
+                "parameters": [
+                    {
+                        "name": "s",
+                        "in": "query",
+                        "description": "You can enter street or city or postcode ",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "transmissionType",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "description": "Select auto (isAuto) or manual (isManual)",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "manual"
+                            ]
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     }
                 },
                 "security": [

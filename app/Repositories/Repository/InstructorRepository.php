@@ -151,12 +151,18 @@ class InstructorRepository implements InstructorRepositoryInterFace
     public function validatePhone($myRequest)
     {
         $phoneNo = $myRequest->input('phoneNo');
-        $originalPhoneNo = $myRequest->input('original_phoneNo');      
+        $originalPhoneNo = $myRequest->input('existing_phoneNo');  
+       
         
+        if(empty($originalPhoneNo))
+        {
+            $exists=0;
+            return response()->json(!$exists, $exists ? 200 : 200);
+        }
         $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)
         ->where('phoneNo', '!=', $originalPhoneNo) 
         ->exists();
-       
+     
         return response()->json(!$exists, $exists ? 200 : 200);
     }
     

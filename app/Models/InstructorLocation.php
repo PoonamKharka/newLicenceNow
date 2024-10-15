@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class InstructorLocation extends Model
+class InstructorLocation extends Pivot
 {
     use HasFactory;
 
@@ -27,10 +28,15 @@ class InstructorLocation extends Model
      /**
      * The users associated with the instructor location.
      */
-    // public function users()
-    // {
-    //     return $this->belongsToMany(User::class, 'instructor_id');
-    // }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
+    }
 
     
 }

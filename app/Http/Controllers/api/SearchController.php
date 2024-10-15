@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
+use App\Models\Location;
+use App\Models\InstructorProfileDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends BaseController
 {
@@ -67,7 +71,7 @@ class SearchController extends BaseController
           
             return $this->successResponse($responseData, "Data Found");
         }catch (\Exception $ex) {
-            
+            Log::error($ex->getMessage());
             return $this->errorResponse($ex);
         }
     }
@@ -91,29 +95,119 @@ class SearchController extends BaseController
                 ->get();
             return $this->successResponse($responseData, "Data Found");
         }catch (\Exception $ex) {
+            Log::error($ex->getMessage());
             return $this->errorResponse($ex);
         }
     }
     
     /**
      * @OA\Get(
-     *     path="/api/suburbs-search",
-     *     summary="Search all available locations",
+     *     path="/api/location-search",
+     *     summary="Search all location based on street,city or postcode",
+     *     description="Retrieve a list of all locations street,city or postcode ",
      *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(
+     *         name="s",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *         description="You can enter street or city or postcode "
+     *     ),
+     *     @OA\Parameter(
+     *         name="transmissionType",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"auto", "manual"}, 
+     *             description="Select auto (isAuto) or manual (isManual)"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
      *     )
      * )
      */
-    public function getAvailableSuburbs(): JsonResponse {
-       
-        $responseData = [];
+    
+    public function getAvailableSuburbs(Request $request): JsonResponse
+    {
+        
+        $transmissionType = ($request->transmissionType === 'auto') ? 'isAuto' : 'isManual';    
+
+        // Validate input
+        $request->validate([
+            's' => 'nullable|string|max:255',
+            'transmissionType' => 'required|in:auto,manual'
+        ]);
+
         try {
             
-            return $this->successResponse($responseData, "Data Found");
-        }catch (\Exception $ex) {
+            //DB::enableQueryLog();
+
+            // Step 1: Get instructor user IDs based on transmission type
+            $userIds = InstructorProfileDetail::where($transmissionType, 1)
+                ->where($transmissionType === 'isAuto' ? 'isManual' : 'isAuto', 0)
+                ->pluck('user_id')
+                ->toArray();
+
+            
+            if (empty($userIds)) {
+                return $this->successResponse([], "No instructors found for the selected transmission type");
+            }
+
+            // Step 2: Search and filter locations based on user input            
+            $locationQuery = Location::with(['instructors' => function ($query) use ($userIds) {                
+                $query->whereIn('instructor_id', $userIds); 
+            }]);
+
+            if ($search = $request->input('s')) {
+                $locationQuery->where(function ($query) use ($search) {
+                    $query->where('city', 'like', '%' . $search . '%')
+                        ->orWhere('state', 'like', '%' . $search . '%')
+                        ->orWhere('street', 'like', '%' . $search . '%')
+                        ->orWhere('postcode', 'like', '%' . $search . '%');
+                });
+            }
+            
+            $responseData = $locationQuery->get();
+            
+            //Log::info(DB::getQueryLog());
+
+            if ($responseData->isEmpty()) {
+                return $this->successResponse($responseData, "No data found");
+            }
+            
+            $response = $responseData->map(function ($location) {
+                return [
+                    'location' => $location,
+                    'instructors' => $location->instructors->map(function ($instructor) {
+                        return [
+                            'instructor_id' => $instructor->id,
+                            'instructor_location_id' => $instructor->pivot->id ?? null,
+                            'name' => $instructor->first_name . ' ' . $instructor->last_name,
+                        ];
+                    }),
+                ];
+            });
+
+            return $this->successResponse($response, "Data found");
+
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
             return $this->errorResponse($ex);
         }
     }
+
+
+
+
+
+    
+
+    
 }
