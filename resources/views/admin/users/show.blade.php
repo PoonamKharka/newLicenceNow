@@ -36,22 +36,30 @@
                             <form method="POST" action="{{ route('users.update', encrypt($userData->id)) }}">
                                 @csrf
                                 @method('PUT')
+                                {{ $userData }}
                                 <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" id="name" class="form-control" name="name"
-                                        value="{{ $userData->name }}">
+                                    <label for="name">First Name</label>
+                                    <input type="text" id="first_name" class="form-control" name="first_name"
+                                        value="{{ $userData->first_name }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" id="username" class="form-control" name="username"
-                                        value="{{ $userData->username }}">
+                                    <label for="name">Last Name</label>
+                                    <input type="text" id="last_name" class="form-control" name="last_name"
+                                        value="{{ $userData->last_name }}">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="text" id="email" class="form-control" name="email"
-                                        value="{{ $userData->email }}" disabled>
+                                        value="{{ $userData->email }}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="name">Password</label>
+                                    <input type="text" id="password" class="form-control" name="password"
+                                        value="{{ $userData->password }}">
+                                </div>
+
                                 <div class="form-group">
                                     <label for="email">Status</label>
                                     <select class="form-control" name="status">
