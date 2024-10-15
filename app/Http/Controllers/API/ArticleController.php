@@ -15,10 +15,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends BaseController
 {
-     /**
-     * Display about us data
-     * 
-     * @return Illuminate\Http\JsonResponse
+    /**
+     * @OA\Get(
+     *     path="/api/about",
+     *     tags={"Articles"},
+     *     summary="About Us",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
      */
     public function getDataOfAboutUs(): JsonResponse {
        
@@ -34,6 +41,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/faqs",
+     *     tags={"Articles"},
      *     summary="Get all FAQs",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
@@ -55,6 +63,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/features",
+     *     tags={"Articles"},
      *     summary="Get all features",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
@@ -75,6 +84,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/article/privacy-policies",
+     *     tags={"Articles"},
      *     summary="Get all article privacy policies",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
@@ -96,6 +106,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/nav-menu",
+     *     tags={"Articles"},
      *     summary="Get all menu items",
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(

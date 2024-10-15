@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Info(
  *  version="1.0",
- *  title="Licence Now API documentation",
+ *  title="LicenceNow API Documentation",
  *  description="API documentation for developer reference"
  * )
  * @OA\SecurityScheme(

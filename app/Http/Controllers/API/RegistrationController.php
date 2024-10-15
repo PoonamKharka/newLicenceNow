@@ -53,6 +53,7 @@ class RegistrationController extends BaseController
     /**
      * @OA\Post(
      *     path="/api/login",
+     *     tags={"Authentication"},
      *     summary="User login",
      *     @OA\RequestBody(
      *         required=true,
