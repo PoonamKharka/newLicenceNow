@@ -85,8 +85,8 @@ class RegisterRepository implements RegisterRepositoryInterFace
     public function updateData(Request $request, $id)
     {
         $userId = decrypt($id);
-        User::findOrFail($userId)->update($request->all());
-        return redirect()->route('users.index')->with('status', 'User Updated successfully.');
+        $updateUser = User::findOrFail($userId)->update($request->all());
+        return $updateUser ;
     }
 
     public function delete($id)

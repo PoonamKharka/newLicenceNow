@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'License Now'),
+    'name' => env('APP_NAME', 'Licence Now'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -51,9 +51,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://ready-set-driving-school.pwd.net.au'),
+    'url' => env('APP_URL', 'http://licencenow.test'),
 
-    'asset_url' => env('ASSET_URL','https://ready-set-driving-school.pwd.net.au'),
+    'asset_url' => env('ASSET_URL','http://licencenow.test'),
 
     // 'url' => env('APP_URL', 'http://127.0.0.1:8000'),
 
