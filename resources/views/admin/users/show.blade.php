@@ -36,11 +36,13 @@
                             <form method="POST" action="{{ route('users.update', encrypt($userData->id)) }}">
                                 @csrf
                                 @method('PUT')
-                                {{ $userData }}
                                 <div class="form-group">
                                     <label for="name">First Name</label>
                                     <input type="text" id="first_name" class="form-control" name="first_name"
                                         value="{{ $userData->first_name }}">
+                                    @error('first_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -53,13 +55,11 @@
                                     <label for="email">Email</label>
                                     <input type="text" id="email" class="form-control" name="email"
                                         value="{{ $userData->email }}">
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
-                                    <label for="name">Password</label>
-                                    <input type="text" id="password" class="form-control" name="password"
-                                        value="{{ $userData->password }}">
-                                </div>
-
+                                
                                 <div class="form-group">
                                     <label for="email">Status</label>
                                     <select class="form-control" name="status">

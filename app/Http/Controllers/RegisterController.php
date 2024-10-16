@@ -54,7 +54,16 @@ class RegisterController extends Controller
      * For updating the record
      */
     public function update(Request $request , $id){
-        return $this->regService->update($request, $id);
+        
+        $request->validate([
+            'email' => 'required',
+            'first_name' => 'required',
+        ]);
+
+        $update = $this->regService->update($request, $id);
+        if($update) {
+            return redirect()->route('users.index')->with('status', 'User Updated successfully.');
+        }
     }
 
     /**

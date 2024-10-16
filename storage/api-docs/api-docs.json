@@ -6,12 +6,70 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/articles-data": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all article modules based on parameters",
+                "description": "Retrieve a list of all modules of article based on parameters and you can pass any specific parameter to get specic module",
+                "operationId": "ee0c6b2cf5b83ab5303b1cf324b0b638",
+                "parameters": [
+                    {
+                        "name": "features",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get features list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "learnerTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Learner Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "instructorTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Instructor Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "paymentPolicy",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Payment Policy list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/about": {
             "get": {
                 "tags": [
                     "Articles"
                 ],
-                "summary": "About Us",
+                "summary": "Get About us page data",
                 "operationId": "b22068b2a7d0924cf976dfbc5bf0f19d",
                 "responses": {
                     "200": {
