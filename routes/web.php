@@ -40,7 +40,7 @@ use App\Http\Controllers\NavMenuController;
 
 Route::get('/admin', [LoginController::class, 'index']);
 
-Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('/admin/login', [LoginController::class, 'login'])->name('login');
 
 //Rest the password
 Route::middleware(['web'])->group(function () {
