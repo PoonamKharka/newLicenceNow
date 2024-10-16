@@ -87,7 +87,22 @@ class User extends Authenticatable
      */
     public function instructorLocations()
     {
-        return $this->belongsToMany(Location::class, 'instructor_locations', 'instructor_id', 'location_id');
-        //return $this->hasMany(InstructorLocation::class, 'instructor_id', 'id');
+        return $this->belongsToMany(Location::class, 'instructor_locations', 'instructor_id', 'location_id')
+                    ->using(InstructorLocation::class)
+                    ->withPivot('id');
+    }
+
+    // public function locations()
+    // {
+    //     return $this->belongsToMany(Location::class, 'instructor_locations')
+    //                 ->using(InstructorLocation::class) // Pivot model
+    //                 ->withPivot('id'); // Include pivot fields if needed
+    // }
+
+    public function instructorPrices()
+    {
+        return $this->belongsToMany(Price::class, 'instructor_prices', 'instructor_id', 'price_id')
+            ->using(InstructorPrice::class)
+            ->withPivot('id');
     }
 }
