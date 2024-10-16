@@ -51,9 +51,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://ready-set-driving-school.pwd.net.au'),
+    'url' => env('APP_URL', 'http://licencenow.test'),
 
-    'asset_url' => env('ASSET_URL','https://ready-set-driving-school.pwd.net.au'),
+    'asset_url' => env('ASSET_URL','http://licencenow.test'),
 
     /*
     |--------------------------------------------------------------------------
