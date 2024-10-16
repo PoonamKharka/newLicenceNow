@@ -26,4 +26,10 @@ class Price extends Model
     public function lessonsPrice() {
         return $this->hasMany(LessonPrice::class, 'pricing_id');
     }
+    public function instructors()
+    {
+        return $this->belongsToMany(User::class, 'instructor_prices', 'price_id', 'instructor_id')
+            ->using(InstructorPrice::class)
+            ->withPivot('id');
+    }
 }

@@ -329,6 +329,10 @@ $(document).ready(function () {
         }
         return true; // If no file, treat as valid
     }, "File size must be less than 2048 KB.");
+    $.validator.addMethod("eitherRequired", function (value, element) {
+        // Check if either 'isAuto' or 'isManual' is checked
+        return $("input[name='isAuto']").is(":checked") || $("input[name='isManual']").is(":checked");
+    }, "Please select either Auto or Manual.");
 
     $('select[name="gender_id"]').select2();
     $('select[name="blood_group_id"]').select2();
@@ -346,10 +350,10 @@ $(document).ready(function () {
                 noWhitespace: true
             },
             isAuto: {
-                required: true
+                eitherRequired: true
             },
             isManual: {
-                required: true
+                eitherRequired: true
             },
             'languages[]': {
                 checkboxRequired: 'input[name="languages[]"]'
@@ -358,34 +362,22 @@ $(document).ready(function () {
                 required: true,
                 //dateISO: true
             },
-            date_of_termination: {
-                required: true,
-                //dateISO: true
-            },
             gender_id: {
                 required: true
             },
-            // phoneNo: {
-            //     required: true,
-            //     //phoneAU: true,
-            //     remote: {
-            //         url: "/validate-phone", // Server-side route to validate uniqueness
-            //         type: "POST",
-            //         data: {
-            //             phoneNo: function () {
-            //                 return $("input[name='phoneNo']").val();
-            //             },
-            //             _token: $("input[name='_token']").val(),
-            //             original_phoneNo: function () {
-            //                 return $("input[name='existing_phoneNo']").val();
-            //             }
-            //         },
-            //         // Only validate uniqueness if the phone number has been changed
-            //         // depends: function () {
-            //         //     return $("input[name='phoneNo']").val() !== $("input[name='existing_phoneNo']").val();
-            //         // }
-            //     }
-            // },
+            phoneNo: {
+                required: true,
+                remote: {
+                    url: "/validate-phone",
+                    type: "POST",
+                    data: {
+                        phoneNo: function () {
+                            return $("input[name='phoneNo']").val();
+                        },
+                        _token: $("input[name='_token']").val(),
+                    }
+                }
+            },
             blood_group_id: {
                 required: true
             },
@@ -396,10 +388,10 @@ $(document).ready(function () {
                 required: true,
             },
             profile_picture: {
-                required: function (element) {
-                    // Check if the user already has a profile picture or not
-                    return $('input[name="existing_profile_picture"]').val() === "";
-                },
+                // required: function (element) {
+                //     // Check if the user already has a profile picture or not
+                //     return $('input[name="existing_profile_picture"]').val() === "";
+                // },
                 fileExtension: "jpeg|jpg|png",
                 fileSize: true
             }
@@ -428,6 +420,10 @@ $(document).ready(function () {
             console.log("Form validated successfully");
             form.submit();
 
+        },
+        invalidHandler: function (event, validator) {
+            // This function is called when the form is invalid
+            console.log("Form is invalid.");
         }
     });
 
@@ -437,6 +433,15 @@ $(document).ready(function () {
     });
     $('select[name="blood_group_id"]').on('change', function () {
         $(this).valid();
+    });
+
+    // Hide error message for the unchecked option when one checkbox is checked
+    $("input[name='isAuto'], input[name='isManual']").change(function () {
+        if ($("input[name='isAuto']").is(":checked")) {
+            $("input[name='isManual']").valid();
+        } else if ($("input[name='isManual']").is(":checked")) {
+            $("input[name='isAuto']").valid();
+        }
     });
 
     // Form validation
@@ -557,6 +562,24 @@ $(document).ready(function () {
             }
         },
         submitHandler: function (form) {
+            form.submit();
+        }
+    });
+
+    $("#price_details").validate({
+        rules: {
+            'price_id[]': {
+                required: true
+            },
+
+        },
+        messages: {
+            'price_id[]': {
+                required: "Please select at least one price."
+            }
+        },
+        submitHandler: function (form) {
+            console.log("Form validated successfully");
             form.submit();
         }
     });

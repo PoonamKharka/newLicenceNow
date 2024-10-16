@@ -57,13 +57,13 @@ class InstructorRepository implements InstructorRepositoryInterFace
     public function profile($id)
     {
         $userId = decrypt($id);
-        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle','instructorLocations')->findOrFail($userId);        
+        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle','instructorLocations','instructorPrices')->findOrFail($userId);        
         if ($userData->profileDetails) {
             $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
             $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
             $userData->profileDetails->dot = Carbon::parse($userData->profileDetails->dot)->format('d/m/Y');
         }
-
+        
         return $userData;
     }
 
@@ -148,25 +148,24 @@ class InstructorRepository implements InstructorRepositoryInterFace
             }
         }
     }
-    // public function validatePhone1($phoneNo)
-    // {
+    public function validatePhone($myRequest)
+    {
+        $phoneNo = $myRequest->input('phoneNo');
+        $originalPhoneNo = $myRequest->input('existing_phoneNo');  
+       
         
-    //     $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)->exists();
-    //     return !$exists; // Return true if not exists, false otherwise
-    // }
-    public function validatePhone($phoneNo)
-    {   
-        dd("hiii");
-        $phoneExists = InstructorProfileDetail::where('phoneNo', $phoneNo->phoneNo)->exists();
-
-        if ($phoneExists && $phoneNo->phoneNo !== $phoneNo->original_phoneNo) {
-            return response()->json(false); // Invalid, phone number is already in use
+        if(empty($originalPhoneNo))
+        {
+            $exists=0;
+            return response()->json(!$exists, $exists ? 200 : 200);
         }
-
-        return response()->json(true); // Valid, phone number is not in use
-        
-        
+        $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)
+        ->where('phoneNo', '!=', $originalPhoneNo) 
+        ->exists();
+     
+        return response()->json(!$exists, $exists ? 200 : 200);
     }
+    
     public function validateSalaryPayModeId(Request $request)
     {
         $validator = Validator::make($request->all(), [

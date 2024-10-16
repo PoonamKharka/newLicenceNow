@@ -27,7 +27,7 @@ class StoreInstructorRequest extends FormRequest
 
         // Base rules that apply to all requests
         $rules = [
-            'form_type' => 'required|in:personal_details,vehicle_details,suburbs_details,bank_details',
+            'form_type' => 'required|in:personal_details,vehicle_details,suburbs_details,bank_details,price_details',
         ];
 
         // Extend base rules with form-specific rules
@@ -40,8 +40,8 @@ class StoreInstructorRequest extends FormRequest
                     Rule::unique('instructor_profile_details')->ignore($userId, 'user_id'), // Ignore current user's phone number during update
                 ],
                 //'profile_picture' => 'image|mimes:jpeg,png,jpg|max:2048',
-                'isAuto' => 'required',
-                'isManual' => 'required',
+                'isAuto' => 'required_without:isManual',
+                'isManual' => 'required_without:isAuto',
                 'driving_expirence' => 'required'
             ]);
         } elseif ($formType === 'bank_details') {
