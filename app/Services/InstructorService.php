@@ -34,7 +34,7 @@ class InstructorService
     public function store(Request $request)
     {
         try {
-
+           
             // Determine which form was submitted
             $formType = $request->input('form_type');
 
@@ -49,6 +49,7 @@ class InstructorService
                 } else{
                     $isAutoVal = false;
                 }
+
                 $dob = Carbon::createFromFormat('d/m/Y', $request->input('date_of_birth'))->format('Y-m-d');
                 $doj = Carbon::createFromFormat('d/m/Y', $request->input('date_of_joining'))->format('Y-m-d');
                 $dot = $request->input('date_of_termination') ? Carbon::createFromFormat('d/m/Y', $request->input('date_of_termination'))->format('Y-m-d') : null;
@@ -56,15 +57,10 @@ class InstructorService
                 $request['date_of_birth'] = $dob;
                 $request['date_of_joining'] = $doj;
                 $request['date_of_termination'] = $dot;
-                if ($request->hasFile('profile_picture')) {
-                    $imageFileName = time() . $request->file('profile_picture')->getClientOriginalExtension();
-                    $request->file('profile_picture')->move(public_path('profile'), $imageFileName);
-                }
                 $instructorProfileDetail = [
                     'user_id' => $request->user_id,
                     'phoneNo' => $request->input('phoneNo'),
                     'languages' => $languages,
-                    'profile_picture' => $imageFileName,
                     'contact_address' => $request->contact_address,
                     'date_of_birth' => $dob,
                     'date_of_joining' => $doj,
@@ -75,39 +71,58 @@ class InstructorService
                     'isAuto' => $isAutoVal,
                     'isManual' => $isManualVal
                 ];
-                $userData = $this->instRep->store($request);
-                
-                if( $userData ){
-                    $updateDetails =  $userData->update($instructorProfileDetail);
-                } else {
-                    $updateDetails =  InstructorProfileDetail::create($instructorProfileDetail);
+              
+                if ($request->hasFile('profile_picture')) {
+                    $imageFileName = time() . $request->file('profile_picture')->getClientOriginalExtension();
+                    $request->file('profile_picture')->move(public_path('profile'), $imageFileName);
+                    $instructorProfileDetail['profile_picture']=$imageFileName;
                 }
+                
+                $userData = $this->instRep->store($request);
+              
+                if( $userData ){
+                  
+                    $updateDetails =  $userData->update($instructorProfileDetail);
+                    
+                } else {
+                    
+                    $updateDetails =  InstructorProfileDetail::create($instructorProfileDetail);
+                    
+                }
+               
                 return $updateDetails;
             } 
 
             if( $formType === 'vehicle_details' ) {
-                
-                if($request->vehicle_image) {
-                    $imageName = time().'.'.$request->vehicle_image->extension();
-                    $request->vehicle_image->move(public_path('vehicles'), $imageName);
+                try { 
+                    
+                    
+                    $vehicleDataArray = [
+                        'instructor_id' => $request->instructor_id,
+                        'vehicle_name' => $request->vehicle_name,
+                        'vehicle_no'=> $request->vehicle_no,
+                        'ancap_rating'=> $request->ancap_rating
+                    ];
+                    if($request->vehicle_image) {
+                        $imageName = time().'.'.$request->vehicle_image->extension();
+                        $request->vehicle_image->move(public_path('vehicles'), $imageName);
+                        $vehicleDataArray['vehicle_image']=$imageName;
+                    }
+                    
+                    $vehicleData = InstructorVehicle::where('instructor_id', $request->instructor_id)->first();
+                    if($vehicleData){
+                        
+                        $storeVehicleData = $vehicleData->update($vehicleDataArray);
+                    } else {
+                       
+                        $storeVehicleData = InstructorVehicle::create($vehicleDataArray);
+                    }
+                    
+                    return $storeVehicleData;
+                }catch (\Exception $e) {                                       
+                  
+                    return redirect()->back()->withErrors($e->getMessage())->withInput();
                 }
-                
-                $vehicleDataArray = [
-                    'instructor_id' => $request->instructor_id,
-                    'vehicle_name' => $request->vehicle_name,
-                    'vehicle_no'=> $request->vehicle_no,
-                    'ancap_rating'=> $request->ancap_rating,
-                    'vehicle_image' => $imageName
-                ];
-                //dd($vehicleDataArray);
-                $vehicleData = InstructorVehicle::where('instructor_id', $request->instructor_id)->first();
-                if($vehicleData){
-                    $storeVehicleData = $vehicleData->update($vehicleDataArray);
-                } else {
-                    $storeVehicleData = InstructorVehicle::create($vehicleDataArray);
-                }
-                
-                return $storeVehicleData;
             }
 
             if ( $formType === 'bank_details') {
@@ -122,26 +137,60 @@ class InstructorService
                 ];
                     
                 $findBankDetails = InstructorBankDetail::where('user_id', $request->input('user_id'))->first();
+                try {  
+                    if( $findBankDetails ){
+                        $updateBankDetails =  $findBankDetails->update($instructorBankDetail);
+                    } else {                                            
+                            $updateBankDetails = InstructorBankDetail::create($instructorBankDetail);
+                        } 
                     
-                if( $findBankDetails ){
-                    $updateBankDetails =  $findBankDetails->update($instructorBankDetail);
-                } else {
-                    $updateBankDetails =  InstructorBankDetail::create($instructorBankDetail);
-                }
 
-                return $updateBankDetails;
+                    return $updateBankDetails;
+                }
+                catch (\Exception $e) {                       
+                    return redirect()->back()->withErrors($e->getMessage())->withInput();
+                }
             }
 
             if( $formType === 'suburbs_details') {
+               
                 if( $request['location_id']) { 
+                    $locationData=[];
                     foreach ($request['location_id'] as $value) {
                         
                         $suburbData = [
                             'instructor_id' => $request->user_id,
                             'location_id' => $value
                         ];
-                        InstructorLocation::where('instructor_id' ,  $request->user_id)->delete();
-                        $locationData = InstructorLocation::create($suburbData);
+                        // InstructorLocation::where('instructor_id' ,  $request->user_id)->delete();
+                        // $locationData = InstructorLocation::create($suburbData);
+                        
+                        $currentLocations = InstructorLocation::where('instructor_id', $request->user_id)
+                            ->pluck('location_id') 
+                            ->toArray();                        
+                        $newSelections = $request['location_id'] ?? []; 
+                        $locationsToDelete = array_diff($currentLocations, $newSelections);
+                        if (!empty($locationsToDelete)) {
+                            InstructorLocation::where('instructor_id', $request->user_id)
+                                ->whereIn('location_id', $locationsToDelete)
+                                ->delete();
+                        }
+                        if(!empty($newSelections)){
+                            foreach ($newSelections as $value) {
+                                $suburbData = [
+                                    'instructor_id' => $request->user_id,
+                                    'location_id' => $value
+                                ];                            
+                                $locationData=InstructorLocation::updateOrCreate(
+                                    [
+                                        'instructor_id' => $request->user_id,
+                                        'location_id' => $value
+                                    ],
+                                    $suburbData
+                                );
+                            
+                            }
+                        }
                         
                     }
                     return $locationData;
@@ -149,7 +198,16 @@ class InstructorService
             }
            
         } catch(\Exception $ex){
+            dd( $ex);
             Log::error("Getting some error while adding instructor details =>" . $ex );
         } 
+    }
+    public function validatePhone($phoneNo)
+    {
+        return $this->instRep->validatePhone($phoneNo);
+    }
+    public function validateSalaryPayModeId($salaryPayModeId)
+    {
+        return $this->instRep->validateSalaryPayModeId($salaryPayModeId);
     }
 }

@@ -1,0 +1,15 @@
+input.error,textarea.error,select.error{
+    border: 1px solid red;
+}
+label.error {
+    /* display: none !important; */
+    color: red;
+    font-size: 12px;
+}
+#exampleInputFile-error{       
+        color: red !important;
+        font-size: 12px;
+        display: block;
+        position: absolute;
+        bottom: -29px;
+}

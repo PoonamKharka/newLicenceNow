@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'License Now'),
+    'name' => env('APP_NAME', 'Licence Now'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
