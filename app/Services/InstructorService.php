@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\InstructorVehicle;
 use App\Models\InstructorBankDetail;
 use App\Models\InstructorLocation;
+use App\Models\InstructorPrice;
 
 class InstructorService
 {
@@ -196,9 +197,53 @@ class InstructorService
                     return $locationData;
                 }
             }
+            if( $formType === 'price_details') {
+               
+                if( $request['price_id']) { 
+                    $priceData=[];
+                    foreach ($request['price_id'] as $value) {
+                        
+                        $priceData = [
+                            'instructor_id' => $request->user_id,
+                            'price_id' => $value
+                        ];
+                        
+                        $currentPrices = InstructorPrice::where('instructor_id', $request->user_id)
+                            ->pluck('price_id') 
+                            ->toArray();                               
+                                              
+                        $newSelections = $request['price_id'] ?? []; 
+                        $pricessToDelete = array_diff($currentPrices, $newSelections);
+                        if (!empty($pricessToDelete)) {
+                            InstructorPrice::where('instructor_id', $request->user_id)
+                                ->whereIn('price_id', $pricessToDelete)
+                                ->delete();
+                        }
+                        if(!empty($newSelections)){
+                            foreach ($newSelections as $value) {
+                                $priceData = [
+                                    'instructor_id' => $request->user_id,
+                                    'price_id' => $value
+                                ]; 
+                                                           
+                                $priceData=InstructorPrice::updateOrCreate(
+                                    [
+                                        'instructor_id' => $request->user_id,
+                                        'price_id' => $value
+                                    ],
+                                    $priceData
+                                );
+                            
+                            }
+                        }
+                        
+                    }
+                    return $priceData;
+                }
+            }
            
         } catch(\Exception $ex){
-            dd( $ex);
+           
             Log::error("Getting some error while adding instructor details =>" . $ex );
         } 
     }

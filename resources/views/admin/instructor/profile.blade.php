@@ -42,6 +42,9 @@
                                 <a class="nav-link" id="vert-tabs-bank-tab" data-toggle="pill"
                                     href="#vert-tabs-bank" role="tab" aria-controls="vert-tabs-bank"
                                     aria-selected="false">Bank</a>
+                                <a class="nav-link" id="vert-tabs-price-tab" data-toggle="pill"
+                                    href="#vert-tabs-price" role="tab" aria-controls="vert-tabs-price"
+                                    aria-selected="false">Prices</a>
                             </div>
                         </div>
                         <div class="col-7 col-sm-9">
@@ -86,7 +89,7 @@
                                                             <input type="hidden" class="form-control" name="user_id"
                                                                 value="{{ $userData->id }}" />
                                                             <input type="text" class="form-control" name="name"
-                                                                value="{{ $userData->name . ' ' . $userData->last_name }}" disabled />
+                                                                value="{{ $userData->first_name . ' ' . $userData->last_name }}" disabled />
                                                                 
                                                         </div>
                                                     </div>
@@ -702,6 +705,56 @@
                                     </div>
                                 </div>
                                 {{-- bank ends --}}
+
+                                {{-- price starts --}}
+                                <div class="tab-pane fade" id="vert-tabs-price" role="tabpanel"
+                                aria-labelledby="vert-tabs-price-tab">
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Price Details</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <form action="{{ route('instructors.store') }}" method="POST"
+                                            enctype="multipart/form-data" id="price_details">
+                                            @csrf
+                                            <input type="hidden" name="form_type" value="price_details">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <!-- text input -->
+                                                    <div class="form-group">
+                                                       <label>Select Prices</label>
+                                                       <input type="hidden" class="form-control" name="user_id"
+                                                            value="{{ $userData->id }}" />
+                                                       <select class="select2" multiple="multiple" data-placeholder="Select a Price" style="width: 100%;"
+                                                               name="price_id[]">
+                                                           @if ($allPrices)
+                                                               @foreach ( $allPrices as $price)
+                                                                   <option value="{{ $price->id }}" 
+                                                                       @if (in_array($price->id, $selectedPriceIds)) selected @endif>
+                                                                       {{ $price->hours . 'hours  - ' . $price->price.'$'}}
+                                                                   </option>
+                                                               @endforeach
+                                                           @endif
+                                                       </select>
+                                                        
+                                                    </div>
+                                                   </div>
+                                            </div>
+                                           <div class="card-footer">
+                                                <button type="submit" class="btn btn-info">Submit</button>
+                                                <button type="reset" class="btn btn-default" onclick="window.location='{{ route('instructors.index') }}'">Cancel</button>
+                                            </div>
+                                            <!-- /.card-footer -->
+                                        </form>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                            </div>
+                            {{-- price ends --}}
+
+
+
                             </div>
                         </div>
                     </div>
