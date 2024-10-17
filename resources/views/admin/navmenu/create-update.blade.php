@@ -77,7 +77,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Status</label>
-                                                            <select name="status" id="status">
+                                                            <select name="status" id="status" class="form-control">
                                                                 <option {{ (isset($navMenu->status) && $navMenu->status=='active')?'selected':'' }}value="active">Active</option>
                                                                 <option value="draft" {{ (isset($navMenu->status) &&$navMenu->status=='draft')?'selected':'' }}>Draft</option>
                                                             </select>

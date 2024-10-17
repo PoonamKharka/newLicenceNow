@@ -766,6 +766,13 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    <style>
+       .select2-results__option.select2-results__option--disabled {
+        color: #ccc; /* Change text color to indicate disabled */
+        background-color: #f9f9f9; /* Light background */
+        pointer-events: none; /* Prevent clicking */
+    }
+    </style>
     <script>
         $(function() {
             //bsCustomFileInput.init();
