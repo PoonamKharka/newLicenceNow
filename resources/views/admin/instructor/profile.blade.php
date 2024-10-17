@@ -5,7 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Instructors Details</h1>
+                    @if ($userData)
+                        <h1 class="m-0">Instructors Details: {{ $userData->first_name . ' ' . $userData->last_name }}</h1>
+                    @else
+                        <h1 class="m-0">Instructors Details</h1>
+                    @endif
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -235,7 +239,7 @@
                                                         <div class="form-group">
                                                             <label>Gender</label>
                                                             @if ($userData->profileDetails)
-                                                                <select class="select2" style="width: 100%;"
+                                                                <select class="form-control select2" style="width: 100%;"
                                                                     name="gender_id">
                                                                     <option value="1"
                                                                         {{ $userData->profileDetails->gender_id == 1 ? 'selected' : '' }}>
@@ -251,7 +255,7 @@
                                                                     </option>
                                                                 </select>
                                                             @else
-                                                                <select class="select2" style="width: 100%;"
+                                                                <select class="form-control select2" style="width: 100%;"
                                                                     name="gender_id">
                                                                     <option selected="selected" value="">Select a Gender</option>
                                                                     <option value="1">Female</option>
@@ -293,10 +297,9 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <label>Blood Group</label>
-                                                            @if ($userData->profileDetails)
-                                                                <select class="form-control select2" style="width: 100%;"
-                                                                    name="blood_group_id">
-                                                                    <option value="1"
+                                                            <select class="form-control select2" style="width: 100%;" name="blood_group_id">
+                                                              @if ($userData->profileDetails)
+                                                              <option value="1"
                                                                         {{ $userData->profileDetails->blood_group_id == 1 ? 'selected' : '' }}>
                                                                         O+
                                                                     </option>
@@ -328,10 +331,8 @@
                                                                         {{ $userData->profileDetails->blood_group_id == 8 ? 'selected' : '' }}>
                                                                         AB-
                                                                     </option>
-                                                                </select>
+                                                               
                                                             @else
-                                                                <select class="form-control select2" style="width: 100%;"
-                                                                    name="blood_group_id">
                                                                     <option selected="selected" value="">Select a Blood Group
                                                                     </option>
                                                                     <option value="1">O+</option>
@@ -342,8 +343,9 @@
                                                                     <option value="6">A-</option>
                                                                     <option value="7">B--</option>
                                                                     <option value="8">AB-</option>
-                                                                </select>
+                                                                
                                                             @endif
+                                                        </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">

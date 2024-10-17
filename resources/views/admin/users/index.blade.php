@@ -75,7 +75,7 @@
                     { data: 'username', name: 'username' },
                     { data: 'email', name: 'email' },
                     { data: 'userType_id' , name: 'userType_id'},
-                    { data: 'status', name: 'status' },
+                    { data: 'userStatus', name: 'userStatus' },
                     { data: 'action', name: 'action', orderable: false, searchable: false},
                  ]
         });
