@@ -32,8 +32,7 @@
         </div>
       @endif
       <p class="login-box-msg">Sign in to start your session</p>
-
-      <form action="{{  url('login') }}" method="POST" id="login-form">
+      <form action="{{  route('login') }}" method="POST" id="login-form">
         @csrf
         <div class="input-group mb-3">
           <input type="email" class="form-control" name="email" placeholder="Enter Email">
