@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\InstructorProfileDetail;
-use App\Models\InstructorStatus;
+use App\Models\MediaAttachment;
+use App\Models\InstructorRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule; 
@@ -89,9 +90,7 @@ class RegistrationController extends BaseController
      *     )
      * )
      */
-
-    public function instructorRegistration(Request $request)
-    {
+    public function instructorRegistrationRquest(Request $request){
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -99,67 +98,55 @@ class RegistrationController extends BaseController
             'phoneNo' => 'required|unique:instructor_profile_details,phoneNo',
             'postcode' => 'required|string',
             'transmission_type' => 'required|in:auto,manual',
-            'files' => 'nullable|array',  // Accept an array of files
-            'files.*' => 'file|mimes:jpeg,png,jpg,pdf|max:2048', // Validate each file for allowed types
+            'files' => 'nullable|array', 
+            'files.*' => 'file|mimes:jpeg,png,jpg,pdf|max:2048', 
         ]);
-    
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors());
         }
     
         try {
-           
-            $password = Str::random(8) . rand(1000, 9999) . '@#';
-            $addUser = User::create([
+            $addInstructorReq = InstructorRequest::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
-                'password' => Hash::make($password),
-                'userType_id' => 2,
-                'isAdmin' => 0,
-            ]);
-            dd( $addUser);
-            if (!$addUser) {
-                return $this->errorResponse('Something went wrong during user creation.');
-            }
-            if($request->transmission_type && $request->transmission_type == "auto") {
-                $isManualVal = 0;
-                $isAutoVal = 1;
-            } else{
-                $isManualVal = 1;
-                $isAutoVal = 0;
-            }
-            $instructorProfileDetail = [
-                'user_id' => $addUser->id,
                 'phoneNo' => $request->phoneNo,
-                'about_your_self' => $request->about_your_self,
-                'isAuto' => $isAutoVal,
-                'isManual' => $isManualVal
-            ];
-    
-            // Handle multiple file uploads
-            if ($request->hasFile('files')) {
-                $uploadedFiles = [];
-                foreach ($request->file('files') as $file) {
-                    $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('uploads'), $fileName);
-                    $uploadedFiles[] = $fileName; 
-                }
-                $instructorProfileDetail['uploaded_files'] = json_encode($uploadedFiles); 
-            }
-    
-            InstructorProfileDetail::create($instructorProfileDetail);
-    
-            InstructorStatus::create([
-                'user_id' => $addUser->id,
+                'postcode' => $request->postcode,
                 'status' => 'pending',
             ]);
-    
-            return $this->successResponse($addUser->user_id, "Instructor registered successfully.");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex->getMessage());
         }
+        
     }
+    // Handle multiple file uploads
+    public function uploadMediaAttachments($attachments,$id) {
+        
+        if ($attachments->hasFile('files')) {
+            $uploadedFiles = [];
+            foreach ($attachments->file('files') as $file) {
+                $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads'), $fileName);
+                $uploadedFiles[] = $fileName; 
+            }
+            $instructorProfileDetail['uploaded_files'] = json_encode($uploadedFiles); 
+        }
+        if ($attachments->hasFile('attachments')) {
+            foreach ($attachments->file('attachments') as $file) {
+                $path = $file->store('attachments');
+                MediaAttachment::create([
+                    'intructor_request_id' => $id,
+                    'file_name' => $file->getClientOriginalName(),
+                    'file_path' => $path,
+                    'file_type' => $file->getClientMimeType(),
+                    'file_size' => $file->getSize(),
+                ]);
+            }
+        }
+        
+    }
+
+   
  
 
     

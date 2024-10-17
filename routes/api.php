@@ -21,7 +21,7 @@ Route::get('documentation', function () {
 });
 
 # Authentication Route
-Route::post('instructor-register', [RegistrationController::class, 'instructorRegistration']);
+Route::post('instructor-register', [RegistrationController::class, 'instructorRegistrationRquest']);
 Route::post('register', [RegistrationController::class, 'registration']);
 Route::post('login', [RegistrationController::class, 'login']);
 
