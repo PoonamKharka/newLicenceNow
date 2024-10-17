@@ -1,0 +1,412 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LicenceNow API Documentation",
+        "description": "API documentation for developer reference",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/articles-data": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all article modules based on parameters",
+                "description": "Retrieve a list of all modules of article based on parameters and you can pass any specific parameter to get specic module",
+                "operationId": "ee0c6b2cf5b83ab5303b1cf324b0b638",
+                "parameters": [
+                    {
+                        "name": "features",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get features list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "learnerTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Learner Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "instructorTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Instructor Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "paymentPolicy",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Payment Policy list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/about": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get About us page data",
+                "operationId": "b22068b2a7d0924cf976dfbc5bf0f19d",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/faqs": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all FAQs",
+                "operationId": "c24b7a3274b0271483e2b3193af4ec4c",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/features": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all features",
+                "operationId": "568d93863ff4260dcd3dd15a5c65157e",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/article/privacy-policies": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all article privacy policies",
+                "operationId": "0022035189a397504c037d76f744d489",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/nav-menu": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all menu items",
+                "operationId": "e6375aef53cf2190e67ec8d1b26b8530",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/instructor-register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Instructor Registration",
+                "description": "Register a new instructor",
+                "operationId": "b0415612d6f9f0ea312ea1e4f810eabd",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "First Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Last Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phoneNo",
+                        "in": "query",
+                        "description": "Phone Number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "postcode",
+                        "in": "query",
+                        "description": "Postcode",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "transmission_type",
+                        "in": "query",
+                        "description": "Transmission type: auto or manual",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "manual"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "about_your_self",
+                        "in": "query",
+                        "description": "About yourself",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Instructor registered successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation errors"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "088cc70ebb0d8ff1598d6e35305cd5a1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "your_password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "Bearer your_token_here"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/instructor-search": {
+            "get": {
+                "summary": "Search all instructors based on location and transmission type",
+                "description": "Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",
+                "operationId": "fe02144dd7f24346c4b2a4e1599f4335",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "query",
+                        "description": "ID of the location (suburb)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "transmissionType",
+                        "in": "query",
+                        "description": "Transmission type of the instructor (e.g. 'auto' or 'manual')",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/instructors": {
+            "get": {
+                "summary": "Get all instructors",
+                "description": "Retrieve a list of all instructors",
+                "operationId": "029801c2258b7fe8b583b9b3247f262c",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/suburbs-search": {
+            "get": {
+                "summary": "Search all available locations",
+                "operationId": "5497230cf10e5ab6f67502553e28f315",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "Passport",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Articles",
+            "description": "Articles"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        }
+    ]
+}

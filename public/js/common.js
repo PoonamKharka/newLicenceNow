@@ -371,7 +371,7 @@ $(document).ready(function () {
             phoneNo: {
                 required: true,
                 remote: {
-                    url: "/validate-phone",
+                    url: "/admin/validate-phone",
                     type: "POST",
                     data: {
                         phoneNo: function () {
@@ -487,6 +487,25 @@ $(document).ready(function () {
         }
     });
 
+    // Function to update the disabled state of options
+    $('#location_ids').select2();
+    function updateOptionStates() {
+        var selectedOptions = $('#location_ids').val();
+        $('#location_ids').find('option').each(function () {
+            var optionValue = $(this).val();
+
+            if (selectedOptions && selectedOptions.includes(optionValue)) {
+
+                $(this).prop('disabled', true);
+            } else {
+
+                $(this).prop('disabled', false);
+            }
+        });
+
+        $('#location_ids').select2('close').select2('open');
+    }
+
     $("#suburbs_details").validate({
         rules: {
             'location_id[]': {
@@ -500,16 +519,28 @@ $(document).ready(function () {
             }
         },
         submitHandler: function (form) {
+            $('#location_ids').find('option').prop('disabled', false);
+            $('#location_ids').select2('close');
             console.log("Form validated successfully");
             form.submit();
         }
     });
+
+    // Listen to the change event for option selection
+    $('#location_ids').on('change', function () {
+
+        updateOptionStates();
+    });
+
+    // Trigger the function to set the initial disabled state on page load
+    updateOptionStates();
+
     $("#bank_details").validate({
         rules: {
             salaryPayModeId: {
                 required: true,
                 remote: {
-                    url: "/validate-salary-pay-mode",
+                    url: "/admin/validate-salary-pay-mode",
                     type: "POST",
                     data: {
                         salaryPayModeId: function () {
@@ -569,6 +600,26 @@ $(document).ready(function () {
         }
     });
 
+    // Function to disable already selected options
+    $('#price_id').select2();
+
+    function disablePriceSelectedOptions() {
+        var selectedOptions = $('#price_id').val();
+        $('#price_id').find('option').each(function () {
+            var optionValue = $(this).val();
+
+            if (selectedOptions && selectedOptions.includes(optionValue)) {
+
+                $(this).prop('disabled', true);
+            } else {
+
+                $(this).prop('disabled', false);
+            }
+        });
+
+        $('#price_id').select2('close').select2('open');
+    }
+
     $("#price_details").validate({
         rules: {
             'price_id[]': {
@@ -582,12 +633,23 @@ $(document).ready(function () {
             }
         },
         submitHandler: function (form) {
+
+
+            $('#price_id').find('option').prop('disabled', false);
+            $('#price_id').select2('close');
             console.log("Form validated successfully");
             form.submit();
         }
     });
 
+    // Listen to the change event for option selection
+    $('#price_id').on('change', function () {
 
+        disablePriceSelectedOptions();
+    });
+
+    // Trigger the function to set the initial disabled state on page load
+    disablePriceSelectedOptions();
 
     /* Providing Lessons validation */
     $("#lessons").validate({

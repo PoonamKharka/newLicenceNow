@@ -108,17 +108,16 @@ class RegistrationController extends BaseController
         }
 
         try {
-            // $addInstructorReq = InstructorRequest::create($request->only([
-            //     'first_name', 'last_name', 'email', 'phoneNo', 'postcode'
-            // ]) + ['status' => 'pending']);
+            $addInstructorReq = InstructorRequest::create($request->only([
+                'first_name', 'last_name', 'email', 'phoneNo', 'postcode'
+            ]) + ['status' => 'pending']);
 
             // Handle multiple file uploads
-            if ($request->hasFile('files')) {
-              
-                $this->uploadMediaAttachments($request->file('files'), 1);
-                //$this->uploadMediaAttachments($request->file('files'), $addInstructorReq->id);
+            if ($request->hasFile('files') ) {              
+                
+               $this->uploadMediaAttachments($request->file('files'), $addInstructorReq->id);
             }
-            //return $this->successResponse($addInstructorReq, "Instructor registered successfully.");
+            return $this->successResponse($addInstructorReq, "Instructor registered successfully.");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex->getMessage());
         }
@@ -131,24 +130,33 @@ class RegistrationController extends BaseController
         $uploadErrors = [];
         foreach ($attachments as $file) {
             try {
-                $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-               
-                $file->move($filePath, $fileName);
-
-                MediaAttachment::create([
-                    'instructor_request_id' => $id,
-                    'file_name' => $fileName,
-                    'file_path' => $filePath,
-                    'file_type' => $file->getClientMimeType(),
-                    'file_size' => $file->getSize(),
-                ]);
-                dd($filePath.$fileName );
-                $uploadedFiles[] = $fileName; 
+                if ($file->isValid()) {
+                    
+                    $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    
+                    $file->move($filePath, $fileName);
+                    
+                    MediaAttachment::create([
+                        'instructor_request_id' => $id,
+                        'file_name' => $fileName,
+                        'file_path' => $filePath,
+                        'file_type' => $file->getClientMimeType(),
+                        'file_size' => $file->getSize(),
+                    ]);
+                   
+                    $uploadedFiles[] = $fileName; 
+                } else {                   
+                   return $uploadErrors[] = [
+                        'file' => $file->getClientOriginalName(),
+                        'error' => 'File upload is invalid or has been removed.',
+                    ];
+                }
             } catch (\Exception $ex) {                
-                $uploadErrors[] = [
+                return $uploadErrors[] = [
                     'file' => $file->getClientOriginalName(),
                     'error' => $ex->getMessage(),
                 ];
+                
             }
         }
         
