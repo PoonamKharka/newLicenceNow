@@ -22,7 +22,7 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Dashboard -->
         <li class="nav-item menu-open">
-          <a href="/admin-dashboard" class="nav-link {{ request()->is('admin-dashboard*') ? 'active' : '' }}">
+          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('admin-dashboard*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -34,7 +34,7 @@
           <a href="{{ route('users.index') }}" class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-users"></i>
             <p>
-              Total Customers
+              Total Users
             </p>
           </a>
         </li>
