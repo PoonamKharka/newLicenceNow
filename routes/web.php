@@ -40,8 +40,6 @@ use App\Http\Controllers\NavMenuController;
 
 Route::get('/admin', [LoginController::class, 'index']);
 
-Route::post('login', [LoginController::class, 'login'])->name('login');
-
 //Rest the password
 Route::middleware(['web'])->group(function () {
     Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.forgot');
@@ -50,7 +48,10 @@ Route::middleware(['web'])->group(function () {
     Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name('password.update');
 });
 
-Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
+Route::prefix('admin')->group(function(){
+    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::get('admin-dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
@@ -74,6 +75,5 @@ Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
     Route::resource('privacy-policy-articles',PrivacyPolicyArticleController::class);
     Route::resource('payment-policy-articles',PaymentPolicyArticleController::class);
     Route::resource('nav-menu',NavMenuController::class);
-   
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+});
 });
