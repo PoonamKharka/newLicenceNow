@@ -16,9 +16,9 @@ use App\Http\Controllers\API\SearchController;
 |
 */
 
-// Route::get('docs', function () {
-//     return view('swagger');
-// });
+Route::get('documentation', function () {
+    return view('vendor.l5-swagger.index');
+});
 
 # Authentication Route
 Route::post('register', [RegistrationController::class, 'registration']);
