@@ -10,6 +10,7 @@ interface InstructorRepositoryInterFace {
     public function store(Request $request);
     public function validatePhone(Request $request);
     public function validateSalaryPayModeId(Request $request);
+    public function getAllInstructorsRquest(Request $request);
 }
 
 ?>

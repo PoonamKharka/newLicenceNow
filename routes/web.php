@@ -69,5 +69,7 @@ Route::prefix('admin')->group(function(){
     Route::resource('privacy-policy-articles',PrivacyPolicyArticleController::class);
     Route::resource('payment-policy-articles',PaymentPolicyArticleController::class);
     Route::resource('nav-menu',NavMenuController::class);
+    Route::get('instructor-request',[InstructorController::class, 'getAllInstructorsRquest'])->name('instructor-request');
+    Route::get('instructor-request/{id}',[InstructorController::class, 'updateInstructorsRquest'])->name('instructor-request.edit');
 });
 });

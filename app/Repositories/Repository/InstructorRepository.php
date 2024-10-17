@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Models\InstructorBankDetail;
 use App\Models\InstructorProfileDetail;
+use App\Models\InstructorRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\InterFaces\InstructorRepositoryInterFace;
@@ -178,5 +179,24 @@ class InstructorRepository implements InstructorRepositoryInterFace
     
 
         return true;
+    }
+    public function getAllInstructorsRquest($request)
+    {
+
+        if ($request->ajax()) {
+            $instrutors = InstructorRequest::all();
+
+            return datatables()->of($instrutors)
+            ->addColumn('action', function ($row) {
+                $editUrl = route('instructor-request.edit', encrypt($row->id));
+                $btn = '<a href="' . $editUrl . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
+                $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i></button>';
+
+                return $btn;
+            })
+            ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('admin.instructor.request-index');
     }
 }

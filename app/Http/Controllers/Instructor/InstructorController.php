@@ -72,5 +72,9 @@ class InstructorController extends Controller
     {
       return $this->instService->validateSalaryPayModeId($request);
     }
+    public function getAllInstructorsRquest(Request $request)
+    {
+      return $this->instService->getAllInstructorsRquest($request);
+    }
 
 }
