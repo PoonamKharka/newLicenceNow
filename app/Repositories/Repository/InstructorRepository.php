@@ -57,14 +57,13 @@ class InstructorRepository implements InstructorRepositoryInterFace
     public function profile($id)
     {
         $userId = decrypt($id);
-        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle')->findOrFail($userId);
-        //dd($userData);
+        $userData =  User::with('bankDetails', 'profileDetails' , 'instructorVehicle','instructorLocations','instructorPrices')->findOrFail($userId);        
         if ($userData->profileDetails) {
             $userData->profileDetails->dob = Carbon::parse($userData->profileDetails->dob)->format('d/m/Y');
             $userData->profileDetails->doj = Carbon::parse($userData->profileDetails->doj)->format('d/m/Y');
             $userData->profileDetails->dot = Carbon::parse($userData->profileDetails->dot)->format('d/m/Y');
         }
-
+        
         return $userData;
     }
 
@@ -96,7 +95,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
             $doj = $request->input('doj') ? Carbon::createFromFormat('d/m/Y', $request->input('doj'))->format('Y-m-d') : null;
             $dot = $request->input('dot') ? Carbon::createFromFormat('d/m/Y', $request->input('dot'))->format('Y-m-d') : null;
 
-            $instructorProfileDetail = InstructorProfileDetail::where('user_id', $userId)->firstOrFail();
+            $instructorProfileDetail = InstructorProfileDetail::where('user_id', $userId)->firstOrFail();            
 
             if ($request->hasFile('picture')) {
                 $imageFileName = time() . '_image.' . $request->file('picture')->getClientOriginalExtension();
@@ -130,8 +129,9 @@ class InstructorRepository implements InstructorRepositoryInterFace
 
             // Check if the record exists
             $findUser = InstructorBankDetail::where('user_id', '=', $request->input('user_id'))->first();
-
+            
             if ($findUser) {
+                
                 // Update the existing record
                 $updateDetails = $findUser->update($instructorBankDetail);
             } else {
@@ -147,5 +147,36 @@ class InstructorRepository implements InstructorRepositoryInterFace
                 return back()->with('error', 'Failed to save instructor bank details.');
             }
         }
+    }
+    public function validatePhone($myRequest)
+    {
+        $phoneNo = $myRequest->input('phoneNo');
+        $originalPhoneNo = $myRequest->input('existing_phoneNo');  
+       
+        
+        if(empty($originalPhoneNo))
+        {
+            $exists=0;
+            return response()->json(!$exists, $exists ? 200 : 200);
+        }
+        $exists = InstructorProfileDetail::where('phoneNo', $phoneNo)
+        ->where('phoneNo', '!=', $originalPhoneNo) 
+        ->exists();
+     
+        return response()->json(!$exists, $exists ? 200 : 200);
+    }
+    
+    public function validateSalaryPayModeId(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'salaryPayModeId' => 'required|exists:salary_pay_modes,id',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+    
+
+        return true;
     }
 }

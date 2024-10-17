@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\InstructorService;
 use App\Http\Requests\StoreInstructorRequest;
 use App\Models\Location;
+use App\Models\Price;
 
 class InstructorController extends Controller
 {
@@ -32,20 +33,44 @@ class InstructorController extends Controller
    public function show($id)
    {
       $userData = $this->instService->profile($id);
+       
+      $selectedLocationIds = [];
+      if (isset($userData->instructorLocations)) {         
+         $selectedLocationIds = $userData->instructorLocations->pluck('id')->toArray();
+      }     
       $allLocation = Location::get();
-      return view('admin.instructor.profile', compact('userData', 'allLocation'));
+
+      $selectedPriceIds = [];
+      if (isset($userData->instructorPrices)) {         
+         $selectedPriceIds = $userData->instructorPrices->pluck('id')->toArray();
+      }   
+
+      $allPrices = Price::get();
+      return view('admin.instructor.profile', compact('userData', 'allLocation','selectedLocationIds','allPrices','selectedPriceIds'));
    }
 
    public function store(StoreInstructorRequest $request)
    {
+      
       $status = $this->instService->store($request);
-     
       if($status && $request->form_type == "vehicle_details") {
          return redirect()->route('instructors.show' , encrypt($request->instructor_id))->with('success', 'Action completed!');
       }
       if($status){
          return redirect()->route('instructors.show' , encrypt($request->user_id))->with('success', 'Action completed!');
+      }else{
+         return back()->with('error', 'Failed to save instructor details.');
       }
    }
+   public function validatePhone(Request $request)
+    {
+      return $this->instService->validatePhone($request);
+      
+    }
+    
+    public function validateSalaryPayModeId(Request $request)
+    {
+      return $this->instService->validateSalaryPayModeId($request);
+    }
 
 }

@@ -6,12 +6,70 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/articles-data": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all article modules based on parameters",
+                "description": "Retrieve a list of all modules of article based on parameters and you can pass any specific parameter to get specic module",
+                "operationId": "ee0c6b2cf5b83ab5303b1cf324b0b638",
+                "parameters": [
+                    {
+                        "name": "features",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get features list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "learnerTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Learner Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "instructorTC",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Instructor Terms and Conditions list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "paymentPolicy",
+                        "in": "query",
+                        "description": "Add this parameter true if you want to get Payment Policy list",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/about": {
             "get": {
                 "tags": [
                     "Articles"
                 ],
-                "summary": "About Us",
+                "summary": "Get About us page data",
                 "operationId": "b22068b2a7d0924cf976dfbc5bf0f19d",
                 "responses": {
                     "200": {
@@ -166,6 +224,135 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/instructor-search": {
+            "get": {
+                "summary": "Search all instructors based on location and transmission type",
+                "description": "Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",
+                "operationId": "fe02144dd7f24346c4b2a4e1599f4335",
+                "parameters": [
+                    {
+                        "name": "locationId",
+                        "in": "query",
+                        "description": "ID of the location (suburb)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "transmissionType",
+                        "in": "query",
+                        "description": "Transmission type of the instructor (e.g. 'auto' or 'manual')",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/instructors": {
+            "get": {
+                "summary": "Get all instructors",
+                "description": "Retrieve a list of all instructors",
+                "operationId": "029801c2258b7fe8b583b9b3247f262c",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/instructors/{id}": {
+            "get": {
+                "summary": "Get instructor details",
+                "description": "Retrieve detailed information of a specific instructor by their ID.",
+                "operationId": "d68120c018f61a5e42fb0b32c131e239",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the instructor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of instructor details"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/location-search": {
+            "get": {
+                "summary": "Search all location based on street,city or postcode",
+                "description": "Retrieve a list of all locations street,city or postcode ",
+                "operationId": "d1396448bc8bd31238afd15090a95fa8",
+                "parameters": [
+                    {
+                        "name": "s",
+                        "in": "query",
+                        "description": "You can enter street or city or postcode ",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "transmissionType",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "description": "Select auto (isAuto) or manual (isManual)",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "manual"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
