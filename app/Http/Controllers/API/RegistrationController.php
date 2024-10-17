@@ -90,7 +90,8 @@ class RegistrationController extends BaseController
      *     )
      * )
      */
-    public function instructorRegistrationRquest(Request $request){
+    public function instructorRegistrationRquest(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
@@ -101,50 +102,71 @@ class RegistrationController extends BaseController
             'files' => 'nullable|array', 
             'files.*' => 'file|mimes:jpeg,png,jpg,pdf|max:2048', 
         ]);
+
         if ($validator->fails()) {
             return $this->errorResponse($validator->errors());
         }
-    
+
         try {
-            $addInstructorReq = InstructorRequest::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'phoneNo' => $request->phoneNo,
-                'postcode' => $request->postcode,
-                'status' => 'pending',
-            ]);
+            // $addInstructorReq = InstructorRequest::create($request->only([
+            //     'first_name', 'last_name', 'email', 'phoneNo', 'postcode'
+            // ]) + ['status' => 'pending']);
+
+            // Handle multiple file uploads
+            if ($request->hasFile('files')) {
+              
+                $this->uploadMediaAttachments($request->file('files'), 1);
+                //$this->uploadMediaAttachments($request->file('files'), $addInstructorReq->id);
+            }
+            //return $this->successResponse($addInstructorReq, "Instructor registered successfully.");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex->getMessage());
         }
-        
     }
-    // Handle multiple file uploads
-    public function uploadMediaAttachments($attachments,$id) {
-        
-        if ($attachments->hasFile('files')) {
-            $uploadedFiles = [];
-            foreach ($attachments->file('files') as $file) {
+
+    public function uploadMediaAttachments($attachments, $id)
+    {
+        $filePath = public_path('user-attachments');
+        $uploadedFiles = [];
+        $uploadErrors = [];
+        foreach ($attachments as $file) {
+            try {
                 $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('uploads'), $fileName);
-                $uploadedFiles[] = $fileName; 
-            }
-            $instructorProfileDetail['uploaded_files'] = json_encode($uploadedFiles); 
-        }
-        if ($attachments->hasFile('attachments')) {
-            foreach ($attachments->file('attachments') as $file) {
-                $path = $file->store('attachments');
+               
+                $file->move($filePath, $fileName);
+
                 MediaAttachment::create([
-                    'intructor_request_id' => $id,
-                    'file_name' => $file->getClientOriginalName(),
-                    'file_path' => $path,
+                    'instructor_request_id' => $id,
+                    'file_name' => $fileName,
+                    'file_path' => $filePath,
                     'file_type' => $file->getClientMimeType(),
                     'file_size' => $file->getSize(),
                 ]);
+                dd($filePath.$fileName );
+                $uploadedFiles[] = $fileName; 
+            } catch (\Exception $ex) {                
+                $uploadErrors[] = [
+                    'file' => $file->getClientOriginalName(),
+                    'error' => $ex->getMessage(),
+                ];
             }
         }
         
+        if (!empty($uploadErrors)) {            
+            return [
+                'status' => 'partial',
+                'uploaded_files' => $uploadedFiles,
+                'errors' => $uploadErrors,
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'uploaded_files' => $uploadedFiles,
+        ];
     }
+
+
 
    
  

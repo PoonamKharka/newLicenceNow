@@ -9,7 +9,7 @@ class MediaAttachment extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'model_id',
+        'instructor_request_id',
         'file_name',
         'file_path',
         'file_type',
