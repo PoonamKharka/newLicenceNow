@@ -34,7 +34,7 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <form action="{{ route('aboutus.store') }}" method="POST" enctype="multipart/form-data">
+                                        <form id="aboutus" action="{{ route('aboutus.store') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $abtUs->id ?? '' }}">
                                             

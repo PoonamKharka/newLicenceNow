@@ -31,7 +31,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-              <form action="{{ route('lessons.store') }}" method="POST" autocomplete="off">
+              <form id="lessons" action="{{ route('lessons.store') }}" method="POST" autocomplete="off">
                 @csrf
                 <div class="card-body">
                   <div class="form-group">

@@ -21,6 +21,7 @@ use App\Http\Controllers\API\SearchController;
 // });
 
 # Authentication Route
+Route::post('instructor-register', [RegistrationController::class, 'instructorRegistration']);
 Route::post('register', [RegistrationController::class, 'registration']);
 Route::post('login', [RegistrationController::class, 'login']);
 

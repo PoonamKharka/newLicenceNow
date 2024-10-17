@@ -31,7 +31,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-              <form action="{{ route('lessons.update', encrypt($findData->id)) }}" method="POST" autocomplete="off">
+              <form id="lessons" action="{{ route('lessons.update', encrypt($findData->id)) }}" method="POST" autocomplete="off">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
@@ -44,7 +44,7 @@
                   </div>
                   <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" rows="3" placeholder="Enter description" name="description" value="{{ $findData->description }}"></textarea>
+                    <textarea class="form-control" rows="3" placeholder="Enter description" name="description" value="{{ $findData->description }}">{{ $findData->description }}</textarea>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputFile">Status</label>
