@@ -62,7 +62,7 @@ $(function() {
              ajax: "{{ route('instructors.index') }}",
              columns: [
                       { data: 'username', name: 'username' },
-                      { data: 'status', name: 'status' },
+                      { data: 'userStatus', name: 'userStatus' },
                       { data: 'action', name: 'action', orderable: false, searchable: false},
                    ]
           });

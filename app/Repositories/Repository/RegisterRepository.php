@@ -19,13 +19,13 @@ class RegisterRepository implements RegisterRepositoryInterFace
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::where('isAdmin', '=', 0)->select('*');
+            $users = User::where('isAdmin', '=', 0)->select('*')->orderBy('created_at', 'DESC');
             return datatables()->of($users)
-                ->editColumn('status', function ($row) {
+                ->addColumn('userStatus', function ($row) {
                     if ($row->status == 1) {
-                        return 'Active';
+                        return '<h5><span class="badge badge-success">Active</a></h5>';
                     } else {
-                        return 'Inactive';
+                        return '<h5><span class="badge badge-success">Inactive</a></h5>';
                     }
                 })
                 ->editColumn('userType_id', function ($row) {
@@ -44,7 +44,7 @@ class RegisterRepository implements RegisterRepositoryInterFace
 
                     return $btn;
                 })
-                ->rawColumns(['action', 'username'])
+                ->rawColumns(['action', 'username', 'userStatus'])
                 ->make(true);
         }
 

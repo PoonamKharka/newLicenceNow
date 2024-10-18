@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegistrationController;
 use App\Http\Controllers\API\ArticleController;
 use App\Http\Controllers\API\SearchController;
+use App\Http\Controllers\API\BookingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,9 +17,9 @@ use App\Http\Controllers\API\SearchController;
 |
 */
 
-Route::get('documentation', function () {
-    return view('vendor.l5-swagger.index');
-});
+// Route::get('documentation', function () {
+//     return view('vendor.l5-swagger.index');
+// });
 
 # Authentication Route
 Route::post('instructor-register', [RegistrationController::class, 'instructorRegistrationRquest']);
@@ -37,4 +38,6 @@ Route::middleware('auth:api')->group( function() {
     Route::get('instructors',[SearchController::class,'getAllInstructors']);
     Route::get('location-search',[SearchController::class,'getAvailableSuburbs']);
     Route::get('instructors/{id}',[SearchController::class,'getInstructorDetails']);
+
+    Route::get('prices',[BookingController::class,'getHoursList']);
 });

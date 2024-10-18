@@ -23,14 +23,14 @@ class InstructorRepository implements InstructorRepositoryInterFace
         if ($request->ajax()) {
             $instrutors = User::whereHas('userType', function ($query) {
                 $query->where('type', '=', 'Instructor');
-            })->select('*');
+            })->select('*')->orderBy('created_at', 'DESC');
 
             return datatables()->of($instrutors)
-                ->editColumn('status', function ($row) {
+                ->addColumn('userStatus', function ($row) {
                     if ($row->status == 1) {
-                        return 'Active';
+                        return '<h5><span class="badge badge-success">Active</a></h5>';
                     } else {
-                        return 'Inactive';
+                        return '<h5><span class="badge badge-success">Inactive</a></h5>';
                     }
                 })
                 ->addColumn('action', function ($row) {
@@ -49,7 +49,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
 
                     return $name;
                 })
-                ->rawColumns(['action' , 'username'])
+                ->rawColumns(['action' , 'username', 'userStatus'])
                 ->make(true);
         }
         return view('admin.instructor.index');
