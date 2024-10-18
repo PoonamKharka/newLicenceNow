@@ -15,13 +15,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule; 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class RegistrationController extends BaseController
 {
     /**
      * @OA\Post(
      *     path="/api/instructor-register",
-     * tags={"Authentication"},
+     * tags={"General"},
      *     summary="Instructor Registration",
      *     description="Register a new instructor",
      *     @OA\Parameter(
@@ -59,7 +60,7 @@ class RegistrationController extends BaseController
      *         @OA\Schema(type="string"),
      *         description="Postcode"
      *     ),
-     * @OA\Parameter(
+     *     @OA\Parameter(
      *         name="transmission_type",
      *         in="query",
      *         required=true,
@@ -68,6 +69,21 @@ class RegistrationController extends BaseController
      *             enum={"auto", "manual"} 
      *         ),
      *         description="Transmission type: auto or manual"
+     *     ),
+     *      
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="files[]",
+     *                     type="array",
+     *                     @OA\Items(type="string", format="binary"),
+     *                     description="Multiple files to upload"
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Parameter(
      *         name="about_your_self",
@@ -119,6 +135,7 @@ class RegistrationController extends BaseController
             }
             return $this->successResponse($addInstructorReq, "Instructor registered successfully.");
         } catch (\Exception $ex) {
+            Log::log('error', $ex);
             return $this->errorResponse($ex->getMessage());
         }
     }
@@ -126,46 +143,55 @@ class RegistrationController extends BaseController
     public function uploadMediaAttachments($attachments, $id)
     {
         $filePath = public_path('user-attachments');
+        
         $uploadedFiles = [];
         $uploadErrors = [];
+        $mediaAttachmentsData = [];
+
         foreach ($attachments as $file) {
             try {
-                if ($file->isValid()) {
-                    
-                    $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                if ($file->isValid() && file_exists($file->getPathname())) {
+                   
+                    $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();                    
                     
                     $file->move($filePath, $fileName);
                     
-                    MediaAttachment::create([
+                    $mediaAttachmentsData[] = [
                         'instructor_request_id' => $id,
                         'file_name' => $fileName,
                         'file_path' => $filePath,
                         'file_type' => $file->getClientMimeType(),
-                        'file_size' => $file->getSize(),
-                    ]);
+                        'file_status' => 'pending',
+                    ];             
+                    $uploadedFiles[] = $fileName;
+                } else {
                    
-                    $uploadedFiles[] = $fileName; 
-                } else {                   
-                   return $uploadErrors[] = [
+                    $uploadErrors[] = [
                         'file' => $file->getClientOriginalName(),
                         'error' => 'File upload is invalid or has been removed.',
-                    ];
+                    ];                    
                 }
-            } catch (\Exception $ex) {                
-                return $uploadErrors[] = [
+            } catch (\Exception $ex) {               
+                $uploadErrors[] = [
                     'file' => $file->getClientOriginalName(),
                     'error' => $ex->getMessage(),
                 ];
-                
+                Log::log('error', $uploadErrors);
             }
         }
-        
-        if (!empty($uploadErrors)) {            
+
+        // Bulk insert media attachments after loop
+        if (!empty($mediaAttachmentsData)) {
+            MediaAttachment::insert($mediaAttachmentsData);
+        }
+
+        if (!empty($uploadErrors)) {
             return [
                 'status' => 'partial',
                 'uploaded_files' => $uploadedFiles,
                 'errors' => $uploadErrors,
             ];
+            Log::log('error', $uploadErrors);
         }
 
         return [
@@ -173,12 +199,6 @@ class RegistrationController extends BaseController
             'uploaded_files' => $uploadedFiles,
         ];
     }
-
-
-
-   
- 
-
     
     /**
      * Register new user into the system
