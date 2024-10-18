@@ -246,8 +246,8 @@ class RegistrationController extends BaseController
      *         required=true,
      *         @OA\JsonContent(
      *             required={"email", "password"},
-     *             @OA\Property(property="email", type="string", example="user@example.com"),
-     *             @OA\Property(property="password", type="string", example="your_password")
+     *             @OA\Property(property="email", type="string", example="adminln@yopmail.com"),
+     *             @OA\Property(property="password", type="string", example="admin")
      *         )
      *     ),
     *     @OA\Response(
