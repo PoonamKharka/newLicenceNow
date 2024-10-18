@@ -159,13 +159,13 @@
                 ]
             }
         },
-        "/api/login": {
+        "/api/prices": {
             "get": {
                 "tags": [
-                    "Booking"
+                    "Booking Steps"
                 ],
                 "summary": "Prices and Hours details",
-                "operationId": "1cc7393190264808ec7fba97cb2ff86c",
+                "operationId": "caec5e87aaa51c80150238889c6fe9b8",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -176,71 +176,6 @@
                         "bearerAuth": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "User login",
-                "operationId": "088cc70ebb0d8ff1598d6e35305cd5a1",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "example": "user@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "your_password"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful login",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "token": {
-                                            "type": "string",
-                                            "example": "Bearer your_token_here"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Unauthorized"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/api/instructor-register": {
@@ -329,6 +264,73 @@
                     },
                     "500": {
                         "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "operationId": "088cc70ebb0d8ff1598d6e35305cd5a1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "your_password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "Bearer your_token_here"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -422,8 +424,8 @@
             "description": "Articles"
         },
         {
-            "name": "Booking",
-            "description": "Booking"
+            "name": "Booking Steps",
+            "description": "Booking Steps"
         },
         {
             "name": "Authentication",

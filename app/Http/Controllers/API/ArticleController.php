@@ -24,7 +24,6 @@ class ArticleController extends BaseController
      *     tags={"Articles"},
      *     summary="Get all article modules based on parameters",
      *     description="Retrieve a list of all modules of article based on parameters and you can pass any specific parameter to get specic module",
-     *     security={{"bearerAuth": {}}},  
      *     @OA\Parameter(
      *         name="features",
      *         in="query",
@@ -86,7 +85,6 @@ class ArticleController extends BaseController
      *     path="/api/about",
      *     tags={"Articles"},
      *     summary="Get About us page data",
-     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK"
@@ -109,7 +107,6 @@ class ArticleController extends BaseController
      *     path="/api/faqs",
      *     tags={"Articles"},
      *     summary="Get all FAQs",
-     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK"
@@ -131,7 +128,6 @@ class ArticleController extends BaseController
      *     path="/api/features",
      *     tags={"Articles"},
      *     summary="Get all features",
-     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK"
@@ -152,7 +148,6 @@ class ArticleController extends BaseController
      *     path="/api/article/privacy-policies",
      *     tags={"Articles"},
      *     summary="Get all article privacy policies",
-     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK"
@@ -174,7 +169,6 @@ class ArticleController extends BaseController
      *     path="/api/nav-menu",
      *     tags={"Articles"},
      *     summary="Get all menu items",
-     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK"

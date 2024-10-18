@@ -16,8 +16,7 @@ class SearchController extends BaseController
      * @OA\Get(
      *     path="/api/instructor-search",
      *     summary="Search all instructors based on location and transmission type",
-     *     description="Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",
-     *     security={{"bearerAuth": {}}},
+     *     description="Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",     
      *     @OA\Parameter(
      *         name="locationId",
      *         in="query",
@@ -76,7 +75,6 @@ class SearchController extends BaseController
      *     path="/api/instructors",
      *     summary="Get all instructors",
      *     description="Retrieve a list of all instructors",
-     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK"
@@ -99,7 +97,6 @@ class SearchController extends BaseController
      * @OA\Get(
      *     path="/api/suburbs-search",
      *     summary="Search all available locations",
-     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="OK"

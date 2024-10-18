@@ -54,6 +54,7 @@ class TestPackageRepository implements TestPackageRepositoryInterface
             $image = $request->file('image');
             $imageName = time() . '_image.' . $image->getClientOriginalExtension();
             $validatedData['image'] = $image->storeAs('testPackages', $imageName, 'public');
+            $validatedData['img_path'] = config('app.baseUrl') . '/' .$validatedData['image'];
         }
 
         // Determine if we're updating or creating
