@@ -1,9 +1,8 @@
 $(document).ready(function () {
-
     /* Initialize editor */
-    $('.summernote').summernote({
-        height: 300,   // Set the height of the editor
-        placeholder: 'Enter description here...',
+    $(".summernote").summernote({
+        height: 300, // Set the height of the editor
+        placeholder: "Enter description here...",
         // toolbar: [
         //     ['style', ['bold', 'italic', 'underline', 'clear']],
         //     ['fontsize', ['fontsize']],
@@ -12,67 +11,96 @@ $(document).ready(function () {
         // ],
         callbacks: {
             onBlur: function () {
-                var contents = $('.summernote').summernote('code');
-                var cleanContent = contents.replace(/&nbsp;/g, ' ');
-                $('.summernote').next('textarea').val(cleanContent);
-
-            }
-        }
+                var contents = $(".summernote").summernote("code");
+                var cleanContent = contents.replace(/&nbsp;/g, " ");
+                $(".summernote").next("textarea").val(cleanContent);
+            },
+        },
     });
 
-
     /* Test Package module */
-    $('#testpackageForm').on('submit', function (e) {
+    $("#testpackageForm").on("submit", function (e) {
         let isValid = true;
 
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-
-
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
-
 
         const imageInput = $('input[name="image"]');
         if (imageInput.get(0).files.length > 0) {
             const file = imageInput.get(0).files[0];
-            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            const maxSizeInBytes = 2048 * 1024; // 2MB
+            const validImageTypes = [
+                "image/jpeg",
+                "image/png",
+                "image/gif",
+                "image/svg+xml",
+            ];
+            const maxSizeInBytes = 2048 * 1448; // 2MB
 
             // Validate image type
             if (!validImageTypes.includes(file.type)) {
                 isValid = false;
-                imageInput.addClass('is-invalid').after('<div class="error-message text-danger">Please upload a valid image (jpeg, png, gif).</div>');
+                imageInput
+                    .addClass("is-invalid")
+                    .after(
+                        '<div class="error-message text-danger">Please upload a valid image (jpeg, png, gif).</div>'
+                    );
             }
 
             // Validate image size
             if (file.size > maxSizeInBytes) {
                 isValid = false;
-                imageInput.addClass('is-invalid').after('<div class="error-message text-danger">Image size must be less than 2MB.</div>');
+                imageInput
+                    .addClass("is-invalid")
+                    .after(
+                        '<div class="error-message text-danger">Image size must be less than 2MB.</div>'
+                    );
             }
         }
 
         // Validate Price
         const priceInput = $('input[name="price"]');
         const priceValue = priceInput.val();
-        if (priceValue === '' || isNaN(priceValue) || parseFloat(priceValue) < 0) {
+        if (
+            priceValue === "" ||
+            isNaN(priceValue) ||
+            parseFloat(priceValue) < 0
+        ) {
             isValid = false;
-            priceInput.addClass('is-invalid').after('<div class="error-message text-danger">Price must be a positive numeric value.</div>');
+            priceInput
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Price must be a positive numeric value.</div>'
+                );
         }
 
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description === '') {
+        if (description === "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {
@@ -81,28 +109,39 @@ $(document).ready(function () {
     });
 
     /* Articles module */
-    $('#articlesForm').on('submit', function (e) {
+    $("#articlesForm").on("submit", function (e) {
         let isValid = true;
 
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-
-
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description === '') {
+        if (description === "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {
@@ -111,54 +150,74 @@ $(document).ready(function () {
     });
 
     /* FeatureForm module */
-    $('#featureForm').on('submit', function (e) {
+    $("#featureForm").on("submit", function (e) {
         let isValid = true;
 
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-
-
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
-
 
         const imageInput = $('input[name="image"]');
         if (imageInput.get(0).files.length > 0) {
             const file = imageInput.get(0).files[0];
-            const validImageTypes = ['image/svg+xml'];
-            const validFileExtensions = ['svg'];
+            const validImageTypes = ["image/svg+xml"];
+            const validFileExtensions = ["svg"];
             const maxSizeInBytes = 2048 * 1024; // 2MB
 
             // Get file extension
-            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const fileExtension = file.name.split(".").pop().toLowerCase();
 
             // Validate image type (only SVG) by MIME type or extension
-            if (!validImageTypes.includes(file.type) || !validFileExtensions.includes(fileExtension)) {
+            if (
+                !validImageTypes.includes(file.type) ||
+                !validFileExtensions.includes(fileExtension)
+            ) {
                 isValid = false;
-                imageInput.addClass('is-invalid').after('<div class="error-message text-danger">Please upload a valid SVG image.</div>');
+                imageInput
+                    .addClass("is-invalid")
+                    .after(
+                        '<div class="error-message text-danger">Please upload a valid SVG image.</div>'
+                    );
             }
 
             // Validate image size
             if (file.size > maxSizeInBytes) {
                 isValid = false;
-                imageInput.addClass('is-invalid').after('<div class="error-message text-danger">Image size must be less than 2MB.</div>');
+                imageInput
+                    .addClass("is-invalid")
+                    .after(
+                        '<div class="error-message text-danger">Image size must be less than 2MB.</div>'
+                    );
             }
         }
 
-
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description === '') {
+        if (description === "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {
@@ -167,28 +226,39 @@ $(document).ready(function () {
     });
 
     /* Learner module */
-    $('#learnerForm').on('submit', function (e) {
+    $("#learnerForm").on("submit", function (e) {
         let isValid = true;
 
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-
-
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description === '') {
+        if (description === "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {
@@ -196,28 +266,39 @@ $(document).ready(function () {
         }
     });
     /* Instructor module */
-    $('#instructorForm').on('submit', function (e) {
+    $("#instructorForm").on("submit", function (e) {
         let isValid = true;
 
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-
-
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description === '') {
+        if (description === "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {
@@ -226,28 +307,39 @@ $(document).ready(function () {
     });
 
     /* Privacy Policy Articles module */
-    $('#privacyPolicyForm').on('submit', function (e) {
+    $("#privacyPolicyForm").on("submit", function (e) {
         let isValid = true;
 
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-
-
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description === '') {
+        if (description === "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {
@@ -255,28 +347,39 @@ $(document).ready(function () {
         }
     });
     /* Payment Policy Articles module */
-    $('#paymentPolicyForm').on('submit', function (e) {
+    $("#paymentPolicyForm").on("submit", function (e) {
         let isValid = true;
 
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-
-
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description === '') {
+        if (description === "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {
@@ -284,17 +387,25 @@ $(document).ready(function () {
         }
     });
     /* Nav menu module */
-    $('#navMenuForm').on('submit', function (e) {
+    $("#navMenuForm").on("submit", function (e) {
         let isValid = true;
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
-        if ($('input[name="title"]').val().trim() === '') {
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
-        if ($('input[name="slug"]').val().trim() === '') {
+        if ($('input[name="slug"]').val().trim() === "") {
             isValid = false;
-            $('input[name="slug"]').addClass('is-invalid').after('<div class="error-message text-danger">Slug is required.</div>');
+            $('input[name="slug"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Slug is required.</div>'
+                );
         }
         if (!isValid) {
             e.preventDefault();
@@ -302,71 +413,100 @@ $(document).ready(function () {
     });
 
     /* Instructors Details module */
-    $.validator.addMethod("noWhitespace", function (value, element) {
-        return $.trim(value).length > 0;
-    }, "This field is required");
+    $.validator.addMethod(
+        "noWhitespace",
+        function (value, element) {
+            return $.trim(value).length > 0;
+        },
+        "This field is required"
+    );
 
-    $.validator.addMethod("phoneAU", function (value, element) {
+    $.validator.addMethod(
+        "phoneAU",
+        function (value, element) {
+            value = value.replace(/\s+/g, "").replace(/[-()]/g, "");
+            return (
+                this.optional(element) ||
+                value.match(/^(\(0[2-8]\)|0[2-8])\d{8}$/) ||
+                value.match(/^04\d{8}$/)
+            );
+        },
+        "Please enter a valid Australian phone number(e.g., 0412345678)."
+    );
 
-        value = value.replace(/\s+/g, "").replace(/[-()]/g, "");
-        return this.optional(element) || value.match(/^(\(0[2-8]\)|0[2-8])\d{8}$/) || value.match(/^04\d{8}$/);
-    }, "Please enter a valid Australian phone number(e.g., 0412345678).");
+    $.validator.addMethod(
+        "checkboxRequired",
+        function (value, element, params) {
+            return $(params).is(":checked");
+        },
+        "This field is required"
+    );
 
-    $.validator.addMethod("checkboxRequired", function (value, element, params) {
-        return $(params).is(":checked");
-    }, "This field is required");
-
-    $.validator.addMethod("fileExtension", function (value, element, param) {
-        const extension = value.split('.').pop().toLowerCase();
-        return this.optional(element) || $.inArray(extension, param.split('|')) !== -1;
-    }, "Only JPG, JPEG, and PNG files are allowed.");
+    $.validator.addMethod(
+        "fileExtension",
+        function (value, element, param) {
+            const extension = value.split(".").pop().toLowerCase();
+            return (
+                this.optional(element) ||
+                $.inArray(extension, param.split("|")) !== -1
+            );
+        },
+        "Only JPG, JPEG, and PNG files are allowed."
+    );
 
     // Ensure the file is an image and check the size limit
-    $.validator.addMethod("fileSize", function (value, element) {
-        if (element.files && element.files[0]) {
-            const fileSize = element.files[0].size / 1024; // size in KB
-            return this.optional(element) || fileSize <= 2048; // 2048 KB = 2 MB
-        }
-        return true; // If no file, treat as valid
-    }, "File size must be less than 2048 KB.");
-    $.validator.addMethod("eitherRequired", function (value, element) {
-        // Check if either 'isAuto' or 'isManual' is checked
-        return $("input[name='isAuto']").is(":checked") || $("input[name='isManual']").is(":checked");
-    }, "Please select either Auto or Manual.");
-
-
-
+    $.validator.addMethod(
+        "fileSize",
+        function (value, element) {
+            if (element.files && element.files[0]) {
+                const fileSize = element.files[0].size / 1024; // size in KB
+                return this.optional(element) || fileSize <= 2048; // 2048 KB = 2 MB
+            }
+            return true; // If no file, treat as valid
+        },
+        "File size must be less than 2048 KB."
+    );
+    $.validator.addMethod(
+        "eitherRequired",
+        function (value, element) {
+            // Check if either 'isAuto' or 'isManual' is checked
+            return (
+                $("input[name='isAuto']").is(":checked") ||
+                $("input[name='isManual']").is(":checked")
+            );
+        },
+        "Please select either Auto or Manual."
+    );
 
     $('select[name="gender_id"]').select2();
     $('select[name="blood_group_id"]').select2();
 
     $("#personal_details").validate({
-
         rules: {
             name: {
                 required: true,
-                noWhitespace: true
+                noWhitespace: true,
             },
             date_of_birth: {
                 required: true,
                 //dateISO: true,
-                noWhitespace: true
+                noWhitespace: true,
             },
             isAuto: {
-                eitherRequired: true
+                eitherRequired: true,
             },
             isManual: {
-                eitherRequired: true
+                eitherRequired: true,
             },
-            'languages[]': {
-                checkboxRequired: 'input[name="languages[]"]'
+            "languages[]": {
+                checkboxRequired: 'input[name="languages[]"]',
             },
             date_of_joining: {
                 required: true,
                 //dateISO: true
             },
             gender_id: {
-                required: true
+                required: true,
             },
             phoneNo: {
                 required: true,
@@ -378,11 +518,11 @@ $(document).ready(function () {
                             return $("input[name='phoneNo']").val();
                         },
                         _token: $("input[name='_token']").val(),
-                    }
-                }
+                    },
+                },
             },
             blood_group_id: {
-                required: true
+                required: true,
             },
             driving_expirence: {
                 required: true,
@@ -396,45 +536,44 @@ $(document).ready(function () {
                 //     return $('input[name="existing_profile_picture"]').val() === "";
                 // },
                 fileExtension: "jpeg|jpg|png",
-                fileSize: true
-            }
+                fileSize: true,
+            },
         },
         messages: {
             name: {
                 required: "Please enter your name",
-                minlength: "Name must be at least 3 characters long"
+                minlength: "Name must be at least 3 characters long",
             },
             date_of_birth: {
                 required: "Please enter your date of birth",
-                date: "Please enter a valid date"
+                date: "Please enter a valid date",
             },
             phoneNo: {
                 required: "Please enter a phone number.",
-                remote: "This phone number is already in use."
+                remote: "This phone number is already in use.",
             },
             profile_picture: {
                 required: "Please upload a profile picture.",
                 fileExtension: "Only JPG, JPEG, and PNG files are allowed.",
-                fileSize: "File size must be less than 2048 KB."
-            }
+                fileSize: "File size must be less than 2048 KB.",
+            },
         },
         submitHandler: function (form, event) {
             //event.preventDefault();
             console.log("Form validated successfully");
             form.submit();
-
         },
         invalidHandler: function (event, validator) {
             // This function is called when the form is invalid
             console.log("Form is invalid.");
-        }
+        },
     });
 
     // Re-validate selects when their value changes
-    $('select[name="gender_id"]').on('change', function () {
+    $('select[name="gender_id"]').on("change", function () {
         $(this).valid();
     });
-    $('select[name="blood_group_id"]').on('change', function () {
+    $('select[name="blood_group_id"]').on("change", function () {
         $(this).valid();
     });
 
@@ -460,31 +599,31 @@ $(document).ready(function () {
                 required: true,
                 number: true,
                 min: 1,
-                max: 5
+                max: 5,
             },
             vehicle_image: {
                 required: function (element) {
                     // Check if the user already has a profile picture or not
-                    return $('input[name="existing_vehicle_image"]').val() === "";
+                    return (
+                        $('input[name="existing_vehicle_image"]').val() === ""
+                    );
                 },
                 fileExtension: "jpeg|jpg|png",
-                fileSize: true
-            }
+                fileSize: true,
+            },
         },
         messages: {
-
             vehicle_image: {
                 required: "Please upload a profile picture.",
                 fileExtension: "Only JPG, JPEG, and PNG files are allowed.",
-                filesize: "The file size must be less than 2MB."
-            }
+                filesize: "The file size must be less than 2MB.",
+            },
         },
         submitHandler: function (form, event) {
             //event.preventDefault();
             console.log("Form validated successfully");
             form.submit();
-
-        }
+        },
     });
 
     // Suburbs Details Function to update the disabled state of options
@@ -521,7 +660,6 @@ $(document).ready(function () {
             'location_id[]': {
                 locationRequired: true
             },
-
         },
         messages: {
             'location_id[]': {
@@ -586,58 +724,64 @@ $(document).ready(function () {
                         salaryPayModeId: function () {
                             return $("select[name='salaryPayModeId']").val();
                         },
-                        _token: $("input[name='_token']").val()
+                        _token: $("input[name='_token']").val(),
                     },
                     dataFilter: function (response) {
-
                         var jsonResponse = JSON.parse(response);
 
-                        if (jsonResponse.errors && jsonResponse.errors.salaryPayModeId) {
-                            return "\"" + jsonResponse.errors.salaryPayModeId[0] + "\"";
+                        if (
+                            jsonResponse.errors &&
+                            jsonResponse.errors.salaryPayModeId
+                        ) {
+                            return (
+                                '"' +
+                                jsonResponse.errors.salaryPayModeId[0] +
+                                '"'
+                            );
                         }
 
                         return true;
-                    }
-                }
+                    },
+                },
             },
             salaryBankName: {
-                required: true
+                required: true,
             },
             salaryBranchName: {
-                required: true
+                required: true,
             },
             salaryIFSCCode: {
-                required: true
+                required: true,
             },
             salaryAccountNumber: {
                 required: true,
                 digits: true,
-                maxlength: 20
-            }
+                maxlength: 20,
+            },
         },
         messages: {
             salaryPayModeId: {
                 required: "Please select a salary pay mode.",
-                remote: "The selected salary pay mode is invalid."
+                remote: "The selected salary pay mode is invalid.",
             },
             salaryBankName: {
-                required: "Please enter the bank name."
+                required: "Please enter the bank name.",
             },
             salaryBranchName: {
-                required: "Please enter the branch name."
+                required: "Please enter the branch name.",
             },
             salaryIFSCCode: {
-                required: "Please enter the IFSC code."
+                required: "Please enter the IFSC code.",
             },
             salaryAccountNumber: {
                 required: "Please enter the account number.",
                 digits: "Please enter only numbers.",
-                maxlength: "Account number must be at most 20 digits long."
-            }
+                maxlength: "Account number must be at most 20 digits long.",
+            },
         },
         submitHandler: function (form) {
             form.submit();
-        }
+        },
     });
 
     // Price section function to disable already selected options
@@ -732,78 +876,87 @@ $(document).ready(function () {
 
     /* Providing Lessons validation */
     $("#lessons").validate({
-
         rules: {
             title: {
                 required: true,
-                noWhitespace: true
+                noWhitespace: true,
             },
             description: {
-
                 required: true,
             },
             status: {
                 required: true,
             },
-            'location_id[]': {
+            "location_id[]": {
                 required: true,
             },
-            'pricing_id[]': {
+            "pricing_id[]": {
                 required: true,
-            }
+            },
         },
         messages: {
             title: {
-                required: "Please enter your title"
+                required: "Please enter your title",
             },
             description: {
-                required: "Please enter your description"
+                required: "Please enter your description",
             },
             status: {
-                required: "Please select status."
-            }
+                required: "Please select status.",
+            },
         },
         submitHandler: function (form, event) {
             console.log("Form validated successfully");
             form.submit();
-
-        }
+        },
     });
-    $('select[name="location_id[]"]').on('change', function () {
+    $('select[name="location_id[]"]').on("change", function () {
         $(this).valid();
     });
-    $('select[name="pricing_id[]"]').on('change', function () {
+    $('select[name="pricing_id[]"]').on("change", function () {
         $(this).valid();
     });
     // Custom method for description validation
-    $.validator.addMethod("descriptionRequired", function (value, element) {
-
-
-    }, "Description is required.");
-
-
+    $.validator.addMethod(
+        "descriptionRequired",
+        function (value, element) { },
+        "Description is required."
+    );
 
     /* aboutus module */
-    $('#aboutus').on('submit', function (e) {
+    $("#aboutus").on("submit", function (e) {
         let isValid = true;
-        $('.error-message').remove();
-        $('.form-control').removeClass('is-invalid');
+        $(".error-message").remove();
+        $(".form-control").removeClass("is-invalid");
 
-        if ($('input[name="title"]').val().trim() === '') {
+        if ($('input[name="title"]').val().trim() === "") {
             isValid = false;
-            $('input[name="title"]').addClass('is-invalid').after('<div class="error-message text-danger">Title is required.</div>');
+            $('input[name="title"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Title is required.</div>'
+                );
         }
 
         // Validate Description
-        var description = $('textarea[name="description"]').summernote('code').trim();
+        var description = $('textarea[name="description"]')
+            .summernote("code")
+            .trim();
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = description;
 
-        description = (tempDiv.textContent.trim() === "") ? "" : description = tempDiv.innerHTML.trim();
+        description =
+            tempDiv.textContent.trim() === ""
+                ? ""
+                : (description = tempDiv.innerHTML.trim());
 
-        if (description == '') {
+        if (description == "") {
             isValid = false;
-            $('textarea[name="description"]').addClass('is-invalid').after('<div class="error-message text-danger">Description is required.</div>');
+            $('textarea[name="description"]')
+                .addClass("is-invalid")
+                .after(
+                    '<div class="error-message text-danger">Description is required.</div>'
+                );
         }
 
         if (!isValid) {

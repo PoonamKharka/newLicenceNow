@@ -38,4 +38,18 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * This function is for handling authorization
+     * 
+     * @return json
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return response()->json(['error' => 'Unauthenticated'], 403);
+        }
+
+        return parent::render($request, $exception);
+    }
 }

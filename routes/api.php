@@ -17,27 +17,33 @@ use App\Http\Controllers\API\BookingController;
 |
 */
 
-// Route::get('documentation', function () {
-//     return view('vendor.l5-swagger.index');
-// });
+Route::get('/documentation', function () {
+    return view('vendor.l5-swagger.index');
+});
 
 # Authentication Route
 Route::post('instructor-register', [RegistrationController::class, 'instructorRegistrationRquest']);
 Route::post('register', [RegistrationController::class, 'registration']);
 Route::post('login', [RegistrationController::class, 'login']);
 
-# public wesite apis
-Route::middleware('auth:api')->group( function() {
-    Route::get('about', [ArticleController::class, 'getDataOfAboutUs']);
-    Route::get('faqs', [ArticleController::class, 'getAllFaqs']);
-    Route::get('articles-data', [ArticleController::class, 'getAllArticleModules']);
-    Route::get('features', [ArticleController::class, 'getAllFeatures']);
-    Route::get('article/privacy-policies',[ArticleController::class,'getAllPrivacyPolicies']);
-    Route::get('nav-menu',[ArticleController::class,'getAllMenu']);
-    Route::get('instructor-search',[SearchController::class,'getAvailableInstructors']);
-    Route::get('instructors',[SearchController::class,'getAllInstructors']);
-    Route::get('location-search',[SearchController::class,'getAvailableSuburbs']);
-    Route::get('instructors/{id}',[SearchController::class,'getInstructorDetails']);
+# public website apis
+/** Article endpoints starts */
+Route::get('about', [ArticleController::class, 'getDataOfAboutUs']);
+Route::get('faqs', [ArticleController::class, 'getAllFaqs']);
+Route::get('articles-data', [ArticleController::class, 'getAllArticleModules']);
+Route::get('features', [ArticleController::class, 'getAllFeatures']);
+Route::get('article/privacy-policies',[ArticleController::class,'getAllPrivacyPolicies']);
+Route::get('nav-menu',[ArticleController::class,'getAllMenu']);
+/** Article endpoints ends */
 
-    Route::get('prices',[BookingController::class,'getHoursList']);
-});
+/** Home Page endpoints starts */
+Route::get('instructor-search',[SearchController::class,'getAvailableInstructors']);
+Route::get('instructors',[SearchController::class,'getAllInstructors']);
+Route::get('location-search',[SearchController::class,'getAvailableSuburbs']);
+Route::get('instructors/{id}',[SearchController::class,'getInstructorDetails']);
+/** Home Page endpoints ends */
+
+/** Booking steps endpoints starts */
+Route::get('prices',[BookingController::class,'getHoursList']);
+Route::get('test-package', [BookingController::class, 'getTestPackage']);
+/** Booking steps endpoints ends */

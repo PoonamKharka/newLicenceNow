@@ -14,6 +14,7 @@ class TestPackage extends Model
     protected $fillable = [
         'title',
         'image',
+        'img_path',
         'price',
         'description'
     ];

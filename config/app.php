@@ -53,6 +53,8 @@ return [
 
     'url' => env('APP_URL', 'http://licencenow.test'),
 
+    'baseUrl' => env('APP_URL', 'http://licencenow.test'),
+
     'asset_url' => env('ASSET_URL','http://licencenow.test'),
 
     /*
