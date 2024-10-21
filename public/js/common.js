@@ -511,7 +511,7 @@ $(document).ready(function () {
             phoneNo: {
                 required: true,
                 remote: {
-                    url: "/validate-phone",
+                    url: "/admin/validate-phone",
                     type: "POST",
                     data: {
                         phoneNo: function () {
@@ -626,28 +626,99 @@ $(document).ready(function () {
         },
     });
 
+    // Suburbs Details Function to update the disabled state of options
+    $('#location_ids').select2();
+    // Function to update the appearance and prevent re-selection of selected options
+    function updateLocationOptionStyles(selectedOptions) {
+
+        $('#location_ids').find('option').each(function () {
+            var optionValue = $(this).val();
+            if (selectedOptions && selectedOptions.includes(optionValue.toString())) {
+                // Add class to style selected options
+                $(this).addClass('select2-results__option--disabled');
+            } else {
+                $(this).removeClass('select2-results__option--disabled');
+            }
+        });
+
+        // Refresh Select2 to apply styles
+        $('#location_ids').select2('close').select2();
+    }
+
+    updateLocationOptionStyles($('#location_ids').val());
+
+    // Custom validation method for Select2
+    $.validator.addMethod("locationRequired", function (value, element) {
+        $('#location_ids').find('option').prop('disabled', false);
+        var selectedOptions = $('#location_ids').val();
+        return selectedOptions && selectedOptions.length > 0;
+    }, "Please select at least one price.");
+
+
     $("#suburbs_details").validate({
         rules: {
-            "location_id[]": {
-                required: true,
+            'location_id[]': {
+                locationRequired: true
             },
         },
         messages: {
-            "location_id[]": {
-                required: "Please select at least one suburb.",
-            },
+            'location_id[]': {
+                locationRequired: "Please select at least one suburb."
+            }
         },
         submitHandler: function (form) {
-            console.log("Form validated successfully");
-            form.submit();
-        },
+            // Only submit if validation is successful
+            if ($("#suburbs_details").valid()) {
+                form.submit();
+            }
+        }
     });
+
+    // Event triggered when an option is selected in Select2
+    $('#location_ids').on('select2:select', function (e) {
+        var selectedOptions = $('#location_ids').val();
+        updateLocationOptionStyles(selectedOptions);
+        $("#suburbs_details").valid();
+    });
+
+    // Event triggered when an option is unselected in Select2
+    $('#location_ids').on('select2:unselect', function (e) {
+        var selectedOptions = $('#location_ids').val();
+        updateLocationOptionStyles(selectedOptions);
+        $("#suburbs_details").valid();
+    });
+
+    // Prevent re-selection of already selected options
+    $('#location_ids').on('select2:opening', function (e) {
+        var selectedOptions = $('#location_ids').val();
+        // Disable already selected options in the dropdown
+        $('#location_ids').find('option').each(function () {
+            var optionValue = $(this).val();
+            if (selectedOptions && selectedOptions.includes(optionValue.toString())) {
+                $(this).prop('disabled', true);
+            } else {
+                //$(this).prop('disabled', false);
+            }
+        });
+    });
+    // Disable validation when opening the Select2 dropdown
+    $('#location_ids').on('select2:opening', function (e) {
+        $('#suburbs_details').validate().settings.ignore = ":disabled";
+    });
+
+    // Re-enable validation after closing the dropdown
+    $('#location_ids').on('select2:close', function (e) {
+        $('#suburbs_details').validate().settings.ignore = "";
+    });
+
+    // End Suburbs Details
+
     $("#bank_details").validate({
         rules: {
             salaryPayModeId: {
                 required: true,
                 remote: {
-                    url: "/validate-salary-pay-mode",
+                    url: "/admin/validate-salary-pay-mode",
                     type: "POST",
                     data: {
                         salaryPayModeId: function () {
@@ -713,22 +784,95 @@ $(document).ready(function () {
         },
     });
 
+    // Price section function to disable already selected options
+    $('#price_id').select2();
+
+
+
+    // Function to update the appearance and prevent re-selection of selected options
+    function updateOptionStyles(selectedOptions) {
+
+        $('#price_id').find('option').each(function () {
+            var optionValue = $(this).val();
+            if (selectedOptions && selectedOptions.includes(optionValue.toString())) {
+                // Add class to style selected options
+                $(this).addClass('select2-results__option--disabled');
+            } else {
+                $(this).removeClass('select2-results__option--disabled');
+            }
+        });
+
+        // Refresh Select2 to apply styles
+        $('#price_id').select2('close').select2();
+    }
+
+    updateOptionStyles($('#price_id').val());
+
+    // Custom validation method for Select2
+    $.validator.addMethod("select2Required", function (value, element) {
+        $('#price_id').find('option').prop('disabled', false);
+        var selectedOptions = $('#price_id').val();
+        return selectedOptions && selectedOptions.length > 0;
+    }, "Please select at least one price.");
+
+    // jQuery Validation for the form
     $("#price_details").validate({
         rules: {
-            "price_id[]": {
-                required: true,
-            },
+            'price_id[]': {
+                select2Required: true
+            }
         },
         messages: {
-            "price_id[]": {
-                required: "Please select at least one price.",
-            },
+            'price_id[]': {
+                select2Required: "Please select at least one price."
+            }
         },
         submitHandler: function (form) {
-            console.log("Form validated successfully");
-            form.submit();
-        },
+
+            // Only submit if validation is successful
+            if ($("#price_details").valid()) {
+                form.submit();
+            }
+        }
     });
+
+    // Event triggered when an option is selected in Select2
+    $('#price_id').on('select2:select', function (e) {
+        var selectedOptions = $('#price_id').val();
+        updateOptionStyles(selectedOptions);
+        $("#price_details").valid();
+    });
+
+    // Event triggered when an option is unselected in Select2
+    $('#price_id').on('select2:unselect', function (e) {
+        var selectedOptions = $('#price_id').val();
+        updateOptionStyles(selectedOptions);
+        $("#price_details").valid();
+    });
+
+    // Prevent re-selection of already selected options
+    $('#price_id').on('select2:opening', function (e) {
+        var selectedOptions = $('#price_id').val();
+        // Disable already selected options in the dropdown
+        $('#price_id').find('option').each(function () {
+            var optionValue = $(this).val();
+            if (selectedOptions && selectedOptions.includes(optionValue.toString())) {
+                $(this).prop('disabled', true);
+            } else {
+                //$(this).prop('disabled', false);
+            }
+        });
+    });
+    // Disable validation when opening the Select2 dropdown
+    $('#price_id').on('select2:opening', function (e) {
+        $('#price_details').validate().settings.ignore = ":disabled";
+    });
+
+    // Re-enable validation after closing the dropdown
+    $('#price_id').on('select2:close', function (e) {
+        $('#price_details').validate().settings.ignore = "";
+    });
+    // End Peice Details
 
     /* Providing Lessons validation */
     $("#lessons").validate({
@@ -775,7 +919,7 @@ $(document).ready(function () {
     // Custom method for description validation
     $.validator.addMethod(
         "descriptionRequired",
-        function (value, element) {},
+        function (value, element) { },
         "Description is required."
     );
 

@@ -132,7 +132,7 @@
         "/api/prices": {
             "get": {
                 "tags": [
-                    "Booking Steps"
+                    "Test Booking Steps"
                 ],
                 "summary": "Prices and Hours details",
                 "operationId": "caec5e87aaa51c80150238889c6fe9b8",
@@ -146,7 +146,7 @@
         "/api/test-package": {
             "get": {
                 "tags": [
-                    "Booking Steps"
+                    "Test Booking Steps"
                 ],
                 "summary": "Fetch Test Package Details",
                 "operationId": "e4fbcc39d29e030d0b80a39e317128ac",
@@ -160,7 +160,7 @@
         "/api/instructor-register": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "General"
                 ],
                 "summary": "Instructor Registration",
                 "description": "Register a new instructor",
@@ -234,6 +234,26 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "files[]": {
+                                        "description": "Multiple files to upload",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Instructor registered successfully"
@@ -266,11 +286,11 @@
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "example": "user@example.com"
+                                        "example": "adminln@yopmail.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "your_password"
+                                        "example": "admin"
                                     }
                                 },
                                 "type": "object"
@@ -314,28 +334,35 @@
                 }
             }
         },
-        "/api/instructor-search": {
+        "/api/location-search": {
             "get": {
-                "summary": "Search all instructors based on location and transmission type",
-                "description": "Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",
-                "operationId": "fe02144dd7f24346c4b2a4e1599f4335",
+                "tags": [
+                    "General"
+                ],
+                "summary": "Search all location based on street,city or postcode",
+                "description": "Retrieve a list of all locations street,city or postcode ",
+                "operationId": "d1396448bc8bd31238afd15090a95fa8",
                 "parameters": [
                     {
-                        "name": "locationId",
+                        "name": "s",
                         "in": "query",
-                        "description": "ID of the location (suburb)",
-                        "required": true,
+                        "description": "You can enter street or city or postcode ",
+                        "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
                         "name": "transmissionType",
                         "in": "query",
-                        "description": "Transmission type of the instructor (e.g. 'auto' or 'manual')",
-                        "required": false,
+                        "required": true,
                         "schema": {
-                            "type": "string"
+                            "description": "Select auto (isAuto) or manual (isManual)",
+                            "type": "string",
+                            "enum": [
+                                "auto",
+                                "manual"
+                            ]
                         }
                     }
                 ],
@@ -351,20 +378,12 @@
         },
         "/api/instructors": {
             "get": {
-                "summary": "Get all instructors",
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get all other instructors",
                 "description": "Retrieve a list of all instructors",
                 "operationId": "029801c2258b7fe8b583b9b3247f262c",
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/api/suburbs-search": {
-            "get": {
-                "summary": "Search all available locations",
-                "operationId": "5497230cf10e5ab6f67502553e28f315",
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -388,8 +407,12 @@
             "description": "Articles"
         },
         {
-            "name": "Booking Steps",
-            "description": "Booking Steps"
+            "name": "Test Booking Steps",
+            "description": "Test Booking Steps"
+        },
+        {
+            "name": "General",
+            "description": "General"
         },
         {
             "name": "Authentication",

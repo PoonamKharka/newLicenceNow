@@ -8,17 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 class MediaAttachment extends Model
 {
     use HasFactory;
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'media_attachments';
+     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'model_id',
+        'instructor_request_id',
         'file_name',
         'file_path',
         'file_type',
-        'file_size',
+        'file_status',
     ];
 
     
-    public function attachable()
+    public function instructorRequest()
     {
-        return $this->morphTo();
+        return $this->belongsTo(InstructorRequest::class);
     }
 }

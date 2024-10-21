@@ -255,4 +255,21 @@ class InstructorService
     {
         return $this->instRep->validateSalaryPayModeId($salaryPayModeId);
     }
+
+    public function getAllInstructorsRquest($request)
+    {
+        return $this->instRep->getAllInstructorsRquest($request);
+    }
+    public function updateInstructorStatus($request)
+    {
+        return $this->instRep->updateInstructorStatus($request);
+    }
+    public function showInstructorRequest($id)
+    {
+      return $this->instRep->showInstructorRequest($id);
+    }
+    public function updateAttachments(Request $request,$id)
+    {
+        return $this->instRep->updateAttachments($request,$id);
+    }
 }

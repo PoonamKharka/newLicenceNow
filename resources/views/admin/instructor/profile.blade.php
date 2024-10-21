@@ -533,7 +533,7 @@
                                                         <label>Select Suburbs</label>
                                                         <input type="hidden" class="form-control" name="user_id"
                                                              value="{{ $userData->id }}" />
-                                                        <select class="select2" multiple="multiple" data-placeholder="Select a Location" style="width: 100%;"
+                                                        <select id="location_ids" class="select2" multiple="multiple" data-placeholder="Select a Location" style="width: 100%;"
                                                                 name="location_id[]">
                                                             @if ($allLocation)
                                                                 @foreach ( $allLocation as $location)
@@ -728,7 +728,7 @@
                                                        <label>Select Prices</label>
                                                        <input type="hidden" class="form-control" name="user_id"
                                                             value="{{ $userData->id }}" />
-                                                       <select class="select2" multiple="multiple" data-placeholder="Select a Price" style="width: 100%;"
+                                                       <select id="price_id" class="select2" multiple="multiple" data-placeholder="Select a Price" style="width: 100%;"
                                                                name="price_id[]">
                                                            @if ($allPrices)
                                                                @foreach ( $allPrices as $price)
@@ -768,11 +768,18 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    <style>
+       .select2-results__option.select2-results__option--disabled {
+        color: #ccc; /* Change text color to indicate disabled */
+        background-color: #f9f9f9; /* Light background */
+        pointer-events: none; /* Prevent clicking */
+    }
+    </style>
     <script>
         $(function() {
             //bsCustomFileInput.init();
             //Initialize Select2 Elements
-            $('.select2').select2()
+            //$('.select2').select2()
             //Date picker
             $('#reservationdate').datetimepicker({
                 format: 'L'
@@ -794,4 +801,5 @@
 
         });
     </script>
+    
 @endsection

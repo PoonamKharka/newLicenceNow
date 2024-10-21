@@ -160,7 +160,7 @@
         "/api/instructor-register": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "General"
                 ],
                 "summary": "Instructor Registration",
                 "description": "Register a new instructor",
@@ -234,6 +234,26 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "files[]": {
+                                        "description": "Multiple files to upload",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Instructor registered successfully"
@@ -316,6 +336,9 @@
         },
         "/api/instructor-search": {
             "get": {
+                "tags": [
+                    "Authentication"
+                ],
                 "summary": "Search all instructors based on location and transmission type",
                 "description": "Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",
                 "operationId": "fe02144dd7f24346c4b2a4e1599f4335",
@@ -351,7 +374,10 @@
         },
         "/api/instructors": {
             "get": {
-                "summary": "Get all instructors",
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get all other instructors",
                 "description": "Retrieve a list of all instructors",
                 "operationId": "029801c2258b7fe8b583b9b3247f262c",
                 "responses": {
@@ -361,13 +387,28 @@
                 }
             }
         },
-        "/api/suburbs-search": {
+        "/api/instructors/{id}": {
             "get": {
-                "summary": "Search all available locations",
-                "operationId": "5497230cf10e5ab6f67502553e28f315",
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get instructor details",
+                "description": "Retrieve detailed information of a specific instructor by their ID.",
+                "operationId": "d68120c018f61a5e42fb0b32c131e239",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the instructor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Successful retrieval of instructor details"
                     }
                 }
             }
@@ -390,6 +431,10 @@
         {
             "name": "Booking Steps",
             "description": "Booking Steps"
+        },
+        {
+            "name": "General",
+            "description": "General"
         },
         {
             "name": "Authentication",
