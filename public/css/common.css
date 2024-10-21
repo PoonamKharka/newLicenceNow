@@ -13,3 +13,153 @@ label.error {
         position: absolute;
         bottom: -29px;
 }
+
+#y_dataTables .btn-danger {
+    margin-left: 5px;
+}
+.card-header{
+    background-color: #449ed6; 
+      color: white; 
+      border-bottom: none; 
+  }
+
+  /* Table container background */
+.dataTables_wrapper {
+    background-color: #f5f7fa; /* Light background for the container */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
+}
+
+/* Table header styling */
+table.dataTable thead {
+    background-color: #449ed6; /* Primary theme color for the header */
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Styling individual header cells */
+table.dataTable thead th {
+    padding: 12px;
+    border-bottom: 3px solid #e0e0e0; /* Underline effect on headers */
+    text-transform: uppercase;
+}
+
+/* Custom font for table */
+table.dataTable {
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Table row hover effect */
+table.dataTable tbody tr:hover {
+    background-color: #f0faff; /* Light blue for hover */
+    transition: background-color 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Zebra striping for table rows */
+table.dataTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+table.dataTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Row and cell padding */
+table.dataTable tbody td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #dddddd; /* Light gray for cell borders */
+    font-size: 14px;
+    color: #333333;
+}
+
+/* Active row highlight */
+table.dataTable tbody tr.active-row {
+    background-color: #ffeb3b; /* Bright yellow for active rows */
+    color: #000;
+}
+
+/* Pagination button styles */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    background-color: #449ed6;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 12px;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #377bb3; /* Darker blue on hover */
+}
+
+/* Custom search box styling */
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 20px;
+    border: 2px solid #449ed6;
+    padding: 5px 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Focused search box */
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #377bb3;
+}
+
+/* Styling length dropdown */
+.dataTables_wrapper .dataTables_length select {
+    border-radius: 20px;
+    border: 2px solid #449ed6;
+    padding: 5px 10px;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Info text and other elements */
+.dataTables_wrapper .dataTables_info {
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+/* Custom buttons within table (e.g., edit, delete) */
+table.dataTable tbody td .btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+/* Button primary */
+table.dataTable tbody td .btn-primary {
+    background-color: #449ed6;
+    border: none;
+    color: white;
+}
+
+table.dataTable tbody td .btn-danger {
+    background-color: #ff4444;
+    border: none;
+    color: white;
+}
+
+/* Button hover effects */
+table.dataTable tbody td .btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px); /* Slight lift effect */
+}
+.card-header .btn-success {
+    color: #fff;
+    background-color: #38496f;
+    border-color: #38496f;
+    box-shadow: none;
+}
