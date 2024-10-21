@@ -197,7 +197,7 @@ class InstructorRepository implements InstructorRepositoryInterFace
                 
                 // Button
                 $dropdown = '<div class="dropdown">';
-                $dropdown .= '<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="statusDropdown' . $row->id . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ' . ($isApproved ? 'disabled' : '') . '>';
+                $dropdown .= '<button class="btn btn-sm ' . ($isApproved ? 'btn-success' : 'btn-primary') . ' dropdown-toggle" type="button" id="statusDropdown' . $row->id . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ' . ($isApproved ? 'disabled' : '') . '>';
                 $dropdown .= ucfirst($row->status);  
                 $dropdown .= '</button>';
                 

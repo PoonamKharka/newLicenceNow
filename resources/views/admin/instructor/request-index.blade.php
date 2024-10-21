@@ -128,14 +128,15 @@ $(function() {
                 },
                 success: function(response) {
                     if (response.success) {
-                        alert('Status updated to ' + status);
+                      toastr.success('Status updated to '+status, 'Success', { timeOut: 5000 });
                         $('#y_dataTables').DataTable().ajax.reload(null, false);
                     } else {
+                      toastr.error('Failed to update status.', 'Error', { timeOut: 5000 });
                         alert('Failed to update status');
                     }
                 },
                 error: function(xhr, status, error) {
-                    alert('Error: ' + error);
+                  toastr.error('Failed to update status!'+error, 'Error', { timeOut: 5000 });
                 }
             });
         }
@@ -146,24 +147,15 @@ $(function() {
       $.ajax({
           url: "/admin/instructor-request-show/" + instructorId, 
           method: 'GET',
-          success: function(response) {              
+          success: function(response) { 
+                       
               $('#instructorModal .modal-body').html(response);
           },
           error: function(xhr) {
-              console.error('Error fetching instructor details:', xhr);
-              $('#instructorModal .modal-body').html('<p class="text-danger">Unable to load instructor details. Please try again later.</p>');
+            toastr.error('Unable to load instructor details. Please try again later.', 'Error', { timeOut: 5000 });
           }
       });
     });
     </script>
-<style>
 
-.card-header{
-  background-color: #449ed6; 
-    color: white; 
-    border-bottom: none; 
-}
-
-
-</style>
 @endsection
