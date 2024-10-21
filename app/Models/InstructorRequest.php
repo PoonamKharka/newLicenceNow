@@ -14,6 +14,11 @@ class InstructorRequest extends Model
         'email',
         'phoneNo',
         'postcode',
-        'status'
-    ]; 
+        'status',
+        'user_id'
+    ];
+    public function mediaAttachments()
+    {
+        return $this->hasMany(MediaAttachment::class, 'instructor_request_id');
+    }
 }

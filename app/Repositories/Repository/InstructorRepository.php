@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\Log;
 use App\Models\InstructorBankDetail;
 use App\Models\InstructorProfileDetail;
 use App\Models\InstructorRequest;
+use App\Models\MediaAttachment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Repositories\InterFaces\InstructorRepositoryInterFace;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class InstructorRepository implements InstructorRepositoryInterFace
 {
@@ -187,16 +191,122 @@ class InstructorRepository implements InstructorRepositoryInterFace
             $instrutors = InstructorRequest::all();
 
             return datatables()->of($instrutors)
+            ->addColumn('status', function ($row) { 
+                // Disable the dropdown if status is 'approve'
+                $isApproved = $row->status == "approve";
+                
+                // Button
+                $dropdown = '<div class="dropdown">';
+                $dropdown .= '<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="statusDropdown' . $row->id . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ' . ($isApproved ? 'disabled' : '') . '>';
+                $dropdown .= ucfirst($row->status);  
+                $dropdown .= '</button>';
+                
+                // Dropdown menu
+                $dropdown .= '<div class="dropdown-menu" aria-labelledby="statusDropdown' . $row->id . '" ' . ($isApproved ? 'style="pointer-events: none; opacity: 0.5;"' : '') . '>';
+                
+                // Pending option
+                $pendingClass = $row->status == "pending" ? 'active disabled' : '';
+                $dropdown .= '<a href="javascript:void(0)" class="dropdown-item ' . $pendingClass . '" data-id="' . $row->id . '" id="pending">Pending</a>';
+                
+                // Approved option
+                $approveClass = $isApproved ? 'active disabled' : ''; // Use $isApproved here
+                $dropdown .= '<a href="javascript:void(0)" class="dropdown-item ' . $approveClass . '" data-id="' . $row->id . '" id="approve">Approved</a>';
+                
+                // Hold option
+                $holdClass = $row->status == "hold" ? 'active disabled' : '';
+                $dropdown .= '<a href="javascript:void(0)" class="dropdown-item ' . $holdClass . '" data-id="' . $row->id . '" id="hold">Hold</a>';
+                
+                // Rejected option
+                $rejectClass = $row->status == "rejected" ? 'active disabled' : '';
+                $dropdown .= '<a href="javascript:void(0)" class="dropdown-item ' . $rejectClass . '" data-id="' . $row->id . '" id="reject">Reject</a>';
+                
+                $dropdown .= '</div>';  
+                $dropdown .= '</div>';  
+
+                return $dropdown;
+            })
             ->addColumn('action', function ($row) {
-                $editUrl = route('instructor-request.edit', encrypt($row->id));
-                $btn = '<a href="' . $editUrl . '" class="btn btn-sm btn-info"><i class="fas fa-pencil-alt"></i></a>';
-                $btn .= '<button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '"><i class="fas fa-trash"></i></button>';
+                
+                $btn = '<button class="btn btn-sm btn-info view-btn pl-3 pr-3" data-id="' . $row->id . '" data-toggle="modal" data-target="#instructorModal">View</button>';  
 
                 return $btn;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['status','action'])
                 ->make(true);
         }
         return view('admin.instructor.request-index');
+    }
+    public function updateInstructorStatus($request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $status = $request->status ?? null;
+            $instructor = InstructorRequest::findOrFail($request->id);
+            $instructor->update(['status' => $status]);
+
+            if ($status === 'approve') {
+                
+                // Check if user with the given email already exists
+                if (User::where('email', $instructor->email)->exists()) {
+                    DB::rollBack();  
+                    return response()->json(['success' => false, 'message' => 'Instructor email already exists.']);
+                }
+
+                // Generate password and create a new user
+                $password = Str::random(8) . rand(1000, 9999) . '@#';
+                $user = User::create([
+                    'first_name' => $instructor->first_name,
+                    'last_name' => $instructor->last_name,
+                    'email' => $instructor->email,
+                    'contact_no' => $instructor->phoneNo,
+                    'postcode' => $instructor->postcode,
+                    'password' => Hash::make($password),
+                    'userType_id' => 2,
+                    'isAdmin' => 0,
+                ]);
+
+                // Assing instructor to media attachments, if any
+                InstructorRequest::where('id', $request->id)
+                    ->update(['user_id' => $user->id]);
+            }
+
+            DB::commit(); 
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+            
+        } catch (\Exception $ex) {
+            DB::rollBack();  
+            Log::error($ex);
+            return response()->json(['success' => false, 'message' => $ex->getMessage()]);
+        }
+    }
+    public function showInstructorRequest($id)
+    {
+        try {
+            $instructor = InstructorRequest::with('mediaAttachments')->findOrFail($id);
+            return view('admin.instructor.request-show', compact('instructor'))->render();
+        } catch (\Exception $ex) {
+           
+            Log::error($ex);
+            return response()->json(['success' => false, 'message' => $ex->getMessage()]);
+        }
+    }
+    public function updateAttachments(Request $request,$id)
+    {
+        try {
+        
+            $validatedData = $request->validate([
+                'media_attachment_status' => 'required', 
+            ]);
+    
+            $statusUpdates = $validatedData['media_attachment_status'];
+            $attachment = MediaAttachment::findOrFail($id);
+            $attachment->update(['file_status' => $statusUpdates]);
+            
+            return response()->json(['message' => 'Status updated successfully']);
+        }catch (\Exception $ex) {
+            Log::error($ex);
+            return response()->json(['success' => false, 'message' => $ex->getMessage()]);
+        }
     }
 }

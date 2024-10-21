@@ -11,6 +11,9 @@ interface InstructorRepositoryInterFace {
     public function validatePhone(Request $request);
     public function validateSalaryPayModeId(Request $request);
     public function getAllInstructorsRquest(Request $request);
+    public function updateInstructorStatus(Request $request);
+    public function showInstructorRequest($id);
+    public function updateAttachments(Request $request,$id);
 }
 
 ?>

@@ -3,60 +3,72 @@
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
-    <div class="row mb-2">
+    <div class="row mb-4">
       <div class="col-sm-6">
-        <h1 class="m-0">Instructors Request</h1>
+        <h1 class="m-0 text-primary">Instructors Request</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Instructors Request</li>
+          <li class="breadcrumb-item"><a href="#" class="text-secondary">Home</a></li>
+          <li class="breadcrumb-item active text-secondary">Instructors Request</li>
         </ol>
-      </div>
-      <!-- /.col -->
+      </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+</div><!-- /.content-header -->
 
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
-              {{-- <div class="card-header">
+            <div class="card shadow-sm">
+              <div class="card-header ">
                 <h3 class="card-title">
-                  <a href="{{ route('users.create') }}" class="btn btn-block btn-sm btn-success"> Add Instructors </a>
+                  <a href="{{ route('users.create') }}" class="btn btn-light btn-sm">Add Instructors</a>
                 </h3>
-              </div> --}}
-              <!-- /.card-header -->
+              </div><!-- /.card-header -->
               <div class="card-body">
-                <table id="y_dataTables" class="table table-bordered table-hover">
-                  <thead>
+                <table id="y_dataTables" class="table table-bordered table-striped">
+                  <thead class="table-primary">
                   <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Email </th>
+                    <th>Email</th>
                     <th>Phone</th>
-                    <th>Postcode</th>
+                    <th>Postcode</th>                    
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                   </thead>
+                  <tbody>
+                    <!-- Data will be populated here -->
+                  </tbody>
                 </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
+              </div><!-- /.card-body -->
+            </div><!-- /.card -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
 </section>
+
 <!-- /.content -->
+<!-- Modal Structure -->
+<div class="modal fade" id="instructorModal" tabindex="-1" role="dialog" aria-labelledby="instructorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="instructorModalLabel">Instructor Request Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Content will be loaded via AJAX -->
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
 $(function() { 
   $(document).ready( function () {
@@ -69,8 +81,8 @@ $(function() {
                 { data: 'last_name', name: 'last_name' },
                 { data: 'email', name: 'email' },
                 { data: 'phoneNo', name: 'phoneNo' },
-                { data: 'postcode', name: 'postcode' },
-                { data: 'status', name: 'status' },
+                { data: 'postcode', name: 'postcode' },                
+                { data: 'status', name: 'status', orderable: false, searchable: false},
                 { data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
@@ -78,4 +90,80 @@ $(function() {
 });
 
   </script>
+  <script>
+    $(document).ready(function() {
+        // Handle Pending button click
+        $(document).on('click', '#pending', function() {
+            var instructorId = $(this).data('id');
+            updateInstructorStatus(instructorId, 'pending');
+        });
+    
+        // Handle Approve button click
+        $(document).on('click', '#approve', function() {
+            var instructorId = $(this).data('id');
+            updateInstructorStatus(instructorId, 'approve');
+        });
+    
+        // Handle Hold button click
+        $(document).on('click', '#hold', function() {
+            var instructorId = $(this).data('id');
+            updateInstructorStatus(instructorId, 'hold');
+        });
+    
+        // Handle Reject button click
+        $(document).on('click', '#reject', function() {
+            var instructorId = $(this).data('id');
+            updateInstructorStatus(instructorId, 'rejected');
+        });
+    
+        // AJAX function to update instructor status
+        function updateInstructorStatus(instructorId, status) {
+            $.ajax({
+                url: '{{ route('instructor-request.update-status') }}', 
+                method: 'POST',
+                data: {
+                    id: instructorId,
+                    status: status,
+                    _token: '{{ csrf_token() }}' 
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Status updated to ' + status);
+                        $('#y_dataTables').DataTable().ajax.reload(null, false);
+                    } else {
+                        alert('Failed to update status');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        }
+    });
+    $(document).on('click', '.view-btn', function() {
+      var instructorId = $(this).data('id');
+
+      $.ajax({
+          url: "/admin/instructor-request-show/" + instructorId, 
+          method: 'GET',
+          success: function(response) {              
+              $('#instructorModal .modal-body').html(response);
+          },
+          error: function(xhr) {
+              console.error('Error fetching instructor details:', xhr);
+              $('#instructorModal .modal-body').html('<p class="text-danger">Unable to load instructor details. Please try again later.</p>');
+          }
+      });
+    });
+    </script>
+<style>
+
+.card-header{
+  background-color: #449ed6; 
+    color: white; 
+    border-bottom: none; 
+}
+
+
+</style>
 @endsection

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('email')->unique();           
             $table->unsignedBigInteger('phoneNo')->unique(); 
             $table->string('postcode')->nullable();                      
-            $table->enum('status', ['pending', 'approve', 'hold', 'rejected']);             
+            $table->enum('status', ['pending', 'approve', 'hold', 'rejected']);  
+            $table->unsignedBigInteger('user_id')->nullable();           
             $table->timestamps();
         });
     }

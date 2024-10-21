@@ -487,7 +487,7 @@ $(document).ready(function () {
         }
     });
 
-    // Function to update the disabled state of options
+    // Suburbs Details Function to update the disabled state of options
     $('#location_ids').select2();
     // Function to update the appearance and prevent re-selection of selected options
     function updateLocationOptionStyles(selectedOptions) {
@@ -573,6 +573,8 @@ $(document).ready(function () {
         $('#suburbs_details').validate().settings.ignore = "";
     });
 
+    // End Suburbs Details
+
     $("#bank_details").validate({
         rules: {
             salaryPayModeId: {
@@ -638,7 +640,7 @@ $(document).ready(function () {
         }
     });
 
-    // Function to disable already selected options
+    // Price section function to disable already selected options
     $('#price_id').select2();
 
 
@@ -726,7 +728,7 @@ $(document).ready(function () {
     $('#price_id').on('select2:close', function (e) {
         $('#price_details').validate().settings.ignore = "";
     });
-
+    // End Peice Details
 
     /* Providing Lessons validation */
     $("#lessons").validate({

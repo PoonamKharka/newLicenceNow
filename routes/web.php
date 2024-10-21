@@ -71,5 +71,8 @@ Route::prefix('admin')->group(function(){
     Route::resource('nav-menu',NavMenuController::class);
     Route::get('instructor-request',[InstructorController::class, 'getAllInstructorsRquest'])->name('instructor-request');
     Route::get('instructor-request/{id}',[InstructorController::class, 'updateInstructorsRquest'])->name('instructor-request.edit');
+    Route::post('instructor-request/update-status', [InstructorController::class, 'updateInstructorStatus'])->name('instructor-request.update-status');
+    Route::get('instructor-request-show/{id}',[InstructorController::class, 'showInstructorRequest'])->name('instructor-request.view');
+    Route::post('update-attachments/{id}',[InstructorController::class, 'updateAttachments'])->name('admin.instructor.update-attachments');
 });
 });
