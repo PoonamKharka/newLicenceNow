@@ -16,6 +16,11 @@ use App\Http\Controllers\API\BookingController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/documentation', function () {
+    return view('vendor.l5-swagger.index');
+});
+
 # Authentication Route
 Route::post('instructor-register', [RegistrationController::class, 'instructorRegistrationRquest']);
 Route::post('register', [RegistrationController::class, 'registration']);

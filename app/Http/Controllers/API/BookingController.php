@@ -15,7 +15,7 @@ class BookingController extends BaseController
     /**
      * @OA\Get(
      *  path="/api/prices",
-     *  tags={"Booking Steps"},
+     *  tags={"Test Booking Steps"},
      *  summary="Prices and Hours details",
      *  @OA\Response(
      *         response=200,
@@ -34,11 +34,11 @@ class BookingController extends BaseController
     }
 
     /**
-     * @OA/Get(
+     * @OA\Get(
      *   path="/api/test-package",
-     *   tags={"Booking Steps"},
-     *   summary("Fetch Test Package Details"),
-     *   @OA/Response(
+     *   tags={"Test Booking Steps"},
+     *   summary="Fetch Test Package Details",
+     *   @OA\Response(
      *       response=200,
      *       description="OK"
      *    )
@@ -54,7 +54,7 @@ class BookingController extends BaseController
         }
     }
 
-    public function storeBookingRequest(Request $request) {
+    // public function storeBookingRequest(Request $request) {
 
-    }
+    // }
 }
