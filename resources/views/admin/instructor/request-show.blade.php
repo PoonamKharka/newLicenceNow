@@ -79,10 +79,11 @@
                 media_attachment_status: attachmentStatus
             },
             success: function(response) {
-               $('.attachment-msg-'+attachmentId).html('Statuses updated successfully');
+                toastr.success(response.message, 'Success', { timeOut: 5000 });
+              // $('.attachment-msg-'+attachmentId).html('Statuses updated successfully');
             },
             error: function(response) {
-                $('.attachment-msg-'+attachmentId).html('Error updating statuses');
+                toastr.error('Unable to update status. Please try again later.', 'Error', { timeOut: 5000 });
             }
         });
     });
