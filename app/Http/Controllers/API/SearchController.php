@@ -19,9 +19,9 @@ class SearchController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/location-search",
-     * tags={"Authentication"},
+     * tags={"General"},
      *     summary="Search all location based on street,city or postcode",
-     * security={{"bearerAuth": {}}},
+     * 
      *     description="Retrieve a list of all locations street,city or postcode ",
      *     @OA\Parameter(
      *         name="s",
@@ -119,36 +119,7 @@ class SearchController extends BaseController
              return $this->errorResponse($ex);
          }
      }
-    /**
-     * @OA\Get(
-     *     path="/api/instructor-search",
-     * tags={"Authentication"},
-     *     summary="Search all instructors based on location and transmission type",
-     *     description="Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",     
-     *     @OA\Parameter(
-     *         name="locationId",
-     *         in="query",
-     *         required=true,
-     *         @OA\Schema(type="integer"),
-     *         description="ID of the location (suburb)"
-     *     ),
-     *     @OA\Parameter(
-     *         name="transmissionType",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(type="string"),
-     *         description="Transmission type of the instructor (e.g. 'auto' or 'manual')"
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="OK"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad Request"
-     *     )
-     * )
-     */
+    
     public function getAvailableInstructors(Request $request): JsonResponse
     {
        
@@ -181,9 +152,9 @@ class SearchController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/instructors",
-     * tags={"Authentication"},
+     * tags={"General"},
      *     summary="Get all other instructors",
-     * security={{"bearerAuth": {}}},
+     * 
      *     description="Retrieve a list of all instructors",
      *     @OA\Response(
      *         response=200,
@@ -203,16 +174,6 @@ class SearchController extends BaseController
             return $this->errorResponse($ex);
         }
     }
-     /**
-     * @OA\Get(
-     *     path="/api/suburbs-search",
-     *     summary="Search all available locations",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful retrieval of instructor details",     *         
-     *     )
-     * )
-     */
 
     public function getInstructorDetails($id): JsonResponse {       
        

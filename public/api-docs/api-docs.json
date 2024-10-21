@@ -337,7 +337,7 @@
         "/api/location-search": {
             "get": {
                 "tags": [
-                    "Authentication"
+                    "General"
                 ],
                 "summary": "Search all location based on street,city or postcode",
                 "description": "Retrieve a list of all locations street,city or postcode ",
@@ -373,56 +373,13 @@
                     "400": {
                         "description": "Bad Request"
                     }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/instructor-search": {
-            "get": {
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Search all instructors based on location and transmission type",
-                "description": "Retrieve a list of all instructors based on location id and transmission type Like:(auto or manula) ",
-                "operationId": "fe02144dd7f24346c4b2a4e1599f4335",
-                "parameters": [
-                    {
-                        "name": "locationId",
-                        "in": "query",
-                        "description": "ID of the location (suburb)",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "transmissionType",
-                        "in": "query",
-                        "description": "Transmission type of the instructor (e.g. 'auto' or 'manual')",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    }
                 }
             }
         },
         "/api/instructors": {
             "get": {
                 "tags": [
-                    "Authentication"
+                    "General"
                 ],
                 "summary": "Get all other instructors",
                 "description": "Retrieve a list of all instructors",
@@ -430,22 +387,6 @@
                 "responses": {
                     "200": {
                         "description": "OK"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/suburbs-search": {
-            "get": {
-                "summary": "Search all available locations",
-                "operationId": "772fe3d82046c41bf80f8d64cbdf3b4c",
-                "responses": {
-                    "200": {
-                        "description": "Successful retrieval of instructor details"
                     }
                 }
             }
