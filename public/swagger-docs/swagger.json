@@ -132,7 +132,7 @@
         "/api/prices": {
             "get": {
                 "tags": [
-                    "Test Booking Steps"
+                    "Booking Steps"
                 ],
                 "summary": "Prices and Hours details",
                 "operationId": "caec5e87aaa51c80150238889c6fe9b8",
@@ -146,7 +146,7 @@
         "/api/test-package": {
             "get": {
                 "tags": [
-                    "Test Booking Steps"
+                    "Booking Steps"
                 ],
                 "summary": "Fetch Test Package Details",
                 "operationId": "e4fbcc39d29e030d0b80a39e317128ac",
@@ -174,7 +174,7 @@
         "/api/states": {
             "get": {
                 "tags": [
-                    "Common APIs"
+                    "General"
                 ],
                 "summary": "List of States",
                 "operationId": "d70f8470c00b35b60d283931dd9ef70e",
@@ -435,16 +435,12 @@
             "description": "Articles"
         },
         {
-            "name": "Test Booking Steps",
-            "description": "Test Booking Steps"
+            "name": "Booking Steps",
+            "description": "Booking Steps"
         },
         {
             "name": "General",
             "description": "General"
-        },
-        {
-            "name": "Common APIs",
-            "description": "Common APIs"
         },
         {
             "name": "Authentication",

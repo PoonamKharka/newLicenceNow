@@ -13,7 +13,7 @@ class CommanAPIController extends BaseController
     /**
      * @OA\Get(
      *   path="/api/states",
-     *   tags={"Common APIs"},
+     *   tags={"General"},
      *   summary="List of States",
      *   @OA\Response(
      *     response=200,
