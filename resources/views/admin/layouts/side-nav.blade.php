@@ -89,14 +89,14 @@
         </li>
         
         <!-- Learners -->
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a href="{{ route('learners.index') }}" class="nav-link {{ request()->is('admin/learners*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Learners
             </p>
           </a>
-        </li>
+        </li> --}}
         <!-- Nav Menu -->
         <li class="nav-item">
           <a href="{{ route('nav-menu.index') }}" class="nav-link {{ request()->is('admin/nav-menu*') ? 'active' : '' }}">

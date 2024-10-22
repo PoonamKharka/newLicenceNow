@@ -31,4 +31,13 @@ class CommanAPIController extends BaseController
             return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
         }
     }
+
+    public function getSuburbs(Request $request) {
+        try {
+
+        } catch (Exceptions $ex) {
+            Log::log('error', $ex);
+            return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
+        }
+    }
 }

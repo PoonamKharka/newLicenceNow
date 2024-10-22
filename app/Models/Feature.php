@@ -12,7 +12,8 @@ class Feature extends Model
 
     protected $fillable = [
         'title',
-        'image',        
+        'image', 
+        'image_path',      
         'description'
     ];
 }

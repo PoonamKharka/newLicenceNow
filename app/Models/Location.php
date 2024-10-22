@@ -19,8 +19,6 @@ class Location extends Model
         'city',
         'state',
         'postcode',
-        'latitude',
-        'longitude'
     ];
 
     public function lessonsLocation1() {
