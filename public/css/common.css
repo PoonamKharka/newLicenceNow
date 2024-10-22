@@ -163,7 +163,8 @@ table.dataTable tbody td .btn:hover {
     border-color: #38496f;
     box-shadow: none;
 }
-aside ,nav{background-color: #449ed6 !important;
+.card-header{background-color: #17a2b8;}
+aside{background-color: #38496f !important;
     color: #fff;
 }
 aside a{ color: #fff;}
