@@ -157,6 +157,34 @@
                 }
             }
         },
+        "/api/pricing-structure": {
+            "get": {
+                "tags": [
+                    "Booking Steps"
+                ],
+                "summary": "Driving Lesson Pricing Structure",
+                "operationId": "41d0c90e93ca0382af5c74eed1cfa87b",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/states": {
+            "get": {
+                "tags": [
+                    "Common APIs"
+                ],
+                "summary": "List of States",
+                "operationId": "d70f8470c00b35b60d283931dd9ef70e",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/instructor-register": {
             "post": {
                 "tags": [
@@ -413,6 +441,10 @@
         {
             "name": "General",
             "description": "General"
+        },
+        {
+            "name": "Common APIs",
+            "description": "Common APIs"
         },
         {
             "name": "Authentication",

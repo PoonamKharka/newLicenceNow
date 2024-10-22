@@ -6,6 +6,7 @@ use App\Http\Controllers\API\RegistrationController;
 use App\Http\Controllers\API\ArticleController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\BookingController;
+use App\Http\Controllers\API\CommanAPIController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,4 +47,9 @@ Route::get('instructors/{id}',[SearchController::class,'getInstructorDetails']);
 /** Booking steps endpoints starts */
 Route::get('prices',[BookingController::class,'getHoursList']);
 Route::get('test-package', [BookingController::class, 'getTestPackage']);
+Route::get('pricing-structure', [BookingController::class, 'pricingStructure']);
 /** Booking steps endpoints ends */
+
+/** Common APIs starts */
+Route::get('states', [CommanAPIController::class, 'getStates']);
+/** Common APIs ends */

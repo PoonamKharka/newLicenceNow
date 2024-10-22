@@ -15,7 +15,7 @@ class BookingController extends BaseController
     /**
      * @OA\Get(
      *  path="/api/prices",
-     *  tags={"Test Booking Steps"},
+     *  tags={"Booking Steps"},
      *  summary="Prices and Hours details",
      *  @OA\Response(
      *         response=200,
@@ -25,8 +25,19 @@ class BookingController extends BaseController
      */
     public function getHoursList() {
         try {
+
             $list = Price::all('id', 'hours', 'price');
-            return $this->successResponse($list, 'Data Found');
+            $sortedList = [];
+            foreach ( $list as $value ) {
+                $newList = [
+                    'hours' => $value->hours,
+                    'price' => '$' . $value->price . '/hr'
+                ];
+                $sortedList['hour_unit'] = 'hr(s)';
+                $sortedList['data'][] = $newList;
+            }
+
+            return $this->successResponse($sortedList, 'Prices and Hours details');
         } catch (Exception $ex) {
             Log::log('error', $ex);
             return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
@@ -36,7 +47,7 @@ class BookingController extends BaseController
     /**
      * @OA\Get(
      *   path="/api/test-package",
-     *   tags={"Test Booking Steps"},
+     *   tags={"Booking Steps"},
      *   summary="Fetch Test Package Details",
      *   @OA\Response(
      *       response=200,
@@ -47,14 +58,37 @@ class BookingController extends BaseController
     public function getTestPackage(){
         try {
             $testPackage = TestPackage::all();
-            return $this->successResponse( $testPackage, 'Data Found' );
+            return $this->successResponse( $testPackage, 'Test Package Details' );
         } catch(Exceptions $ex){
             Log::log('error', $ex);
             return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
         }
     }
 
-    // public function storeBookingRequest(Request $request) {
+    /**
+     * @OA\Get(
+     *   path="/api/pricing-structure",
+     *   tags={"Booking Steps"},
+     *   summary="Driving Lesson Pricing Structure",
+     *   @OA\Response(
+     *       response=200,
+     *       description="OK"
+     *    )
+     * ) 
+     */
+    public function pricingStructure() {
+        try {
 
-    // }
+            $mappedData = [
+                    '1-5 hours' => '$105.00 / hr',
+                    '5-9 hours' => '$95.00 / hr',
+                    '10+ hours' => '$85.00 / hr',
+            ];
+
+            return $this->successResponse( $mappedData, 'Driving Lesson Pricing Structure' );
+        } catch(Exceptions $ex){
+            Log::log('error', $ex);
+            return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
+        }
+    }
 }
