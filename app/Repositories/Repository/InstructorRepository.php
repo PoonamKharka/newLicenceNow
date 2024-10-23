@@ -186,10 +186,10 @@ class InstructorRepository implements InstructorRepositoryInterFace
     }
     public function getAllInstructorsRquest($request)
     {
-
+       
         if ($request->ajax()) {
-            $instrutors = InstructorRequest::all();
-
+            $instrutors = InstructorRequest::select('*')->orderBy('created_at', 'DESC');
+        
             return datatables()->of($instrutors)
             ->addColumn('status', function ($row) { 
                 // Disable the dropdown if status is 'approve'
