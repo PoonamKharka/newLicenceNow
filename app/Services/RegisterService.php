@@ -37,4 +37,7 @@ class RegisterService {
     public function delete($id) {
         return $this->regRep->delete($id);
     }
+    public function userProfile($id){
+        return  $this->regRep->userProfile($id);
+    }
 }

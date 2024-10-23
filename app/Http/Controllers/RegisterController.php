@@ -72,4 +72,11 @@ class RegisterController extends Controller
     public function destroy($id){
         return  $this->regService->delete($id);
     }
+    /**
+     * Show user profile.
+    */
+    public function userProfile($id){
+        $user=$this->regService->userProfile($id);        
+        return view('admin.users.profile', compact('user'));
+    }
 }

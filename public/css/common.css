@@ -170,3 +170,4 @@ aside{background-color: #38496f !important;
 aside a{ color: #fff;}
 .nav-link{ color: #fff !important;}
 .nav-link.active{background-color: #4ab9ea !important;}
+.user-panel a:hover{color: #fff;}

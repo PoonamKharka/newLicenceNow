@@ -27,7 +27,8 @@ class User extends Authenticatable
         'password',
         'isAdmin',
         'userType_id',
-        'status'
+        'status',   
+        'profile_image'
     ];
 
     /**
@@ -93,13 +94,7 @@ class User extends Authenticatable
                     ->using(InstructorLocation::class)
                     ->withPivot('id');
     }
-
-    // public function locations()
-    // {
-    //     return $this->belongsToMany(Location::class, 'instructor_locations')
-    //                 ->using(InstructorLocation::class) // Pivot model
-    //                 ->withPivot('id'); // Include pivot fields if needed
-    // }
+    
 
     public function instructorPrices()
     {

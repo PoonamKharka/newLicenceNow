@@ -963,4 +963,53 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
+    // User Update Form validation
+    $.validator.addMethod("fileSize", function (value, element) {
+        if (element.files.length > 0) {
+            var fileSize = element.files[0].size;
+            return this.optional(element) || (fileSize <= 2 * 1024 * 1024);
+        }
+        return true;
+    }, "File size must be less than 2MB.");
+
+    $.validator.addMethod("fileExtension", function (value, element) {
+
+        if (this.optional(element)) {
+            return true;
+        }
+        // Get file extension
+        var ext = value.split('.').pop().toLowerCase();
+        return this.optional(element) || /^(jpeg|jpg|png|svg)$/.test(ext);
+    }, "Only JPG, JPEG, PNG, and SVG files are allowed.");
+    $("#user-update").validate({
+        rules: {
+            first_name: {
+                required: true,
+            },
+            last_name: {
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true,
+            },
+            profile_image: {
+                extension: "jpeg,jpg,png,svg",
+                fileSize: true,
+                optional: true
+            },
+        },
+        messages: {
+            profile_image: {
+
+                fileExtension: "Only JPG, JPEG, and PNG,svg files are allowed.",
+                filesize: "The file size must be less than 2MB.",
+            },
+        },
+        submitHandler: function (form, event) {
+            //event.preventDefault();
+            console.log("Form validated successfully");
+            form.submit();
+        },
+    });
 });
