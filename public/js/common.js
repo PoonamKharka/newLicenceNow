@@ -973,14 +973,13 @@ $(document).ready(function () {
     }, "File size must be less than 2MB.");
 
     $.validator.addMethod("fileExtension", function (value, element) {
-
         if (this.optional(element)) {
             return true;
         }
-        // Get file extension
         var ext = value.split('.').pop().toLowerCase();
-        return this.optional(element) || /^(jpeg|jpg|png|svg)$/.test(ext);
+        return /^(jpeg|jpg|png|svg)$/.test(ext);
     }, "Only JPG, JPEG, PNG, and SVG files are allowed.");
+
     $("#user-update").validate({
         rules: {
             first_name: {
@@ -994,16 +993,53 @@ $(document).ready(function () {
                 email: true,
             },
             profile_image: {
-                extension: "jpeg,jpg,png,svg",
+                fileExtension: true,
                 fileSize: true,
-                optional: true
             },
         },
         messages: {
             profile_image: {
+                fileExtension: "Only JPG, JPEG, PNG, and SVG files are allowed.",
+                fileSize: "The file size must be less than 2MB.",
+            },
+        },
+        submitHandler: function (form, event) {
+            console.log("Form validated successfully");
+            form.submit();
+        },
+    });
 
-                fileExtension: "Only JPG, JPEG, and PNG,svg files are allowed.",
-                filesize: "The file size must be less than 2MB.",
+    // User Create Form validation
+
+    $("#user-store").validate({
+        rules: {
+            first_name: {
+                required: true,
+            },
+            last_name: {
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true,
+            },
+            password: {
+                required: true,
+                minlength: 4
+            },
+            password_confirmation: {
+                required: true,
+                equalTo: "#password",
+            },
+        },
+        messages: {
+            password: {
+                required: "Please enter a password.",
+                minlength: "Your password must be at least 4 characters long."
+            },
+            password_confirmation: {
+                required: "Please confirm your password.",
+                equalTo: "Password and confirm password do not match."
             },
         },
         submitHandler: function (form, event) {
@@ -1012,4 +1048,73 @@ $(document).ready(function () {
             form.submit();
         },
     });
+
+    // Locations Form validation
+
+    $("#location-form").validate({
+        rules: {
+            street: {
+                required: true,
+            },
+            postcode: {
+                required: true,
+            },
+        },
+        messages: {
+            street: {
+                required: "Please enter a street.",
+            },
+        },
+        submitHandler: function (form, event) {
+            //event.preventDefault();
+            console.log("Form validated successfully");
+            form.submit();
+        },
+    });
+
+    // Price Form validation
+
+    $("#price-form").validate({
+        rules: {
+            hours: {
+                required: true,
+            },
+            price: {
+                required: true,
+            },
+        },
+        messages: {
+            hours: {
+                required: "Please enter a hours.",
+            },
+        },
+        submitHandler: function (form, event) {
+            //event.preventDefault();
+            console.log("Form validated successfully");
+            form.submit();
+        },
+    });
+
+    // Faqs Form validation
+    $("#faqs-form").validate({
+        rules: {
+            question: {
+                required: true,
+            },
+            answer: {
+                required: true,
+            },
+        },
+        messages: {
+            answer: {
+                required: "Please enter a answer.",
+            },
+        },
+        submitHandler: function (form, event) {
+            //event.preventDefault();
+            console.log("Form validated successfully");
+            form.submit();
+        },
+    });
+
 });

@@ -6,9 +6,16 @@ use App\Models\TestPackage;
 use App\Repositories\InterFaces\TestPackageRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Services\ImageUploadService;
 
 class TestPackageRepository implements TestPackageRepositoryInterface
 {
+    protected $imageUploadService;
+    // Constructor to inject the ImageUploadService
+    public function __construct(ImageUploadService $imageUploadService)
+    {
+        $this->imageUploadService = $imageUploadService;
+    }
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -19,7 +26,7 @@ class TestPackageRepository implements TestPackageRepositoryInterface
                     return Str::limit(strip_tags($row->description), 50, '...');
                 })
                 ->addColumn('image', function ($row) {
-                    $imageUrl = asset('storage/' . $row->image);
+                    $imageUrl = $row->image;
                     return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
                 ->addColumn('action', function ($row) {
@@ -51,12 +58,12 @@ class TestPackageRepository implements TestPackageRepositoryInterface
 
         // Handle File Upload
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_image.' . $image->getClientOriginalExtension();
-            $validatedData['image'] = $image->storeAs('testPackages', $imageName, 'public');
-            $validatedData['img_path'] = config('app.baseUrl') . '/' .$validatedData['image'];
+            $imagePaths = $this->imageUploadService->uploadImage($request->file('image'),'testPackages');
         }
-
+        if (!empty($imagePaths)) {
+            $validatedData['img_path'] = $imagePaths; 
+            $validatedData['image'] = $imagePaths; 
+        }
         // Determine if we're updating or creating
         $testPackage = TestPackage::updateOrCreate(
             ['id' => $request->input('id')],

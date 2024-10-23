@@ -13,10 +13,11 @@ class ImageUploadService
     public function uploadImage(UploadedFile $image, string $folder)
     {
         
-         $path = $folder . '/' . time() . '_' . $image->getClientOriginalName();
-             
+        $fileName = time() . '_' . $image->getClientOriginalName();
+        $path = $folder . '/' . $fileName;
         Storage::disk('public')->put($path, file_get_contents($image));
-        return $path;
+        $filePath = Storage::url($path);        
+        return config('app.baseUrl').$filePath; 
     }
     public function uploadImages(array $images, string $folder)
     {
@@ -28,7 +29,8 @@ class ImageUploadService
                 $path = $folder . '/' . time() . '_' . $image->getClientOriginalName();
 
                 Storage::disk('public')->put($path, file_get_contents($image));
-                $paths[] = $path;
+                $filePath = Storage::url( $path);
+                $paths[] = config('app.baseUrl') . $path;
             }
         }
         return $paths;
