@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Datatables;
 use Illuminate\Support\Facades\Hash;
+use App\Services\ImageUploadService;
 
 class RegisterRepository implements RegisterRepositoryInterFace
 {
+    protected $imageUploadService;
+
+    // Constructor to inject the ImageUploadService
+    public function __construct(ImageUploadService $imageUploadService)
+    {
+        $this->imageUploadService = $imageUploadService;
+    }
+
 
     /**
      * Display users list
@@ -85,7 +94,21 @@ class RegisterRepository implements RegisterRepositoryInterFace
     public function updateData(Request $request, $id)
     {
         $userId = decrypt($id);
-        $updateUser = User::findOrFail($userId)->update($request->all());
+        
+         $request->validate([            
+            'profile_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if ($request->hasFile('profile_image')) {
+            
+            $imagePaths = $this->imageUploadService->uploadImage($request->file('profile_image'),'profile');
+        }
+         
+          $updateData = $request->all();        
+          if (!empty($imagePaths)) {
+              $updateData['profile_image'] = $imagePaths; 
+          }
+  
+        $updateUser = User::findOrFail($userId)->update($updateData);
         return $updateUser ;
     }
 
@@ -96,5 +119,9 @@ class RegisterRepository implements RegisterRepositoryInterFace
         $user->delete();
 
         return redirect()->route('users.index')->with('status', 'User deleted successfully.');
+    }
+    public function userProfile($id){
+        $userId = decrypt($id);
+        return User::findOrFail($userId);
     }
 }

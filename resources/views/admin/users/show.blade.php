@@ -33,7 +33,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('users.update', encrypt($userData->id)) }}">
+                            <form id="user-update" method="POST"
+                                action="{{ route('users.update', encrypt($userData->id)) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
@@ -59,13 +60,37 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="email">Status</label>
                                     <select class="form-control" name="status">
                                         <option value=1 {{ $userData->status == 1 ? 'selected' : '' }}>Active</option>
                                         <option value=0 {{ $userData->status == 0 ? 'selected' : '' }}>Inactive</option>
                                     </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Profile Picture</label>
+                                            <input type="file" class="form-control" name="profile_image">
+                                            @error('profile_image')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <!-- Show existing image if editing -->
+                                        @if (!empty($userData->profile_image))
+                                            <div class="form-group">
+                                                <label>Current Profile Picture</label>
+                                                <div>
+                                                    <img src="{{ Storage::url($userData->profile_image) }}"
+                                                        alt="Profile Image" width="100">
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-info">Update</button>

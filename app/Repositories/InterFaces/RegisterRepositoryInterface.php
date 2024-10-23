@@ -11,5 +11,6 @@ interface RegisterRepositoryInterFace {
     public function view($id);
     public function updateData( Request $request, $id );
     public function delete($id);
+    public function userProfile($id);
 }
 ?>

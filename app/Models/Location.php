@@ -21,27 +21,15 @@ class Location extends Model
         'postcode',
     ];
 
-    public function lessonsLocation1() {
-        return $this->hasMany(LessonLocation::class, 'location_id');
-    }
+    
     /**
      * The instructors associated with the location.
      */
-    public function instructors1()
-    {
-        //return $this->belongsToMany(User::class, 'instructor_locations');
-
-       // return $this->belongsToMany(User::class, 'instructor_locations', 'location_id', 'instructor_id');
-        
-        return $this->belongsToMany(User::class, 'instructor_locations', 'location_id', 'instructor_id')
-                ->using(InstructorLocation::class) // Pivot model
-                ->withPivot('id'); // Include pivot fields if needed
-   
-    }
+    
     public function instructors()
     {
         return $this->belongsToMany(User::class, 'instructor_locations', 'location_id', 'instructor_id')
-                    //->using(InstructorLocation::class) // Specify the pivot model if needed
-                    ->withPivot('id'); // Include any pivot fields if necessary
+                    //->using(InstructorLocation::class) 
+                    ->withPivot('id'); 
     }
 }

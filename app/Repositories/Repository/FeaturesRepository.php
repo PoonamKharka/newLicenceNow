@@ -53,7 +53,7 @@ class FeaturesRepository implements FeaturesRepositoryInterface
             $image = $request->file('image');
             $imageName = time() . '_image.' . $image->getClientOriginalExtension();
             $validatedData['image'] = $image->storeAs('features', $imageName, 'public');
-            $validatedData['image_path'] = config('app.baseUrl') . '/' .$validatedData['image'];
+            $validatedData['image_path'] = config('app.baseUrl') . '/storage/' .$validatedData['image'];
         }
 
         // Determine if we're updating or creating
