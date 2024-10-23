@@ -23,12 +23,14 @@ return [
                 /*
                  * File name of the generated json documentation file
                  */
-                'docs_json' => 'api-docs.json',
+                // 'docs_json' => 'api-docs.json',
+                'docs_json' => 'swagger.json',
 
                 /*
                  * File name of the generated YAML documentation file
                  */
-                'docs_yaml' => 'api-docs.yaml',
+                // 'docs_yaml' => 'api-docs.yaml',
+                'docs_yaml' => 'swagger.yaml',
 
                 /*
                  * Set this to `json` or `yaml` to determine which documentation file to use in UI
@@ -76,7 +78,8 @@ return [
             /*
              * Absolute path to location where parsed annotations will be stored
              */
-            'docs' => public_path('api-docs'),
+            // 'docs' => public_path('api-docs'),
+            'docs' => public_path('swagger-docs'),
 
             /*
              * Absolute path to directory where to export views

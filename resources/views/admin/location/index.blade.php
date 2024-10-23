@@ -55,8 +55,6 @@
                     <th>City</th>
                     <th>State</th>
                     <th>Postcode</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
                     <th>Country</th>
                     <th>Action</th>
                   </tr>
@@ -87,8 +85,6 @@ $(function() {
                       { data: 'city', name: 'city' },
                       { data: 'state', name: 'state' },
                       { data: 'postcode', name: 'postcode' },
-                      { data: 'latitude', name: 'latitude' },
-                      { data: 'longitude', name: 'longitude' },
                       { data: 'country', name: 'country' },
                       { data: 'action', name: 'action', orderable: false, searchable: false},
                    ]

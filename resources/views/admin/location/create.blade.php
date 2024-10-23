@@ -81,27 +81,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Latitude</label>
-                                <input type="text" class="form-control" placeholder="Enter Latitude" name="latitude">
-                                @error('latitude')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Longitude</label>
-                                <input type="text" class="form-control" placeholder="Enter Longitude" name="longitude">
-                                @error('longitude')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
                       <button type="submit" class="btn btn-info">Submit</button>

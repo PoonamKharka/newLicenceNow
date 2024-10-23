@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\LocationService;
 use App\Models\Location;
+use Illuminate\Support\Facades\Exceptions;
+use Illuminate\Support\Facades\Log;
 
 class LocationController extends Controller
 {
@@ -34,17 +36,17 @@ class LocationController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'city' => 'required',
-            'postcode' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required'
-        ]);
-
-        $insert = $this->locationService->addLocation($request->all());
-        if($insert) {
-            return redirect()->route('location.index');
+    {   
+        try {
+            $request->validate([
+                'city' => 'required',
+                'postcode' => 'required'
+            ]);
+           
+            $this->locationService->addLocation($request->all());
+            return redirect()->route('location.index')->with('status', 'Location Added!');
+        } catch (Exceptions $ex) {
+            Log::error('error while adding Location', $ex);
         }
     }
 
@@ -61,20 +63,26 @@ class LocationController extends Controller
      */
     public function edit(string $id)
     {
-        $encodedData = decrypt($id);
-        $locationData = Location::find($encodedData->id);
-    
-        return view('admin.location.edit', compact('locationData'));
+        try {
+            $encodedData = decrypt($id);
+            $locationData = Location::find($encodedData->id);
+            
+            return view('admin.location.edit', compact('locationData'));
+        } catch (Exceptions $ex) {
+            Log::error('error while fetching Location data for edit', $ex);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $data =  $this->locationService->updateLocation($request->all(), $id);
-        if($data){
-          return redirect()->route('location.index')->with('status', 'Location Updated!');
+    {   
+        try {
+            $this->locationService->updateLocation($request->all(), $id);
+            return redirect()->route('location.index')->with('status', 'Location Updated!');
+        } catch (Exceptions $ex) {
+            Log::error('error while updating Location', $ex);
         }
     }
 
@@ -83,8 +91,10 @@ class LocationController extends Controller
      */
     public function destroy(string $id)
     {
-        $location = Location::find($id)->with('lessonsLocation')->get();
+        $location = Location::findOrFail($id);
         
+        //->with('lessonsLocation1')->first();
+        dd($location);
         if($location){
             return redirect()->route('location.index')->with('warning', 'Cant perform operation as Data is linked with other tables');
            

@@ -1,4 +1,6 @@
-input.error,textarea.error,select.error{
+input.error,
+textarea.error,
+select.error {
     border: 1px solid red;
 }
 label.error {
@@ -6,24 +8,24 @@ label.error {
     color: red;
     font-size: 12px;
 }
-#exampleInputFile-error{       
-        color: red !important;
-        font-size: 12px;
-        display: block;
-        position: absolute;
-        bottom: -29px;
+#exampleInputFile-error {
+    color: red !important;
+    font-size: 12px;
+    display: block;
+    position: absolute;
+    bottom: -29px;
 }
 
 #y_dataTables .btn-danger {
     margin-left: 5px;
 }
-.card-header{
-    background-color: #449ed6; 
-      color: white; 
-      border-bottom: none; 
-  }
+.card-header {
+    background-color: #449ed6;
+    color: white;
+    border-bottom: none;
+}
 
-  /* Table container background */
+/* Table container background */
 .dataTables_wrapper {
     background-color: #f5f7fa; /* Light background for the container */
     padding: 15px;
@@ -42,14 +44,14 @@ table.dataTable thead {
 
 /* Styling individual header cells */
 table.dataTable thead th {
-    padding: 12px;
+    padding: 6px;
     border-bottom: 3px solid #e0e0e0; /* Underline effect on headers */
-    text-transform: uppercase;
+    text-transform: math-auto;
 }
 
 /* Custom font for table */
 table.dataTable {
-    font-family: 'Arial', sans-serif; /* Clean, modern font */
+    font-family: "Arial", sans-serif; /* Clean, modern font */
     border-collapse: collapse;
     width: 100%;
     margin-top: 20px;
@@ -163,11 +165,23 @@ table.dataTable tbody td .btn:hover {
     border-color: #38496f;
     box-shadow: none;
 }
-.card-header{background-color: #17a2b8;}
-aside{background-color: #38496f !important;
+.card-header {
+    background-color: #17a2b8;
+}
+aside {
+    background-color: #38496f !important;
     color: #fff;
 }
 aside a{ color: #fff;}
 .nav-link{ color: #fff !important;}
 .nav-link.active{background-color: #4ab9ea !important;}
 .user-panel a:hover{color: #fff;}
+aside a {
+    color: #fff;
+}
+.nav-link {
+    color: #fff !important;
+}
+.nav-link.active {
+    background-color: #4ab9ea !important;
+}

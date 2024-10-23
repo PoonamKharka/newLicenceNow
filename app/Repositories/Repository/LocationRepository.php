@@ -11,7 +11,7 @@ class LocationRepository implements  LocationRepositoryInterface {
     /** Get list of all location */
     public function getListOfLocations($req){
         if ($req->ajax()) {
-            $locationData = Location::select('*');
+            $locationData = Location::select('*')->orderBy('created_at', 'DESC');
             return datatables()->of($locationData)
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="' . route('location.edit', encrypt($row)) . '" class="btn btn-sm btn-success">

@@ -12,7 +12,7 @@ class FeaturesRepository implements FeaturesRepositoryInterface
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $features = Feature::all();
+            $features = Feature::select('*')->orderBy('created_at', 'DESC');
             return datatables()
                 ->of($features)
                 ->addColumn('description', function ($row) {
@@ -53,6 +53,7 @@ class FeaturesRepository implements FeaturesRepositoryInterface
             $image = $request->file('image');
             $imageName = time() . '_image.' . $image->getClientOriginalExtension();
             $validatedData['image'] = $image->storeAs('features', $imageName, 'public');
+            $validatedData['image_path'] = config('app.baseUrl') . '/' .$validatedData['image'];
         }
 
         // Determine if we're updating or creating
