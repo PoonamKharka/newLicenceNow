@@ -1,9 +1,10 @@
 <aside class="main-sidebar elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-        <img src="{{ asset('images/icon.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-        <span class="d-block"> @include('admin.layouts.title') </span>
-    </a>
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <img src="{{ asset('images/icon.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+    {{-- <span class="d-block"> @include('admin.layouts.title') </span> --}}
+    <span class="brand-text font-weight-light">@include('admin.layouts.title')</span>
+  </a>
 
     <!-- Sidebar -->
     <div class="sidebar">

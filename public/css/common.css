@@ -179,7 +179,7 @@ aside a{ color: #fff;}
 .card-header a,aside a {
     color: #fff;
 }
-.nav-link {
+.mt-2 .nav .nav-item .nav-link {
     color: #fff !important;
 }
 .nav-link.active {
