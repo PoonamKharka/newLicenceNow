@@ -1,9 +1,9 @@
 <aside class="main-sidebar elevation-4">
-  <!-- Brand Logo -->
-  <a href="#" class="brand-link elevation-4">
-    <img src="{{ asset('images/icon.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-    <span class="brand-text font-weight-light"> @include('admin.layouts.title') </span>
-  </a>
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link elevation-4">
+        <img src="{{ asset('images/icon.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+        <span class="brand-text font-weight-light"> @include('admin.layouts.title') </span>
+    </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -42,14 +42,14 @@
                 </li>
                 <!-- Nav Menu -->
                 <li class="nav-item">
-                  <a href="{{ route('nav-menu.index') }}"
-                      class="nav-link {{ request()->is('admin/nav-menu*') ? 'active' : '' }}">
-                      <i class="nav-icon fas fa-th"></i>
-                      <p>
-                          Navigation
-                      </p>
-                  </a>
-              </li>
+                    <a href="{{ route('nav-menu.index') }}"
+                        class="nav-link {{ request()->is('admin/nav-menu*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Navigation
+                        </p>
+                    </a>
+                </li>
                 <!-- Users -->
                 <li class="nav-item">
                     <a href="{{ route('users.index') }}"
@@ -127,7 +127,7 @@
                     </a>
                 </li>
                 <li
-                    class="nav-item {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*') ? 'menu-open' : '' }}">
+                    class="nav-item {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/informations*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*') ? 'menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*') ? 'active' : '' }}">
                         <i class="nav-icon far fa-plus-square"></i>
@@ -149,6 +149,13 @@
                                 class="nav-link {{ request()->is('admin/faqs*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>FAQs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('informations.index') }}"
+                                class="nav-link {{ request()->is('admin/informations*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Informations</p>
                             </a>
                         </li>
                         <li class="nav-item">

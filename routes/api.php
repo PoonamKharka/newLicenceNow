@@ -32,6 +32,7 @@ Route::group(['middleware' => 'cors'], function() {
     /** Article endpoints starts */
     Route::get('about', [ArticleController::class, 'getDataOfAboutUs']);
     Route::get('faqs', [ArticleController::class, 'getAllFaqs']);
+    Route::get('informations', [ArticleController::class, 'getAllInformations']);
     Route::get('articles-data', [ArticleController::class, 'getAllArticleModules']);
     Route::get('features', [ArticleController::class, 'getAllFeatures']);
     Route::get('article/privacy-policies',[ArticleController::class,'getAllPrivacyPolicies']);
@@ -42,7 +43,7 @@ Route::group(['middleware' => 'cors'], function() {
     Route::get('instructor-search',[SearchController::class,'getAvailableInstructors']);
     Route::get('instructors',[SearchController::class,'getAllInstructors']);
     Route::get('location-search',[SearchController::class,'getAvailableSuburbs']);
-    Route::get('instructors/{id}',[SearchController::class,'getInstructorDetails']);
+    Route::get('instructor/{id}',[SearchController::class,'getInstructorDetails']);
     /** Home Page endpoints ends */
 
     /** Booking steps endpoints starts */

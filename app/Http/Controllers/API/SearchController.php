@@ -20,9 +20,9 @@ class SearchController extends BaseController
      * @OA\Get(
      *     path="/api/location-search",
      * tags={"General"},
-     *     summary="Search all location based on street,city or postcode",
+     *     summary="Search all location and their intructors based on street,city or postcode",
      * 
-     *     description="Retrieve a list of all locations street,city or postcode ",
+     *     description="Retrieve a list of all locations street,city or postcode and their intructors. It returns latest intstructors in case of 'Perth no search' ",
      *     @OA\Parameter(
      *         name="s",
      *         in="query",
@@ -91,12 +91,12 @@ class SearchController extends BaseController
                  });
              }
              
-             $responseData = $locationQuery->get();
+             $responseData = $locationQuery->get();             
              
-             //Log::info(DB::getQueryLog());
- 
+             //Perth no search
              if ($responseData->isEmpty()) {
-                 return $this->successResponse($responseData, "No data found");
+                $responseData=$this->getLatestInstructors();
+                return $this->successResponse($responseData, "Perth no search");
              }
              
              $response = $responseData->map(function ($location) {
@@ -119,7 +119,27 @@ class SearchController extends BaseController
              return $this->errorResponse($ex);
          }
      }
-    
+     
+    /* 
+     * Get Latest instrunctors 
+    */
+     public function getLatestInstructors()
+     {
+        try {
+            $instrutors = User::whereHas('userType', function ($query) {
+                $query->where('type', '=', 'Instructor');
+            })->select('*')->orderBy('created_at', 'DESC')->get();
+            
+            return $instrutors;
+        }catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+            return $this->errorResponse($ex);
+        }
+     }
+     
+    /* 
+     * Get all instrunctor based on location id 
+    */
     public function getAvailableInstructors(Request $request): JsonResponse
     {
        
@@ -153,7 +173,7 @@ class SearchController extends BaseController
      * @OA\Get(
      *     path="/api/instructors",
      * tags={"General"},
-     *     summary="Get all other instructors",
+     *     summary="Get list of all other instructors",
      * 
      *     description="Retrieve a list of all instructors",
      *     @OA\Response(
@@ -174,7 +194,25 @@ class SearchController extends BaseController
             return $this->errorResponse($ex);
         }
     }
-
+    /**
+     * @OA\Get(
+     *     path="/api/instructor/{id}",
+     * tags={"General"},
+     *     summary="Get instructor detail based on id",
+     *     description="Retrieve details of an instructor by their ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="The ID of the instructor",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getInstructorDetails($id): JsonResponse {       
        
         try {

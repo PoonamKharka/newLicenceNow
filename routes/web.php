@@ -21,6 +21,7 @@ use App\Http\Controllers\PrivacyPolicyArticleController;
 use App\Http\Controllers\PaymentPolicyArticleController;
 use App\Http\Controllers\auth\ForgotPasswordController;
 use App\Http\Controllers\NavMenuController;
+use App\Http\Controllers\InformationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,5 +76,6 @@ Route::prefix('admin')->group(function(){
         Route::get('instructor-request-show/{id}',[InstructorController::class, 'showInstructorRequest'])->name('instructor-request.view');
         Route::post('update-attachments/{id}',[InstructorController::class, 'updateAttachments'])->name('admin.instructor.update-attachments');
         Route::get('user-profile/{id}',[RegisterController::class, 'userProfile'])->name('user-profile');
+        Route::resource('informations', InformationController::class);
     });
 });
