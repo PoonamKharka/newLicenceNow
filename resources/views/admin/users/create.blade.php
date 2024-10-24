@@ -30,7 +30,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form method="POST" action="{{ route('users.store') }}" autocomplete="off">
+                            <form id="user-store" method="POST" action="{{ route('users.store') }}" autocomplete="off">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -71,7 +71,8 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="password" class="form-control" placeholder="****" name="password">
+                                            <input type="password" class="form-control" placeholder="****" name="password"
+                                                id="password">
                                             @error('password')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

@@ -38,23 +38,24 @@
                                         <div class="card-body">
                                             @if ($errors->any())
                                                 <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
                                             @endif
-                                            @if(session('success'))
+                                            @if (session('success'))
                                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                     {{ session('success') }}
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                             @endif
-                                            <form id="testpackageForm" action="{{ route('testpackages.store') }}" method="POST"
-                                                enctype="multipart/form-data">
+                                            <form id="testpackageForm" action="{{ route('testpackages.store') }}"
+                                                method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $testPackage->id ?? '' }}">
                                                 <div class="row">
@@ -70,7 +71,7 @@
                                                             <label>Image</label>
                                                             <div style="display: flex">
                                                                 @if (isset($testPackage->image))
-                                                                    <img src="{{ asset('storage/' . $testPackage->image) }}"
+                                                                    <img src="{{ $testPackage->image }}"
                                                                         alt="{{ $testPackage->title }}" width="200"
                                                                         height="200">
                                                                 @endif
@@ -87,7 +88,7 @@
                                                             <label>Price</label>
                                                             <input type="text" class="form-control" name="price"
                                                                 value="{{ $testPackage->price ?? '' }}"
-                                                                placeholder="Enter Price" >
+                                                                placeholder="Enter Price">
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Description</label>
@@ -115,6 +116,5 @@
             <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
-    </section>    
+    </section>
 @endsection
-

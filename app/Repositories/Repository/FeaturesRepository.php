@@ -6,9 +6,16 @@ use App\Models\Feature;
 use App\Repositories\InterFaces\FeaturesRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Services\ImageUploadService;
 
 class FeaturesRepository implements FeaturesRepositoryInterface
 {
+    protected $imageUploadService;
+    // Constructor to inject the ImageUploadService
+    public function __construct(ImageUploadService $imageUploadService)
+    {
+        $this->imageUploadService = $imageUploadService;
+    }
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -19,7 +26,7 @@ class FeaturesRepository implements FeaturesRepositoryInterface
                     return Str::limit(html_entity_decode(strip_tags($row->description)), 50, '...');
                 })
                 ->addColumn('image', function ($row) {
-                    $imageUrl = asset('storage/' . $row->image);
+                    $imageUrl = $row->image;
                     return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
                 ->addColumn('action', function ($row) {
@@ -50,12 +57,12 @@ class FeaturesRepository implements FeaturesRepositoryInterface
 
         // Handle File Upload
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_image.' . $image->getClientOriginalExtension();
-            $validatedData['image'] = $image->storeAs('features', $imageName, 'public');
-            $validatedData['image_path'] = config('app.baseUrl') . '/storage/' .$validatedData['image'];
+            $imagePaths = $this->imageUploadService->uploadImage($request->file('image'),'features');
         }
-
+        if (!empty($imagePaths)) {
+            $validatedData['image_path'] = $imagePaths; 
+            $validatedData['image'] = $imagePaths; 
+        }
         // Determine if we're updating or creating
         $feature = Feature::updateOrCreate(
             ['id' => $request->input('id')],

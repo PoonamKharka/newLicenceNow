@@ -38,17 +38,18 @@
                                         <div class="card-body">
                                             @if ($errors->any())
                                                 <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
                                             @endif
-                                            @if(session('success'))
+                                            @if (session('success'))
                                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                     {{ session('success') }}
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -70,7 +71,7 @@
                                                             <label>Image</label>
                                                             <div style="display: flex">
                                                                 @if (isset($feature->image))
-                                                                    <img src="{{ asset('storage/' . $feature->image) }}"
+                                                                    <img src="{{ $feature->image }}"
                                                                         alt="{{ $feature->title }}" width="50"
                                                                         height="50">
                                                                 @endif
@@ -83,7 +84,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div class="form-group">
                                                             <label>Description</label>
                                                             <textarea class="form-control summernote" name="description" placeholder="Enter Description">{{ $feature->description ?? '' }}</textarea>
@@ -110,6 +111,5 @@
             <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
-    </section>    
+    </section>
 @endsection
-
