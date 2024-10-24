@@ -14,6 +14,7 @@ use App\Models\InstructorTermsAndCondition;
 use App\Models\PaymentPolicyArticle;
 use App\Models\PrivacyPolicyArticle;
 use App\Models\NavMenu;
+use App\Models\Information;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends BaseController
@@ -123,6 +124,27 @@ class ArticleController extends BaseController
         }
     }
     
+    /**
+     * @OA\Get(
+     *     path="/api/informations",
+     *     tags={"Articles"},
+     *     summary="Get all Informations",
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
+    public function getAllInformations(): JsonResponse {
+       
+        try {
+            $informations = Information::get();
+            return $this->successResponse($informations, "Data Found");
+        } catch (\Exception $ex) {
+            return $this->errorResponse($ex);
+        }
+    }
+
     /**
      * @OA\Get(
      *     path="/api/features",

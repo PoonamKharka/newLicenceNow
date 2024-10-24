@@ -51,6 +51,9 @@ use App\Repositories\InterFaces\ForgotPasswordRepositoryInterface;
 use App\Repositories\Repository\ForgotPasswordRepository;
 use App\Services\ForgotPasswordService;
 use Illuminate\Support\Facades\Schema;
+use App\Repositories\InterFaces\InformationRepositoryInterface;
+use App\Repositories\Repository\InformationRepository;
+use App\Services\InformationService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -132,6 +135,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ForgotPasswordRepositoryInterface::class, ForgotPasswordRepository::class);
         $this->app->bind(ForgotPasswordService::class, function($app){
             return new ForgotPasswordService($app->make(ForgotPasswordRepositoryInterface::class));
+        });
+
+        $this->app->bind(InformationRepositoryInterface::class, InformationRepository::class);
+        $this->app->bind(InformationService::class, function($app){
+            return new InformationService($app->make(InformationRepositoryInterface::class));
         });
     }
 

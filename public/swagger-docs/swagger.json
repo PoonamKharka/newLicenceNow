@@ -87,6 +87,20 @@
                 }
             }
         },
+        "/api/informations": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all Informations",
+                "operationId": "8fd4aa307344727440f8441dd493996f",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/features": {
             "get": {
                 "tags": [
@@ -381,8 +395,8 @@
                 "tags": [
                     "General"
                 ],
-                "summary": "Search all location based on street,city or postcode",
-                "description": "Retrieve a list of all locations street,city or postcode ",
+                "summary": "Search all location and their intructors based on street,city or postcode",
+                "description": "Retrieve a list of all locations street,city or postcode and their intructors. It returns latest intstructors in case of 'Perth no search' ",
                 "operationId": "d1396448bc8bd31238afd15090a95fa8",
                 "parameters": [
                     {
@@ -423,9 +437,35 @@
                 "tags": [
                     "General"
                 ],
-                "summary": "Get all other instructors",
+                "summary": "Get list of all other instructors",
                 "description": "Retrieve a list of all instructors",
                 "operationId": "029801c2258b7fe8b583b9b3247f262c",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/instructor/{id}": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get instructor detail based on id",
+                "description": "Retrieve details of an instructor by their ID",
+                "operationId": "b0184d3e9606ac87acc1273fcf0c2dc9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the instructor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
