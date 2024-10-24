@@ -172,11 +172,19 @@ aside {
     background-color: #38496f !important;
     color: #fff;
 }
-aside a{ color: #fff;}
-.nav-link{ color: #fff !important;}
-.nav-link.active{background-color: #4ab9ea !important;}
-.user-panel a:hover{color: #fff;}
-.card-header a,aside a {
+aside a {
+    color: #fff;
+}
+/* .nav-link {
+    color: #fff !important;
+} */
+.nav-link.active {
+    background-color: #4ab9ea !important;
+}
+.user-panel a:hover {
+    color: #fff;
+}
+aside a {
     color: #fff;
 }
 .mt-2 .nav .nav-item .nav-link {

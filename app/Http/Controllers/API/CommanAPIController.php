@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Exceptions;
 use App\Models\State;
+use App\Models\Location;
 
 class CommanAPIController extends BaseController
 {
@@ -32,9 +33,26 @@ class CommanAPIController extends BaseController
         }
     }
 
+    /**
+     * @OA\Get(
+     *   path="/api/suburbs",
+     *   tags={"General"},
+     *   summary="List of Suburbs",
+     *   @OA\Response(
+     *     response=200,
+     *     description="OK"
+     *   )
+     * )
+     */
     public function getSuburbs(Request $request) {
         try {
-
+            $locations = "https://www.geonames.org/postalcode-search.html?q=&country=AU";
+            $mappedLocations = $locations->map( function ($element) {
+                return [
+                    'suburbs' => $element
+                ];
+            });
+            return $this->successResponse($mappedLocations, 'Suburbs List');
         } catch (Exceptions $ex) {
             Log::log('error', $ex);
             return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);

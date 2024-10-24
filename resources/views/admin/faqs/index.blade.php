@@ -41,7 +41,7 @@
                               @foreach ($faqs as $faq)
                               <div class="card card-primary card-outline">
                                  <a class="d-block w-100" data-toggle="collapse"
-                                    href="#collapse{{ $loop->index }}">
+                                    href="#collapse{{ $loop->index }}" style="color:#fff;">
                                     <div class="card-header">
                                        <h4
                                           class="card-title w-100 d-flex justify-content-between align-items-center">

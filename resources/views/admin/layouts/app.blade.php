@@ -3,7 +3,7 @@
 <head>
   @include('admin.layouts.head')
 </head>
-<body class="hold-transition sidebar-mini layout-navbar-fixed" style="background-image: url('{{ asset('images/banner.png') }}')">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed" style="background-image: url('{{ asset('images/banner.png') }}')">
 <div class="wrapper">
   <!-- Navbar -->
   @include('admin.layouts.top-nav')
@@ -12,7 +12,7 @@
   <!-- Main Sidebar Container -->
   @include('admin.layouts.side-nav')
 
-  <!-- Content Wrapper. Contains page content -->qqqqi         xz
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     @yield('content')
   </div>
