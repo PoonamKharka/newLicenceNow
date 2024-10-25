@@ -193,3 +193,5 @@ aside a {
 .nav-link.active {
     background-color: #4ab9ea !important;
 }
+#vert-tabs-tab .active{color: #fff;}
+.select2-container .select2-selection--single{height: 37px;}

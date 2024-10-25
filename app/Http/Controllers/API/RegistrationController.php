@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule; 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class RegistrationController extends BaseController
 {
@@ -131,7 +133,7 @@ class RegistrationController extends BaseController
             // Handle multiple file uploads
             if ($request->hasFile('files') ) {              
                 
-               $this->uploadMediaAttachments($request->file('files'), $addInstructorReq->id);
+               $this->uploadMediaAttachments($request->file('files'), $addInstructorReq->id,'user-attachments');
             }
             return $this->successResponse($addInstructorReq, "Instructor registered successfully.");
         } catch (\Exception $ex) {
@@ -140,9 +142,11 @@ class RegistrationController extends BaseController
         }
     }
 
-    public function uploadMediaAttachments($attachments, $id)
+    /*
+     * Function for uploading multiple files
+    */
+    public function uploadMediaAttachments($attachments, $id, $folder='user-attachments')
     {
-        $filePath = public_path('user-attachments');
         
         $uploadedFiles = [];
         $uploadErrors = [];
@@ -152,15 +156,20 @@ class RegistrationController extends BaseController
             try {
                 if ($file->isValid() && file_exists($file->getPathname())) {
                    
-                    $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();                    
-                    
-                    $file->move($filePath, $fileName);
+                    $fileName = time() . '_' . $file->getClientOriginalName();             
+                    $fileType=$file->getClientMimeType()??null;
+                 
+                    $path = $folder . '/' . $fileName;
+
+                    Storage::disk('public')->put($path, file_get_contents($file));
+                    $filePath = Storage::url( $path);
+                   
                     
                     $mediaAttachmentsData[] = [
                         'instructor_request_id' => $id,
                         'file_name' => $fileName,
-                        'file_path' => $filePath,
-                        'file_type' => $file->getClientMimeType(),
+                        'file_path' => config('app.baseUrl').$filePath,
+                        'file_type' => $fileType,
                         'file_status' => 'pending',
                     ];             
                     $uploadedFiles[] = $fileName;
