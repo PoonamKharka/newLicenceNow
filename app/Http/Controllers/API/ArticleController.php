@@ -16,6 +16,7 @@ use App\Models\PrivacyPolicyArticle;
 use App\Models\NavMenu;
 use App\Models\Information;
 use Illuminate\Support\Facades\Auth;
+use App\Models\FaqContent;
 
 class ArticleController extends BaseController
 {
@@ -134,8 +135,15 @@ class ArticleController extends BaseController
     public function getAllFaqs(): JsonResponse {
        
         try {
-            $faqs = Faq::get();
-            return $this->successResponse($faqs, "Data Found");
+            $faqData = FaqContent::firstOrFail();
+            $faqs = Faq::all();
+
+            $combinedData = [
+                'content' => $faqData,
+                'faqs' => $faqs
+            ];
+            
+            return $this->successResponse($combinedData, "Data Found");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex);
         }
@@ -144,7 +152,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/informations",
-     *     tags={"Articles"},
+     *     tags={"General"},
      *     summary="Get all Informations",
      *     @OA\Response(
      *         response=200,

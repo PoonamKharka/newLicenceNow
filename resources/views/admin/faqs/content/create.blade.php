@@ -32,6 +32,14 @@
                                     <div class="card-header">
                                         <h3 class="card-title">FAQ Content</h3>
                                     </div>
+                                    @if (session('status'))
+                                        <div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        {{ session('status') }}
+                                        </div>
+                                    @endif
                                     <!-- /.card-header -->
                                     <div class="card-body">
                                         <form id="faqContent" action="{{ route('faqContent.store') }}" method="POST" enctype="multipart/form-data">
@@ -54,7 +62,7 @@
                                             
                                             <div class="card-footer">
                                                 <button type="submit" class="btn btn-info">Submit</button>
-                                                <button type="reset" class="btn btn-default" onclick="window.location='{{ route('aboutus.index') }}'">Cancel</button>
+                                                <button type="reset" class="btn btn-default" onclick="window.location='{{ route('faqContent.index') }}'">Cancel</button>
 
                                             </div>
                                         </form>

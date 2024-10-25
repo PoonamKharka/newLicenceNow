@@ -104,7 +104,7 @@
         "/api/informations": {
             "get": {
                 "tags": [
-                    "Articles"
+                    "General"
                 ],
                 "summary": "Get all Informations",
                 "operationId": "8fd4aa307344727440f8441dd493996f",
