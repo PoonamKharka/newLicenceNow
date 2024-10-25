@@ -11,7 +11,7 @@ class NavMenuController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $navMenu = NavMenu::all();
+            $navMenu = NavMenu::orderBy('created_at', 'DESC')->get();
             return datatables()
                 ->of($navMenu)
                 ->addColumn('description', function ($row) {

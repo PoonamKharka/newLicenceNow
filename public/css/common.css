@@ -159,7 +159,7 @@ table.dataTable tbody td .btn:hover {
     opacity: 0.9;
     transform: translateY(-1px); /* Slight lift effect */
 }
-.card-header .btn-success {
+.card-header .btn-success,.card-body .btn-success {
     color: #fff;
     background-color: #38496f;
     border-color: #38496f;

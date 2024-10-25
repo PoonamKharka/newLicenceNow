@@ -78,6 +78,7 @@
             $('#y_dataTables').DataTable({
                 processing: true,
                 serverSide: true,
+                order: [],
                 ajax: "{{ route('informations.index') }}",
                 columns: [{
                         data: 'title',

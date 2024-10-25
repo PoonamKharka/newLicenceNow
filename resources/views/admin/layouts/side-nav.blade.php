@@ -127,9 +127,9 @@
                     </a>
                 </li> --}}
                 <li
-                    class="nav-item {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*', 'admin/faqContent*') ? 'menu-open' : '' }}">
+                    class="nav-item {{ request()->is('admin/aboutus*', 'admin/informations*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*', 'admin/faqContent*') ? 'menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*', 'admin/faqContent*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/informations*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*', 'admin/faqContent*') ? 'active' : '' }}">
                         <i class="nav-icon far fa-plus-square"></i>
                         <p>
                             Pages

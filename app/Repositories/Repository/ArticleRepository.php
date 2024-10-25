@@ -12,7 +12,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $article = Article::all();
+            $article = Article::orderBy('created_at', 'DESC')->get();;
             return datatables()
                 ->of($article)
                 ->addColumn('description', function ($row) {

@@ -11,7 +11,7 @@ class PaymentPolicyArticleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $paymentPolicyArticle = PaymentPolicyArticle::all();
+            $paymentPolicyArticle = PaymentPolicyArticle::orderBy('created_at', 'DESC')->get();
             return datatables()
                 ->of($paymentPolicyArticle)
                 ->addColumn('description', function ($row) {
