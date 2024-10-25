@@ -47,14 +47,22 @@
                                             <input type="hidden" name="id" value="{{ $records->id ?? '' }}">
                                             <div class="form-group">
                                                 <label>Title</label>
-                                                <input type="text" class="form-control" name="title" placeholder="Enter Title" value="{{ $records->title }}">
+                                                @if($records)
+                                                    <input type="text" class="form-control" name="title" placeholder="Enter Title" value="{{ $records->title }}">
+                                                @else
+                                                    <input type="text" class="form-control" name="title" placeholder="Enter Title">
+                                                @endif
                                                 @error('title')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label>Description</label>
-                                                <textarea class="form-control summernote" name="description" placeholder="Enter Description">{{ $records->description }}</textarea>
+                                                @if($records)
+                                                    <textarea class="form-control summernote" name="description" placeholder="Enter Description">{{ $records->description }}</textarea>
+                                                @else
+                                                    <textarea class="form-control summernote" name="description" placeholder="Enter Description"></textarea>
+                                                @endif
                                                 @error('description')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
