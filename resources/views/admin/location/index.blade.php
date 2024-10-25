@@ -51,9 +51,8 @@
                 <table id="y_dataTables" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>Street</th>
-                    <th>City</th>
-                    <th>State</th>
+                    <th>Suburb</th>
+                    <th>StateCode</th>
                     <th>Postcode</th>
                     <th>Country</th>
                     <th>Action</th>
@@ -80,10 +79,8 @@ $(function() {
              serverSide: true,
              ajax: "{{ route('location.index') }}",
              columns: [
-                      // { data: 'id', name: 'id' },
-                      { data: 'street', name: 'street' },
-                      { data: 'city', name: 'city' },
-                      { data: 'state', name: 'state' },
+                      { data: 'suburb', name: 'suburb' },
+                      { data: 'stateCode', name: 'stateCode' },
                       { data: 'postcode', name: 'postcode' },
                       { data: 'country', name: 'country' },
                       { data: 'action', name: 'action', orderable: false, searchable: false},
