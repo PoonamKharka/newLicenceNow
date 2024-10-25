@@ -36,20 +36,34 @@
                                     <div class="card-body">
                                         <form id="aboutus" action="{{ route('aboutus.store') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $abtUs->id ?? '' }}">
+                                            <input type="hidden" name="id" value="{{ $editFormData->id ?? '' }}">
                                             
                                             <div class="form-group">
                                                 <label>Title</label>
-                                                <input type="text" class="form-control" name="title" value="{{ $abtUs->title ?? '' }}" placeholder="Enter Title">
+                                                <input type="text" class="form-control" name="title" value="{{ $editFormData->title ?? '' }}" placeholder="Enter Title">
+                                                @error('title')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
-                                            
+                                            <div class="form-group">
+                                                <label>Page</label>
+                                                <input type="text" class="form-control" name="page" value="{{ $editFormData->page ?? '' }}" placeholder="Home">
+                                                @error('page')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                             <div class="form-group">
                                                 <label>Description</label>
-                                                <textarea class="form-control summernote" name="description" placeholder="Enter Description">{{ $abtUs->description ?? '' }}</textarea>
+                                                <textarea class="form-control summernote" name="description" placeholder="Enter Description">{{ $editFormData->description ?? '' }}</textarea>
+                                                @error('description')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             
                                             <div class="card-footer">
                                                 <button type="submit" class="btn btn-info">Submit</button>
+                                                <button type="reset" class="btn btn-default" onclick="window.location='{{ route('aboutus.index') }}'">Cancel</button>
+
                                             </div>
                                         </form>
                                     </div>

@@ -9,41 +9,48 @@ use App\Repositories\InterFaces\AboutUsRepositoryInterface;
 class AboutUsRepository implements AboutUsRepositoryInterface
 {
 
+    public function getAboutUsList($req) {
+        return AboutUs::all();
+    }
+
     public function profile()
     {
         $abtUs = AboutUs::first(); 
-        return view('admin.aboutus.profile', compact('abtUs'));
+        return view('admin.aboutus.create', compact('abtUs'));
+    }
+
+    public function editRecord($id)
+    {
+        $id = decrypt($id);
+        $editFormData = AboutUs::findOrFail($id); 
+        return $editFormData;
     }
 
     public function store(Request $request)
     {
-        // Validate the request
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-
-        $abtUsId = $request->input('id');
-
-        if ($abtUsId) {
-            // Update existing record
-            $abtUs = AboutUs::find($abtUsId);
-
-            if ($abtUs) {
-                $abtUs->title = $request->input('title');
-                $abtUs->description = $request->input('description');
-                $abtUs->save();
-                return redirect()->route('aboutus.create')->with('success', 'Data updated successfully.');
-            } else {
-                return back()->with('error', 'Data not found.');
-            }
-        } else {
-            // Create new record
-            AboutUs::create([
-                'title' => $request->input('title'),
-                'description' => $request->input('description')
+        $checkExistingRecord = AboutUs::where('page', '=' , $request->page )->first();
+        if( $checkExistingRecord ) {
+            $request->validate([
+                'title' => 'required',
+                'page' => 'required',
+                'description' => 'required',
             ]);
-            return redirect()->route('aboutus.create')->with('success', 'Data created successfully.');
+            $updatedata = AboutUs::findOrFail($request->id);
+            $storeData = $updatedata->update($request->all());
+        } else {
+            $request->validate([
+                'title' => 'required',
+                'page' => 'required|unique:aboutus',
+                'description' => 'required',
+            ]);
+            $storeData = AboutUs::create($request->all());
         }
+
+        return $storeData;
+    }
+
+    public function destroy($id) {
+        $data = AboutUs::findOrFail($id); 
+        return $data->delete();
     }
 }

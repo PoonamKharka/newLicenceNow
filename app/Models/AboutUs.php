@@ -13,6 +13,7 @@ class AboutUs extends Model
 
     protected $fillable = [
         'title',
+        'page',
         'description'
     ];
 }

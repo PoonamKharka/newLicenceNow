@@ -60,12 +60,26 @@
             }
         },
         "/api/about": {
-            "get": {
+            "post": {
                 "tags": [
-                    "Articles"
+                    "General"
                 ],
                 "summary": "Get About us page data",
-                "operationId": "b22068b2a7d0924cf976dfbc5bf0f19d",
+                "operationId": "d3370b769621020bf4df96d55c72d66c",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "page": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -76,7 +90,7 @@
         "/api/faqs": {
             "get": {
                 "tags": [
-                    "Articles"
+                    "General"
                 ],
                 "summary": "Get all FAQs",
                 "operationId": "c24b7a3274b0271483e2b3193af4ec4c",
@@ -104,7 +118,7 @@
         "/api/features": {
             "get": {
                 "tags": [
-                    "Articles"
+                    "General"
                 ],
                 "summary": "Get all features",
                 "operationId": "568d93863ff4260dcd3dd15a5c65157e",
@@ -132,7 +146,7 @@
         "/api/nav-menu": {
             "get": {
                 "tags": [
-                    "Articles"
+                    "General"
                 ],
                 "summary": "Get all menu items",
                 "operationId": "e6375aef53cf2190e67ec8d1b26b8530",
@@ -160,7 +174,7 @@
         "/api/test-package": {
             "get": {
                 "tags": [
-                    "Booking Steps"
+                    "General"
                 ],
                 "summary": "Fetch Test Package Details",
                 "operationId": "e4fbcc39d29e030d0b80a39e317128ac",
@@ -489,12 +503,12 @@
             "description": "Articles"
         },
         {
-            "name": "Booking Steps",
-            "description": "Booking Steps"
-        },
-        {
             "name": "General",
             "description": "General"
+        },
+        {
+            "name": "Booking Steps",
+            "description": "Booking Steps"
         },
         {
             "name": "Authentication",

@@ -116,7 +116,7 @@
                     </a>
                 </li>
 
-                <!-- Learners -->
+                {{-- <!-- Learners -->
                 <li class="nav-item">
                     <a href="{{ route('learners.index') }}"
                         class="nav-link {{ request()->is('admin/learners*') ? 'active' : '' }}">
@@ -125,30 +125,37 @@
                             Learners
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 <li
-                    class="nav-item {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/informations*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*') ? 'menu-open' : '' }}">
+                    class="nav-item {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*', 'admin/faqContent*') ? 'menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('admin/aboutus*', 'admin/faqs*', 'admin/articles*', 'admin/features*', 'admin/learner-terms-and-condition*', 'admin/instructor-terms-and-condition*', 'admin/privacy-policy-articles*', 'admin/payment-policy-articles*', 'admin/faqContent*') ? 'active' : '' }}">
                         <i class="nav-icon far fa-plus-square"></i>
                         <p>
-                            Pages Content
+                            Pages
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('aboutus.create') }}"
+                            <a href="{{ route('aboutus.index') }}"
                                 class="nav-link {{ request()->is('admin/aboutus*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>About Us</p>
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('faqContent.index') }}"
+                                class="nav-link {{ request()->is('admin/faqContent*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>FAQs Content</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('faqs.index') }}"
                                 class="nav-link {{ request()->is('admin/faqs*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>FAQs</p>
+                                <p>FAQs Questions</p>
                             </a>
                         </li>
                         <li class="nav-item">

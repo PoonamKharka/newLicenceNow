@@ -30,7 +30,7 @@ Route::group(['middleware' => 'cors'], function() {
 
     # public website apis
     /** Article endpoints starts */
-    Route::get('about', [ArticleController::class, 'getDataOfAboutUs']);
+    Route::post('about', [ArticleController::class, 'getDataOfAboutUs']);
     Route::get('faqs', [ArticleController::class, 'getAllFaqs']);
     Route::get('informations', [ArticleController::class, 'getAllInformations']);
     Route::get('articles-data', [ArticleController::class, 'getAllArticleModules']);

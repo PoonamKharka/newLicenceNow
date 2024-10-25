@@ -54,6 +54,9 @@ use Illuminate\Support\Facades\Schema;
 use App\Repositories\InterFaces\InformationRepositoryInterface;
 use App\Repositories\Repository\InformationRepository;
 use App\Services\InformationService;
+use App\Repositories\InterFaces\FaqContentRepositoryInterface;
+use App\Repositories\Repository\FaqContentRepository;
+use App\Services\FaqContentService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -140,6 +143,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(InformationRepositoryInterface::class, InformationRepository::class);
         $this->app->bind(InformationService::class, function($app){
             return new InformationService($app->make(InformationRepositoryInterface::class));
+        });
+        
+        $this->app->bind(FaqContentRepositoryInterface::class, FaqContentRepository::class);
+        $this->app->bind(FaqContentService::class, function($app){
+            return new FaqContentService($app->make(FaqContentRepositoryInterface::class));
         });
     }
 

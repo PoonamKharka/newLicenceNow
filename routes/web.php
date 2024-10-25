@@ -22,6 +22,7 @@ use App\Http\Controllers\PaymentPolicyArticleController;
 use App\Http\Controllers\auth\ForgotPasswordController;
 use App\Http\Controllers\NavMenuController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\FAQContentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,7 @@ Route::prefix('admin')->group(function(){
         Route::resource('articles', ArticleController::class);
         Route::resource('learners', LearnerController::class);
         Route::resource('faqs', FaqController::class);
+        Route::resource('faqContent', FAQContentController::class);
         Route::resource('aboutus', AboutUsController::class);
         Route::resource('privacy',PrivacyPolicyController::class);
         Route::resource('payment',PaymentPolicyController::class);

@@ -82,21 +82,38 @@ class ArticleController extends BaseController
     }
     
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/api/about",
-     *     tags={"Articles"},
+     *     tags={"General"},
      *     summary="Get About us page data",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="page",
+     *                     type="string"
+     *                 )
+	 *			)
+     *        )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
      * )
      */
-    public function getDataOfAboutUs(): JsonResponse {
+    public function getDataOfAboutUs(Request $request): JsonResponse {
        
         try {
-            $aboutUs = AboutUs::get();
+            if( $request->page == 'home') {
+                $aboutUs = AboutUs::where('page', 'Home')->get();
+            } else {
+                $aboutUs = AboutUs::where('page', 'about')->get();
+            }
+            
             return $this->successResponse($aboutUs, "Data Found");
+
         } catch (\Exception $ex) {
             return $this->errorResponse($ex);
         }
@@ -106,7 +123,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/faqs",
-     *     tags={"Articles"},
+     *     tags={"General"},
      *     summary="Get all FAQs",
      *     @OA\Response(
      *         response=200,
@@ -148,7 +165,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/features",
-     *     tags={"Articles"},
+     *     tags={"General"},
      *     summary="Get all features",
      *     @OA\Response(
      *         response=200,
@@ -189,7 +206,7 @@ class ArticleController extends BaseController
     /**
      * @OA\Get(
      *     path="/api/nav-menu",
-     *     tags={"Articles"},
+     *     tags={"General"},
      *     summary="Get all menu items",
      *     @OA\Response(
      *         response=200,

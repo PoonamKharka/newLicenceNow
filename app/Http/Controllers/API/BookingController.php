@@ -47,7 +47,7 @@ class BookingController extends BaseController
     /**
      * @OA\Get(
      *   path="/api/test-package",
-     *   tags={"Booking Steps"},
+     *   tags={"General"},
      *   summary="Fetch Test Package Details",
      *   @OA\Response(
      *       response=200,
