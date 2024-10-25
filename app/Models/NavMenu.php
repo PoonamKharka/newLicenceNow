@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NavMenu extends Model
 {
     use HasFactory;
+    protected $table = 'nav_menus';
     /**
      * The attributes that are mass assignable.
      *

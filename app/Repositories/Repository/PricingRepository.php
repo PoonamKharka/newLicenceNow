@@ -9,7 +9,7 @@ class PricingRepository implements PricingRepositoryInterface {
 
     /** Get list of all prices */
     public function getAllPrices($req){
-        $list = Price::select('*');
+        $list = Price::select('*')->orderBy('created_at', 'DESC');
         return $list;
     }
     

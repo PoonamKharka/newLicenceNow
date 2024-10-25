@@ -12,7 +12,7 @@ class InformationRepository implements InformationRepositoryInterface
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $information = Information::all();
+            $information = Information::orderBy('created_at', 'DESC')->get();
             return datatables()
                 ->of($information)
                 ->addColumn('description', function ($row) {

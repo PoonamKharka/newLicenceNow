@@ -77,6 +77,7 @@
                 $('#y_dataTables').DataTable({
                     processing: false,
                     serverSide: true,
+                    order: [],
                     ajax: "{{ route('instructor-request') }}",
                     columns: [{
                             data: 'first_name',

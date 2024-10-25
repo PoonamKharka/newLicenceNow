@@ -19,7 +19,7 @@ class TestPackageRepository implements TestPackageRepositoryInterface
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $testPackages = TestPackage::all();
+            $testPackages = TestPackage::orderBy('created_at', 'DESC')->get();
             return datatables()
                 ->of($testPackages)
                 ->addColumn('description', function ($row) {

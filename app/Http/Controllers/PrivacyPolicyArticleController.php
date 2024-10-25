@@ -11,7 +11,7 @@ class PrivacyPolicyArticleController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $privacyPolicyArticles = PrivacyPolicyArticle::all();
+            $privacyPolicyArticles = PrivacyPolicyArticle::orderBy('created_at', 'DESC')->get();
             return datatables()
                 ->of($privacyPolicyArticles)
                 ->addColumn('description', function ($row) {

@@ -11,7 +11,7 @@ class InstructorTermsAndConditionsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $instructorTermsAndCondition = InstructorTermsAndCondition::all();
+            $instructorTermsAndCondition = InstructorTermsAndCondition::orderBy('created_at', 'DESC')->get();
             return datatables()
                 ->of($instructorTermsAndCondition)
                 ->addColumn('description', function ($row) {

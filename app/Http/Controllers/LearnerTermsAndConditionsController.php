@@ -11,7 +11,7 @@ class LearnerTermsAndConditionsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $learnerTermsAndCondition = LearnerTermsAndCondition::all();
+            $learnerTermsAndCondition = LearnerTermsAndCondition::orderBy('created_at', 'DESC')->get();
             return datatables()
                 ->of($learnerTermsAndCondition)
                 ->addColumn('description', function ($row) {
