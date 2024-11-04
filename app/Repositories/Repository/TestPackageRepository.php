@@ -26,7 +26,7 @@ class TestPackageRepository implements TestPackageRepositoryInterface
                     return Str::limit(strip_tags($row->description), 50, '...');
                 })
                 ->addColumn('image', function ($row) {
-                    $imageUrl = $row->image;
+                    $imageUrl = $row->img_path;
                     return '<img src="' . $imageUrl . '" alt="' . $row->title . '" width="100" height="100"/>';
                 })
                 ->addColumn('action', function ($row) {
