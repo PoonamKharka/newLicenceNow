@@ -22,7 +22,6 @@ class ForgotPasswordRepository implements ForgotPasswordRepositoryInterFace {
     public function showLinkRequestForm()
     {
         return view('admin.auth.passwords.forgot');
-
     }
 
     /**
@@ -106,7 +105,7 @@ class ForgotPasswordRepository implements ForgotPasswordRepositoryInterFace {
      */
     protected function sendResetResponse(Request $request, $response)
     {
-        return redirect('/admin-dashboard')->with('status', __($response));
+        return redirect('admin')->with('status', __($response));
     }
 
     /**
