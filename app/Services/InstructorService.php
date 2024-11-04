@@ -11,15 +11,19 @@ use App\Models\InstructorVehicle;
 use App\Models\InstructorBankDetail;
 use App\Models\InstructorLocation;
 use App\Models\InstructorPrice;
+use App\Services\ImageUploadService;
 
 class InstructorService
 {
 
     protected $instRep;
+    protected $imageUploadService;
+    
     /** injecting repository */
     public function __construct(InstructorRepositoryInterFace $instructorRepository)
     {
-        $this->instRep = $instructorRepository;
+        $this->instRep = $instructorRepository;       
+        $this->imageUploadService =  new ImageUploadService();
     }
 
     public function getAllInstructors(Request $request)
@@ -74,9 +78,9 @@ class InstructorService
                 ];
               
                 if ($request->hasFile('profile_picture')) {
-                    $imageFileName = time() . $request->file('profile_picture')->getClientOriginalExtension();
-                    $request->file('profile_picture')->move(public_path('profile'), $imageFileName);
-                    $instructorProfileDetail['profile_picture']=$imageFileName;
+
+                    $imagePaths = $this->imageUploadService->uploadImage($request->file('profile_picture'),'profile');
+                    $instructorProfileDetail['profile_picture']=$imagePaths??null;
                 }
                 
                 $userData = $this->instRep->store($request);
@@ -105,9 +109,8 @@ class InstructorService
                         'ancap_rating'=> $request->ancap_rating
                     ];
                     if($request->vehicle_image) {
-                        $imageName = time().'.'.$request->vehicle_image->extension();
-                        $request->vehicle_image->move(public_path('vehicles'), $imageName);
-                        $vehicleDataArray['vehicle_image']=$imageName;
+                        $vehicleImagePaths = $this->imageUploadService->uploadImage($request->vehicle_image,'vehicles');
+                        $vehicleDataArray['vehicle_image']=$vehicleImagePaths;
                     }
                     
                     $vehicleData = InstructorVehicle::where('instructor_id', $request->instructor_id)->first();

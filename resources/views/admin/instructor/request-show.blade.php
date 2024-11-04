@@ -42,12 +42,10 @@
                             <div class="card h-100">
                                 <div class="card-body text-center">
                                     @if (in_array($attachment->file_type, ['image/jpeg', 'image/png', 'image/gif']))
-                                        <img src="{{ asset('user-attachments/' . $attachment->file_name) }}"
-                                            alt="Attachment" class="img-fluid img-thumbnail mb-2"
-                                            style="max-height: 150px;">
+                                        <img src="{{ $attachment->file_path }}" alt="Attachment"
+                                            class="img-fluid img-thumbnail mb-2" style="max-height: 150px;">
                                     @else
-                                        <a href="{{ asset('user-attachments/' . $attachment->file_name) }}"
-                                            target="_blank"
+                                        <a href="{{ $attachment->file_path }}" target="_blank"
                                             class="btn btn-outline-info">{{ $attachment->file_name }}</a>
                                     @endif
                                     <div class="mt-2">
