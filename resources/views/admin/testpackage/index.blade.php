@@ -58,7 +58,6 @@
                                         <th>Image</th>
                                         <th>Title</th>
                                         <th>Price</th>
-                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -95,10 +94,6 @@
                     {
                         data: 'price',
                         name: 'price'
-                    },
-                    {
-                        data: 'description',
-                        name: 'description'
                     },
                     {
                         data: 'action',

@@ -16,6 +16,7 @@ class TestPackage extends Model
         'image',
         'img_path',
         'price',
-        'description'
+        'listing',
+        'disclaimer',
     ];
 }

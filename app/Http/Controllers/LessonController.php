@@ -32,7 +32,7 @@ class LessonController extends Controller
      */
     public function create()
     {
-        $locations = Location::get();
+        $locations = Location::select('id','suburb','stateCode','postcode')->get();
         $prices = Price::get();
         return view('admin.lessons.create', compact(['locations', 'prices']));
     }

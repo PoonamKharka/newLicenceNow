@@ -22,15 +22,14 @@ class LessonService {
         
         if($req->ajax()){
             $data = $this->lessonRepo->getAllLessons($req);
-        
             return datatables()->of($data)
                     ->addColumn('locations-list', function ($row) {
                         $listLocation = [];
+                        $locs = [];
                         if($row->lessonLocations) {
                             foreach ($row->lessonLocations as  $value) {
                                 $locs[] = $value->locations->street;
                             }
-
                             return $listLocation[] =  $locs;
                         }
                     })

@@ -53,7 +53,8 @@ class TestPackageRepository implements TestPackageRepositoryInterface
             'title' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required',
-            'description' => 'required',
+            'listing' => 'required',
+            'disclaimer' => 'required',
         ]);
 
         // Handle File Upload

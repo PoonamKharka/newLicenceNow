@@ -91,8 +91,12 @@
                                                                 placeholder="Enter Price">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Description</label>
-                                                            <textarea class="form-control summernote" name="description" placeholder="Enter Description">{{ $testPackage->description ?? '' }}</textarea>
+                                                            <label>Listing</label>
+                                                            <textarea class="form-control summernote" name="listing" placeholder="Enter Listing">{{ $testPackage->listing ?? '' }}</textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Disclaimer</label>
+                                                            <textarea class="form-control summernote" name="disclaimer" placeholder="Enter Disclaimer">{{ $testPackage->disclaimer ?? '' }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
