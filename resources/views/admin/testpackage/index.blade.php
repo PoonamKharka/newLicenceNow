@@ -27,7 +27,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">List of All Test Packages</h3>
+                            <button type="submit" class="btn btn-sm btn-success"><a href="{{ route('testpackages.create') }}"
+                                style="text-decoration: none; color:aliceblue">Add More</a></button>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -49,9 +50,6 @@
                                     {{ session('success') }}
                                 </div>
                             @endif
-                            <button type="submit" class="btn btn-success"><a href="{{ route('testpackages.create') }}"
-                                    style="text-decoration: none; color:aliceblue">Add More</a></button>
-                            <br><br>
                             <table id="y_dataTables" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>

@@ -85,7 +85,7 @@
                                             <div class="form-group">
                                                 <label>Current Profile Picture</label>
                                                 <div>
-                                                    <img src="{{ Storage::url($userData->profile_image) }}"
+                                                    <img src="{{ $userData->profile_image }}"
                                                         alt="Profile Image" width="100">
                                                 </div>
                                             </div>
