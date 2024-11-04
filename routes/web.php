@@ -36,17 +36,16 @@ use App\Http\Controllers\FAQContentController;
 */
 Route::get('/admin', [LoginController::class, 'index']);
 
-//Rest the password
-Route::middleware(['web'])->group(function () {
-    Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.forgot');
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('password/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name('password.update');
-});
-
 Route::prefix('admin')->group(function(){
     Route::post('login', [LoginController::class, 'login'])->name('login');
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    //Rest the password
+    Route::middleware(['web'])->group(function () {
+        Route::get('password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.forgot');
+        Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+        Route::get('password/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+        Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name('password.update');
+    });
     Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
         Route::get('admin-dashboard', function () {
             return view('admin.dashboard');
