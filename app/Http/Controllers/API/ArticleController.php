@@ -218,7 +218,7 @@ class ArticleController extends BaseController
     public function getAllMenu(): JsonResponse {
        
         try {
-            $navMenu = NavMenu::get();
+            $navMenu = NavMenu::where('status', 'active')->get();
             return $this->successResponse($navMenu, "Data Found");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex);
