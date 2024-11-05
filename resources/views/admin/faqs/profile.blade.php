@@ -50,9 +50,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Answer</label>
-                                                            <input type="text" class="form-control" name="answer"
-                                                                value="{{ $faqs->answer ?? '' }}"
-                                                                placeholder="Enter Answer">
+                                                            <textarea class="form-control summernote" name="answer" placeholder="Enter Answer">{{ $faqs->answer ?? '' }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>

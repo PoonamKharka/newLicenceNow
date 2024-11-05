@@ -135,15 +135,8 @@ class ArticleController extends BaseController
     public function getAllFaqs(): JsonResponse {
        
         try {
-            $faqData = FaqContent::firstOrFail();
             $faqs = Faq::all();
-
-            $combinedData = [
-                'content' => $faqData,
-                'faqs' => $faqs
-            ];
-            
-            return $this->successResponse($combinedData, "Data Found");
+            return $this->successResponse($faqs, "Data Found");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex);
         }
@@ -225,7 +218,7 @@ class ArticleController extends BaseController
     public function getAllMenu(): JsonResponse {
        
         try {
-            $navMenu = NavMenu::get();
+            $navMenu = NavMenu::where('status', 'active')->get();
             return $this->successResponse($navMenu, "Data Found");
         } catch (\Exception $ex) {
             return $this->errorResponse($ex);

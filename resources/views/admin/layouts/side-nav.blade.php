@@ -144,13 +144,13 @@
                                 <p>About Us</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('faqContent.index') }}"
                                 class="nav-link {{ request()->is('admin/faqContent*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>FAQs Content</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ route('faqs.index') }}"
                                 class="nav-link {{ request()->is('admin/faqs*') ? 'active' : '' }}">

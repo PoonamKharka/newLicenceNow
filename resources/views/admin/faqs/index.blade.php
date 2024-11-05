@@ -53,12 +53,6 @@
                                  </h4>
                                  </div>
                                  </a>
-                                 <div id="collapse{{ $loop->index }}"
-                                    class="collapse {{ $loop->first ? 'show' : '' }}" data-parent="#accordion">
-                                    <div class="card-body">
-                                       {{ $faq->answer }}
-                                    </div>
-                                 </div>
                               </div>
                               @endforeach
                            @else

@@ -56,7 +56,7 @@
                     <label>Location</label>
                     <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;" name="location_id[]">
                       @foreach ($locations as $loc)
-                        <option value="{{ $loc->id }}">{{ $loc->street }} , {{ $loc->postcode }}</option>
+                        <option value="{{ $loc->id }}">{{ $loc->suburb }} , {{ $loc->stateCode .' '. $loc->postcode }}</option>
                       @endforeach
                     </select>
                   </div>
@@ -90,7 +90,7 @@
 <script>
   $(function () {
     //Initialize Select2 Elements
-    $('.select2').select2()
+    $('.select2').select2();
   });
 </script>
 @endsection

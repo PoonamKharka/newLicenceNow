@@ -29,6 +29,35 @@ class InstructorController extends Controller
    {
       return $this->instService->getAllInstructors($request);
    }
+   
+   /*
+    *  Function to showing existing location by id in ajax
+   */
+   public function getLocationById($id)
+   {      
+      $location = Location::find($id);
+      if ($location) {  
+         return response()->json($location);
+      } else {         
+         return response()->json(['error' => 'Location not found'], 404);
+      }
+   }
+   /*
+    *  Function to showing locations by ajax
+   */
+   public function searchLocations(Request $request)
+   {
+      $search = $request->input('search');
+
+      // Fetch records that match the search term
+      $locations = Location::where('suburb', 'LIKE', "%{$search}%")
+                  ->orWhere('stateCode', 'LIKE', "%{$search}%")
+                  ->orWhere('postcode', 'LIKE', "%{$search}%")
+                  ->limit(20) 
+                  ->get();
+  
+      return response()->json($locations);
+   }
 
    public function show($id)
    {
@@ -38,8 +67,8 @@ class InstructorController extends Controller
       if (isset($userData->instructorLocations)) {         
          $selectedLocationIds = $userData->instructorLocations->pluck('id')->toArray();
       }     
-      $allLocation = Location::get();
-
+      $allLocation = Location::paginate(40);
+     
       $selectedPriceIds = [];
       if (isset($userData->instructorPrices)) {         
          $selectedPriceIds = $userData->instructorPrices->pluck('id')->toArray();

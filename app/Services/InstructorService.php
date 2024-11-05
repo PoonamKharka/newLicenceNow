@@ -156,11 +156,11 @@ class InstructorService
                 }
             }
 
-            if( $formType === 'suburbs_details') {
+            if( $formType === 'suburbs_details') {                
                
-                if( $request['location_id']) { 
+                if( $request->input('location_id')) { 
                     $locationData=[];
-                    foreach ($request['location_id'] as $value) {
+                    foreach ($request->input('location_id') as $value) {
                         
                         $suburbData = [
                             'instructor_id' => $request->user_id,
@@ -172,7 +172,7 @@ class InstructorService
                         $currentLocations = InstructorLocation::where('instructor_id', $request->user_id)
                             ->pluck('location_id') 
                             ->toArray();                        
-                        $newSelections = $request['location_id'] ?? []; 
+                        $newSelections = $request->input('location_id') ?? []; 
                         $locationsToDelete = array_diff($currentLocations, $newSelections);
                         if (!empty($locationsToDelete)) {
                             InstructorLocation::where('instructor_id', $request->user_id)
