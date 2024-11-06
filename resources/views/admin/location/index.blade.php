@@ -66,7 +66,7 @@
                     </div>
                     <!-- /.card -->
                 </div>
-                @endif
+
                 @if (session('warning'))
                     <div class="alert alert-warning">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
