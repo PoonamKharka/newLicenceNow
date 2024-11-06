@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\InstructorVehicle;
 use App\Models\InstructorBankDetail;
 use App\Models\InstructorLocation;
+use App\Models\Location;
 use App\Models\InstructorPrice;
 use App\Services\ImageUploadService;
 
@@ -181,9 +182,11 @@ class InstructorService
                         }
                         if(!empty($newSelections)){
                             foreach ($newSelections as $value) {
+                                $locationPostCode = Location::where('id', $value)->first();
                                 $suburbData = [
                                     'instructor_id' => $request->user_id,
-                                    'location_id' => $value
+                                    'location_id' => $value,
+                                    'postcode' =>  $locationPostCode->postcode??null
                                 ];                            
                                 $locationData=InstructorLocation::updateOrCreate(
                                     [
