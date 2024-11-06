@@ -5,7 +5,7 @@ namespace App\Repositories\Repository;
 use App\Repositories\InterFaces\RegisterRepositoryInterFace;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Datatables;
+use App\Models\UserType;
 use Illuminate\Support\Facades\Hash;
 use App\Services\ImageUploadService;
 
@@ -84,6 +84,11 @@ class RegisterRepository implements RegisterRepositoryInterFace
             'email.email' => 'Email field must be email address.'
         ]);
         $request['password'] = Hash::make($request->password);
+        $userType = UserType::findOrFail($request->userType_id);
+        if( $userType->type == "Admin" ) {
+            $request['isAdmin'] = 1;
+        }
+        
         $user = User::create($request->all());
 
         return $user;

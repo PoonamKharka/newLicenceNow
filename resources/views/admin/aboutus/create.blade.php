@@ -36,7 +36,7 @@
                                     <div class="card-body">
                                         <form id="aboutus" action="{{ route('aboutus.store') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $abtUs->id ?? '' }}">
+                                            {{-- <input type="hidden" name="id" value="{{ $abtUs->id ?? '' }}"> --}}
                                             
                                             <div class="form-group">
                                                 <label>Title</label>
@@ -47,7 +47,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Page</label>
-                                                <input type="text" class="form-control" name="page" placeholder="Home">
+                                                <select class="form-control select" name="page">
+                                                    <option value="Home">Home</option>
+                                                    <option value="About">About</option>
+                                                </select>
                                                 @error('page')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

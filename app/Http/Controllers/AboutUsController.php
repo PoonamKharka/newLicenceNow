@@ -52,6 +52,12 @@ class AboutUsController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'title' => 'required',
+                'page' => 'required|unique:aboutus',
+                'description' => 'required',
+            ]);
+            
             $this->abtUsService->store($request);
             return redirect()->route('aboutus.index');
         } catch (Exceptions $ex) {

@@ -27,7 +27,11 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                    <a href="{{ route('aboutus.create') }}" class="btn btn-block btn-sm btn-success"> Add More </a>
+                    @if ($dataCount <= 1)
+                      <a href="{{ route('aboutus.create') }}" class="btn btn-block btn-sm btn-success"> Add More </a>
+                    @else
+                      <h3 class="card-title">About Us List</h3>
+                    @endif
                 </h3>
               </div>
               @if (session('status'))

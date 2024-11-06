@@ -28,13 +28,7 @@ class AboutUsRepository implements AboutUsRepositoryInterface
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'page' => 'required',
-            'description' => 'required',
-        ]);
-        
-        if ($request->has('id')) {
+        if ($request->id) {
             $checkExistingRecord = AboutUs::findOrFail($request->id);
             $storeData = $checkExistingRecord->update($request->all());
         } else {

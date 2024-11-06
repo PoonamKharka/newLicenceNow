@@ -15,8 +15,8 @@ class AboutUsService
       }
 
       public function getAboutList($req){
+         $data = $this->abtUsRep->getAboutUsList($req);
             if($req->ajax()){
-               $data = $this->abtUsRep->getAboutUsList($req);
                return datatables()->of($data)
                   ->addColumn('action', function ($row) {
                      $btn = '<a href="' . route('aboutus.edit', encrypt($row->id)) . '" class="btn btn-sm btn-success">
@@ -29,8 +29,9 @@ class AboutUsService
                   ->rawColumns(['action'])
                   ->make(true);
             }
-      
-            return view('admin.aboutus.index'); 
+            
+            $dataCount = count($data);
+            return view('admin.aboutus.index', compact('dataCount')); 
       }
 
       public function profile()
