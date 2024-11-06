@@ -54,8 +54,8 @@
                             <table id="price-table" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Hours (in hrs)</th>
-                                        <th>Price ( in doller)</th>
+                                        <th>Hours (in Hrs)</th>
+                                        <th>Price ( in Dollar)</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

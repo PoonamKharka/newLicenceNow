@@ -28,7 +28,7 @@ class RegisterRepository implements RegisterRepositoryInterFace
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $users = User::where('isAdmin', '=', 0)->select('*')->orderBy('created_at', 'DESC');
+            $users = User::select('*')->orderBy('created_at', 'DESC');
             return datatables()->of($users)
                 ->addColumn('userStatus', function ($row) {
                     if ($row->status == 1) {
@@ -38,6 +38,10 @@ class RegisterRepository implements RegisterRepositoryInterFace
                     }
                 })
                 ->editColumn('userType_id', function ($row) {
+                    if ($row->userType_id == 1) {
+                        return 'Admin';
+                    }
+
                     if ($row->userType_id == 2) {
                         return 'Instructor';
                     }

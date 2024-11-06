@@ -54,6 +54,6 @@ Route::group(['middleware' => 'cors'], function() {
 
     /** Common APIs starts */
     Route::get('states', [CommanAPIController::class, 'getStates']);
-    Route::get('suburbs', [CommanAPIController::class, 'getSuburbs']);
+    Route::get('find-suburbs', [CommanAPIController::class, 'getSuburbs']);
     /** Common APIs ends */ 
 });

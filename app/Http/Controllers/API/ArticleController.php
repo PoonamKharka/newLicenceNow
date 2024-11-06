@@ -108,9 +108,11 @@ class ArticleController extends BaseController
        
         try {
             if( $request->page == 'home') {
-                $aboutUs = AboutUs::where('page', 'Home')->get();
-            } else {
-                $aboutUs = AboutUs::where('page', 'about')->get();
+                $aboutUs = AboutUs::where('page', 'Home')->select('id', 'title', 'page', 'description')->get();
+            } 
+
+            if( $request->page == 'about') {
+                $aboutUs = AboutUs::where('page', 'About')->select('id', 'title', 'page', 'description')->get();
             }
             
             return $this->successResponse($aboutUs, "Data Found");

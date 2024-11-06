@@ -38,8 +38,8 @@ class InstructorController extends Controller
       if (isset($userData->instructorLocations)) {         
          $selectedLocationIds = $userData->instructorLocations->pluck('id')->toArray();
       }     
-      $allLocation = Location::get();
-
+      $allLocation = Location::select('suburb', 'stateCode', 'postcode')->get();
+      
       $selectedPriceIds = [];
       if (isset($userData->instructorPrices)) {         
          $selectedPriceIds = $userData->instructorPrices->pluck('id')->toArray();

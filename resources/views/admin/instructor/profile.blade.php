@@ -567,8 +567,10 @@
                                                             <select id="location_ids" class="select2" multiple="multiple"
                                                                 data-placeholder="Select a Location" style="width: 100%;"
                                                                 name="location_id[]">
+                                                               
                                                                 @if ($allLocation)
                                                                     @foreach ($allLocation as $location)
+                                                                        
                                                                         {{-- <option value ="{{ $location->id }}">{{ $location->street . ' - ' . $location->city . ' , ' . $location->postcode }}</option> --}}
                                                                         <option value="{{ $location->id }}"
                                                                             @if (in_array($location->id, $selectedLocationIds)) selected @endif>

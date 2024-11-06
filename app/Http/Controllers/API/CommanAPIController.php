@@ -24,9 +24,9 @@ class CommanAPIController extends BaseController
      */
     public function getStates() {
         try {
-          $allStates = State::all();
+          $allStates = State::all('id', 'name', 'slug');
           
-          return $this->successResponse($allStates, 'State List');
+          return $this->successResponse($allStates, 'Data Found');
         } catch (Exceptions $ex) {
             Log::log('error', $ex);
             return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
@@ -46,13 +46,22 @@ class CommanAPIController extends BaseController
      */
     public function getSuburbs(Request $request) {
         try {
-            $locations = "https://www.geonames.org/postalcode-search.html?q=&country=AU";
-            $mappedLocations = $locations->map( function ($element) {
-                return [
-                    'suburbs' => $element
-                ];
-            });
-            return $this->successResponse($mappedLocations, 'Suburbs List');
+            
+            $search = preg_replace('/[^A-Za-z0-9 ]/', '', $request->filter);
+            $locations = Location::select('id','suburb', 'stateCode', 'postcode')
+                        ->whereAny([
+                            'suburb',
+                            'stateCode',
+                            'postcode',
+                        ], 'like', '%'. $search . '%')
+                        ->get();
+            
+            if(count($locations) > 0) {
+                return $this->successResponse($locations, 'Data Found');
+            } else {
+                return $this->successResponse([], 'No Data Found');
+            }
+            
         } catch (Exceptions $ex) {
             Log::log('error', $ex);
             return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
