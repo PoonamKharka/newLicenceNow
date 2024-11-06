@@ -56,7 +56,7 @@
                         class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
-                            Total Users
+                            Users
                         </p>
                     </a>
                 </li>
@@ -111,7 +111,7 @@
                         class="nav-link {{ request()->is('admin/instructors*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chalkboard-teacher"></i>
                         <p>
-                            Our Instructors
+                            Instructor Details
                         </p>
                     </a>
                 </li>

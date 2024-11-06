@@ -52,9 +52,8 @@
                             <table id="y_dataTables" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Street</th>
-                                        <th>City</th>
-                                        <th>State</th>
+                                        <th>Suburb</th>
+                                        <th>StateCode</th>
                                         <th>Postcode</th>
                                         <th>Country</th>
                                         <th>Action</th>
@@ -66,106 +65,68 @@
                     </div>
                     <!-- /.card -->
                 </div>
-
-                @if (session('warning'))
-                    <div class="alert alert-warning">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        <i class="icon fas fa-exclamation-triangle"></i>{{ session('warning') }}
-                    </div>
-                @endif
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="y_dataTables" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Suburb</th>
-                                <th>StateCode</th>
-                                <th>Postcode</th>
-                                <th>Country</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <!-- /.card-body -->
+                <!-- /.col -->
             </div>
             <!-- /.row -->
-        </div>
-        <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
     <script type="text/javascript">
         $(function() {
-                    $(document).ready(function() {
-                        $('#y_dataTables').DataTable({
-                            processing: false,
-                            serverSide: true,
-                            ajax: "{{ route('location.index') }}",
-                            columns: [{
-                                    data: 'suburb',
-                                    name: 'suburb'
-                                },
-                                {
-                                    data: 'stateCode',
-                                    name: 'stateCode'
-                                },
-                                {
-                                    data: 'postcode',
-                                    name: 'postcode'
-                                },
-                                {
-                                    data: 'country',
-                                    name: 'country'
-                                },
-                                {
-                                    data: 'action',
-                                    name: 'action',
-                                    orderable: false,
-                                    searchable: false
-                                },
-                            ]
-                        });
+            $(document).ready(function() {
+                $('#y_dataTables').DataTable({
+                    processing: false,
+                    serverSide: true,
+                    ajax: "{{ route('location.index') }}",
+                    columns: [{
+                            data: 'suburb',
+                            name: 'suburb'
+                        },
+                        {
+                            data: 'stateCode',
+                            name: 'stateCode'
+                        },
+                        {
+                            data: 'postcode',
+                            name: 'postcode'
+                        },
+                        {
+                            data: 'country',
+                            name: 'country'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        },
+                    ]
+                });
+            });
+
+
+            // Handle delete button click
+            $(document).on('click', '.delete-location', function() {
+                let locationId = $(this).data('id');
+                let deleteUrl = $(this).data('url');
+                // Show confirmation dialog
+                if (confirm('Are you sure you want to delete this location?')) {
+                    // Create a form dynamically
+                    var form = $('<form>', {
+                        action: deleteUrl,
+                        method: 'POST'
                     });
 
+                    // Append CSRF token and DELETE method
+                    form.append('@csrf');
+                    form.append('@method('DELETE')');
 
-                    // Handle delete button click
-                    $(document).on('click', '.delete-location', function() {
-                                let locationId = $(this).data('id');
-                                let deleteUrl = $(this).data('url');
-                                // Show confirmation dialog
-                                if (confirm('Are you sure you want to delete this location?')) {
-                                    // Create a form dynamically
-                                    var form = $('<form>', {
-                                        action: deleteUrl,
-                                        method: 'POST'
-                                    });
-
-
-                                    // Handle delete button click
-                                    $(document).on('click', '.delete-location', function() {
-                                        let locationId = $(this).data('id');
-                                        let deleteUrl = $(this).data('url');
-                                        // Show confirmation dialog
-                                        if (confirm('Are you sure you want to delete this location?')) {
-                                            // Create a form dynamically
-                                            var form = $('<form>', {
-                                                action: deleteUrl,
-                                                method: 'POST'
-                                            });
-
-                                            // Append CSRF token and DELETE method
-                                            form.append('@csrf');
-                                            form.append('@method('DELETE')');
-
-                                            // Append the form to the body and submit it
-                                            $('body').append(form);
-                                            form.submit();
-                                        }
-                                    });
-                                });
+                    // Append the form to the body and submit it
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+        });
     </script>
 @endsection

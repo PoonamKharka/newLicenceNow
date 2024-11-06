@@ -876,7 +876,7 @@
                                 .stateCode + ' ' + location.postcode, location.id, true,
                                 true);
                             $('#location_ids').append(option).trigger(
-                            'change'); // Add and trigger change
+                                'change'); // Add and trigger change
                         }
                     },
                     error: function() {

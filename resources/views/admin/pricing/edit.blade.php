@@ -38,7 +38,7 @@
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label>Hours (in hours)</label>
+                                            <label>Hours</label>
                                             <input type="number" class="form-control" name="hours"
                                                 value="{{ $priceData->hours }}">
                                             @error('hours')
@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>Price (in doller)</label>
+                                            <label>Price (in Dollar)</label>
                                             <input type="number" class="form-control" name="price" step="any"
                                                 value="{{ $priceData->price }}">
                                             @error('price')
