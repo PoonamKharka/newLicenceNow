@@ -567,17 +567,8 @@
                                                             <select id="location_ids" class="select2" multiple="multiple"
                                                                 data-placeholder="Select a Location" style="width: 100%;"
                                                                 name="location_id[]">
-                                                               
-                                                                @if ($allLocation)
-                                                                    @foreach ($allLocation as $location)
-                                                                        
-                                                                        {{-- <option value ="{{ $location->id }}">{{ $location->street . ' - ' . $location->city . ' , ' . $location->postcode }}</option> --}}
-                                                                        <option value="{{ $location->id }}"
-                                                                            @if (in_array($location->id, $selectedLocationIds)) selected @endif>
-                                                                            {{ $location->street . ' - ' . $location->city . ' , ' . $location->postcode }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                @endif
+
+
                                                             </select>
 
                                                         </div>
@@ -841,6 +832,81 @@
                 format: 'L'
             });
 
+        });
+        $(document).ready(function() {
+            $('#location_ids').select2({
+                placeholder: "Select a Locations",
+                minimumInputLength: 0,
+                ajax: {
+                    url: '/admin/locations/search',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(location) {
+                                return {
+                                    id: location.id,
+                                    text: location.suburb + ' , ' + location.stateCode + ' ' +
+                                        location.postcode
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
+            // Pre-select existing options
+            let preSelectedOptions = {!! json_encode($selectedLocationIds) !!};
+
+            preSelectedOptions.forEach(id => {
+                $.ajax({
+                    url: '/admin/locations/' + id,
+                    method: 'GET',
+                    success: function(location) {
+                        // Append existing options
+                        if ($('#location_ids').find(`option[value="${location.id}"]`).length ===
+                            0) {
+                            let option = new Option(location.suburb + ' , ' + location
+                                .stateCode + ' ' + location.postcode, location.id, true,
+                                true);
+                            $('#location_ids').append(option).trigger(
+                                'change'); // Add and trigger change
+                        }
+                    },
+                    error: function() {
+                        console.log(`Could not fetch location with ID ${id}`);
+                    }
+                });
+            });
+
+            // Form validation
+            $("#suburbs_details").validate({
+                rules: {
+                    'location_id[]': {
+                        required: true // This ensures the field is required
+                    }
+                },
+                messages: {
+                    'location_id[]': {
+                        required: "Please select at least one suburb."
+                    }
+                },
+                submitHandler: function(form) {
+                    form.submit(); // Submit form if valid
+                }
+            });
+
+            $('#location_ids').on('select2:select select2:unselect', function() {
+                var selectedOptions = $('#location_ids').val();
+                console.log("Currently selected options: ", selectedOptions);
+                $("#suburbs_details").valid(); // Validate the form
+            });
         });
     </script>
 

@@ -23,7 +23,7 @@ class InstructorLocation extends Pivot
      *
      * @var array
      */
-    protected $fillable = ['location_id' , 'instructor_id' ];
+    protected $fillable = ['location_id' , 'instructor_id','postcode'];
 
      /**
      * The users associated with the instructor location.

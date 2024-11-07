@@ -94,7 +94,7 @@ class LocationController extends Controller
         $location = Location::findOrFail($id);
         
         //->with('lessonsLocation1')->first();
-        dd($location);
+        
         if($location){
             return redirect()->route('location.index')->with('warning', 'Cant perform operation as Data is linked with other tables');
            

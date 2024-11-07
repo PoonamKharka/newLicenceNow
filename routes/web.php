@@ -23,6 +23,8 @@ use App\Http\Controllers\auth\ForgotPasswordController;
 use App\Http\Controllers\NavMenuController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\FAQContentController;
+use App\Http\Controllers\DashboardController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +49,12 @@ Route::prefix('admin')->group(function(){
         Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name('password.update');
     });
     Route::middleware(['auth', 'admin.gate:admin-access'])->group(function () {
-        Route::get('admin-dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
+        // Route::get('admin-dashboard', function () {
+        //     return view('admin.dashboard');
+        // })->name('dashboard');
+
+        Route::get('admin-dashboard',[DashboardController::class, 'index'])->name('dashboard');
+
         Route::resource('users', RegisterController::class);
         Route::resource('instructors', InstructorController::class);
         Route::post('/validate-phone', [InstructorController::class, 'validatePhone']);
@@ -78,5 +83,7 @@ Route::prefix('admin')->group(function(){
         Route::post('update-attachments/{id}',[InstructorController::class, 'updateAttachments'])->name('admin.instructor.update-attachments');
         Route::get('user-profile/{id}',[RegisterController::class, 'userProfile'])->name('user-profile');
         Route::resource('informations', InformationController::class);
+        Route::get('locations/search',[InstructorController::class, 'searchLocations'])->name('locations.search');
+        Route::get('locations/{id}', [InstructorController::class, 'getLocationById']);
     });
 });
