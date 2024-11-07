@@ -12,33 +12,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Exceptions;
 
 class SearchController extends BaseController
 {
     
     /**
-     * @OA\Get(
-     *     path="/api/location-search",
-     * tags={"General"},
-     *     summary="Search all location and their intructors based on street,city or postcode",
-     * 
-     *     description="Retrieve a list of all locations street,city or postcode and their intructors. It returns latest intstructors in case of 'Perth no search' ",
-     *     @OA\Parameter(
-     *         name="s",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(type="string"),
-     *         description="You can enter street or city or postcode "
-     *     ),
-     *     @OA\Parameter(
-     *         name="transmissionType",
-     *         in="query",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             enum={"auto", "manual"}, 
-     *             description="Select auto (isAuto) or manual (isManual)"
-     *         )
+     * @OA\Post(
+     *     path="/api/find-suburbs",
+     *     tags={"General"},
+     *     summary="Search all location based on queried street,city or postcode",
+     *     description="Retrieve a list of all locations",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *             @OA\Property( 
+     *                property="filter",
+     *                oneOf={
+     *                   @OA\Schema(type="string"),
+     *                   @OA\Schema(type="integer"),
+     *                }
+     *              ),
+     *           )
+     *        )
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -50,75 +47,30 @@ class SearchController extends BaseController
      *     )
      * )
      */
-    
-     public function getAvailableSuburbs(Request $request): JsonResponse
-     {
-         
-         $transmissionType = ($request->transmissionType === 'auto') ? 'isAuto' : 'isManual';    
- 
-         // Validate input
-         $request->validate([
-             's' => 'nullable|string|max:255',
-             'transmissionType' => 'required|in:auto,manual'
-         ]);
- 
-         try {
-             
-             //DB::enableQueryLog();
- 
-             // Step 1: Get instructor user IDs based on transmission type
-             $userIds = InstructorProfileDetail::where($transmissionType, 1)
-                 ->where($transmissionType === 'isAuto' ? 'isManual' : 'isAuto', 0)
-                 ->pluck('user_id')
-                 ->toArray();
- 
-             
-             if (empty($userIds)) {
-                 return $this->successResponse([], "No instructors found for the selected transmission type");
-             }
- 
-             // Step 2: Search and filter locations based on user input            
-             $locationQuery = Location::with(['instructors' => function ($query) use ($userIds) {                
-                 $query->whereIn('instructor_id', $userIds); 
-             }]);
- 
-             if ($search = $request->input('s')) {
-                 $locationQuery->where(function ($query) use ($search) {
-                     $query->where('city', 'like', '%' . $search . '%')
-                         ->orWhere('state', 'like', '%' . $search . '%')
-                         ->orWhere('street', 'like', '%' . $search . '%')
-                         ->orWhere('postcode', 'like', '%' . $search . '%');
-                 });
-             }
-             
-             $responseData = $locationQuery->get();             
-             
-             //Perth no search
-             if ($responseData->isEmpty()) {
-                $responseData=$this->getLatestInstructors();
-                return $this->successResponse($responseData, "Perth no search");
-             }
-             
-             $response = $responseData->map(function ($location) {
-                 return [
-                     'location' => $location,
-                     'instructors' => $location->instructors->map(function ($instructor) {
-                         return [
-                             'instructor_id' => $instructor->id,
-                             'instructor_location_id' => $instructor->pivot->id ?? null,
-                             'name' => $instructor->first_name . ' ' . $instructor->last_name,
-                         ];
-                     }),
-                 ];
-             });
- 
-             return $this->successResponse($response, "Data found");
- 
-         } catch (\Exception $ex) {
-             Log::error($ex->getMessage());
-             return $this->errorResponse($ex);
-         }
-     }
+    public function getAllSuburbs(Request $request): JsonResponse
+    {
+        try {
+            
+            $search = preg_replace('/[^A-Za-z0-9 ]/', '', $request->filter);
+            $locations = Location::select('id','suburb', 'stateCode', 'postcode')
+                        ->whereAny([
+                            'suburb',
+                            'stateCode',
+                            'postcode',
+                        ], 'like', '%'. $search . '%')
+                        ->get();
+            
+            if(count($locations) > 0) {
+                return $this->successResponse($locations, 'Data Found');
+            } else {
+                return $this->successResponse([], 'No Data Found');
+            }
+            
+        } catch (Exceptions $ex) {
+            Log::log('error', $ex);
+            return $this->errorResponse('Error', ['error'=>'"'. $ex . '"']);
+        }
+    }
      
     /* 
      * Get Latest instrunctors 
@@ -140,31 +92,32 @@ class SearchController extends BaseController
     /* 
      * Get all instrunctor based on location id 
     */
-    public function getAvailableInstructors(Request $request): JsonResponse
+    public function getAvailableInstructors(Request $request)
     {
        
-        try {
-            
-           // Manual validation using Validator facade
+        try { 
+            // Validate input
             $validator = Validator::make($request->all(), [
-                'locationId' => 'required|numeric|exists:locations,id',
+                'suburb' => 'required',
+                'transmissionType' => 'required|in:auto,manual'
             ]);
 
             if ($validator->fails()) {
                 return $this->errorResponse($validator->errors());
             }
-            $transmissionType=($request->transmissionType=='auto')?'isAuto':'isManual';
-            $locationId = (int) $request->locationId;
-            $responseData = User::whereHas('instructorLocations', function ($query) use ($locationId) {
-                $query->where('location_id', $locationId);
-            })
-            ->with(['profileDetails' => function ($query) use ($transmissionType) {
-                $query->where($transmissionType, 1);
-            }])
-            ->get();
-          
-            return $this->successResponse($responseData, "Data Found");
-        }catch (\Exception $ex) {
+
+            $transmissionType = ($request->transmissionType == 'auto' ) ? 'isAuto' : 'isManual';
+            
+            if ( $transmissionType == 'isAuto' ) {
+                $instructorList = InstructorProfileDetail::where('isAuto', 1)->with('prices')->get();
+            } 
+
+            if( $transmissionType == 'isManual' ){
+                $instructorList = InstructorProfileDetail::where('isManual', 1)->with('prices')->get();
+            }
+           
+            return $this->successResponse($instructorList, "Data Found");
+        }catch (Exception $ex) {
             Log::error($ex->getMessage());
             return $this->errorResponse($ex);
         }

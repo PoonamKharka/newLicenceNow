@@ -40,9 +40,9 @@ Route::group(['middleware' => 'cors'], function() {
     /** Article endpoints ends */
 
     /** Home Page endpoints starts */
-    Route::get('instructor-search',[SearchController::class,'getAvailableInstructors']);
+    Route::get('instructors-list',[SearchController::class,'getAvailableInstructors']);
     Route::get('instructors',[SearchController::class,'getAllInstructors']);
-    Route::get('location-search',[SearchController::class,'getAvailableSuburbs']);
+    Route::post('find-suburbs',[SearchController::class,'getAllSuburbs']);
     Route::get('instructor/{id}',[SearchController::class,'getInstructorDetails']);
     /** Home Page endpoints ends */
 
@@ -54,6 +54,5 @@ Route::group(['middleware' => 'cors'], function() {
 
     /** Common APIs starts */
     Route::get('states', [CommanAPIController::class, 'getStates']);
-    Route::get('find-suburbs', [CommanAPIController::class, 'getSuburbs']);
     /** Common APIs ends */ 
 });
