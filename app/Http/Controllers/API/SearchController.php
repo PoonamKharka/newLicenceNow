@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Exceptions;
+use App\Models\InstructorPrice;
 
 class SearchController extends BaseController
 {
-    
     /**
      * @OA\Post(
      *     path="/api/find-suburbs",
@@ -89,16 +89,47 @@ class SearchController extends BaseController
         }
      }
      
-    /* 
-     * Get all instrunctor based on location id 
-    */
+   /**
+     * @OA\Post(
+     *     path="/api/instructors-list",
+     *     tags={"General"},
+     *     summary="Search all instructors based on queried street,city or postcode",
+     *     description="Retrieve a list of all instructors",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *           mediaType="application/json",
+     *           @OA\Schema(
+     *             @OA\Property( 
+     *                property="postcode",
+     *                oneOf={
+     *                   @OA\Schema(type="string"),
+     *                   @OA\Schema(type="integer"),
+     *                }
+     *              ),
+     *             @OA\Property( 
+     *                property="transmissionType",
+     *                type="string",
+     *              )
+     *           )
+     *        )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     )
+     * )
+     */
     public function getAvailableInstructors(Request $request)
     {
        
         try { 
             // Validate input
             $validator = Validator::make($request->all(), [
-                'suburb' => 'required',
+                'postcode' => 'required',
                 'transmissionType' => 'required|in:auto,manual'
             ]);
 
@@ -107,16 +138,44 @@ class SearchController extends BaseController
             }
 
             $transmissionType = ($request->transmissionType == 'auto' ) ? 'isAuto' : 'isManual';
-            
+            $listingData = [];
             if ( $transmissionType == 'isAuto' ) {
-                $instructorList = InstructorProfileDetail::where('isAuto', 1)->with('prices')->get();
+                $instructorList = InstructorProfileDetail::select(['id','user_id','profile_picture'])
+                                ->where('isAuto', 1)
+                                ->with(['user' => function ($query) {
+                                    $query->select('id', 'first_name');
+                                }])
+                                ->get();
             } 
 
-            if( $transmissionType == 'isManual' ){
-                $instructorList = InstructorProfileDetail::where('isManual', 1)->with('prices')->get();
+            if( $transmissionType == 'isManual' ) {
+                $instructorList = InstructorProfileDetail::where('isManual', 1)
+                                ->with(['user' => function ($query) {
+                                    $query->select('id', 'first_name');
+                                }])->get();
             }
-           
-            return $this->successResponse($instructorList, "Data Found");
+            
+            foreach ($instructorList as $instructors) {
+                
+                $getPrice = InstructorPrice::where('instructor_id', $instructors->user->id)
+                            ->with(['prices' => function ($query) {
+                                $query->where('hours', 1)->select('id', 'hours','price');
+                            }])->first();
+
+                $no = $getPrice->prices[0]['price'] + 8;
+                $lessonPrice = '$' . $getPrice->prices[0]['price'] . '-$' . number_format((float)$no, 2, '.', '') . ' per hour';
+                $listingData[] = [
+                    'instructor_id' => $instructors->user->id, 
+                    'profile_picture' => $instructors->profile_picture,
+                    'first_name' => $instructors->user->first_name,
+                    'prices' => $lessonPrice,
+                    'reviews' => '4.93 (134 Reviews)',
+                    'lessons' => '198 Lessons Completed' 
+                ];
+            }
+            
+            
+            return $this->successResponse($listingData, "Data Found");
         }catch (Exception $ex) {
             Log::error($ex->getMessage());
             return $this->errorResponse($ex);

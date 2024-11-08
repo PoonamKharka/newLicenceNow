@@ -52,7 +52,7 @@ class InstructorProfileDetail extends Model
         return $this->hasMany(InstructorLocation::class, 'instructor_id', 'user_id');
     }
 
-    public function prices(){
+    public function instructorPrices(){
         return $this->hasMany(InstructorPrice::class, 'instructor_id', 'user_id');
     }
     

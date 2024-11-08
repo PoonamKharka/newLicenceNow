@@ -40,7 +40,7 @@ Route::group(['middleware' => 'cors'], function() {
     /** Article endpoints ends */
 
     /** Home Page endpoints starts */
-    Route::get('instructors-list',[SearchController::class,'getAvailableInstructors']);
+    Route::post('instructors-list',[SearchController::class,'getAvailableInstructors']);
     Route::get('instructors',[SearchController::class,'getAllInstructors']);
     Route::post('find-suburbs',[SearchController::class,'getAllSuburbs']);
     Route::get('instructor/{id}',[SearchController::class,'getInstructorDetails']);

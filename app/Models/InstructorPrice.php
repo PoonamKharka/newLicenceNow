@@ -24,5 +24,8 @@ class InstructorPrice extends Pivot
      */
     protected $fillable = ['price_id' , 'instructor_id' ];
     
+    public function prices(){
+        return $this->hasMany(Price::class, 'id', 'price_id');
+    }
     
 }
