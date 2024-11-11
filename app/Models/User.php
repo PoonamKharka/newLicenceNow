@@ -28,7 +28,9 @@ class User extends Authenticatable
         'isAdmin',
         'userType_id',
         'status',   
-        'profile_image'
+        'profile_image',
+        'transmission_id',
+        'postcode',
     ];
 
     /**
@@ -63,8 +65,8 @@ class User extends Authenticatable
         return $this->hasOne(InstructorBankDetail::class, 'user_id', 'id');
     }
 
-    // Define the relationship with ProfileDetails
-    public function profileDetails()
+    // Define the relationship with Instructor Profile Details
+    public function instructorProfileDetail()
     {
         return $this->hasOne(InstructorProfileDetail::class, 'user_id', 'id');
     }

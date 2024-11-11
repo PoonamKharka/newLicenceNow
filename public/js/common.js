@@ -626,9 +626,6 @@ $(document).ready(function () {
         },
     });
 
-
-
-
     $("#bank_details").validate({
         rules: {
             salaryPayModeId: {
@@ -701,92 +698,102 @@ $(document).ready(function () {
     });
 
     // Price section function to disable already selected options
-    $('#price_id').select2();
-
-
+    $("#price_id").select2();
 
     // Function to update the appearance and prevent re-selection of selected options
     function updateOptionStyles(selectedOptions) {
-
-        $('#price_id').find('option').each(function () {
-            var optionValue = $(this).val();
-            if (selectedOptions && selectedOptions.includes(optionValue.toString())) {
-                // Add class to style selected options
-                $(this).addClass('select2-results__option--disabled');
-            } else {
-                $(this).removeClass('select2-results__option--disabled');
-            }
-        });
+        $("#price_id")
+            .find("option")
+            .each(function () {
+                var optionValue = $(this).val();
+                if (
+                    selectedOptions &&
+                    selectedOptions.includes(optionValue.toString())
+                ) {
+                    // Add class to style selected options
+                    $(this).addClass("select2-results__option--disabled");
+                } else {
+                    $(this).removeClass("select2-results__option--disabled");
+                }
+            });
 
         // Refresh Select2 to apply styles
-        $('#price_id').select2('close').select2();
+        $("#price_id").select2("close").select2();
     }
 
-    updateOptionStyles($('#price_id').val());
+    updateOptionStyles($("#price_id").val());
 
     // Custom validation method for Select2
-    $.validator.addMethod("select2Required", function (value, element) {
-        $('#price_id').find('option').prop('disabled', false);
-        var selectedOptions = $('#price_id').val();
-        return selectedOptions && selectedOptions.length > 0;
-    }, "Please select at least one price.");
+    $.validator.addMethod(
+        "select2Required",
+        function (value, element) {
+            $("#price_id").find("option").prop("disabled", false);
+            var selectedOptions = $("#price_id").val();
+            return selectedOptions && selectedOptions.length > 0;
+        },
+        "Please select at least one price."
+    );
 
     // jQuery Validation for the form
     $("#price_details").validate({
         rules: {
-            'price_id[]': {
-                select2Required: true
-            }
+            "price_id[]": {
+                select2Required: true,
+            },
         },
         messages: {
-            'price_id[]': {
-                select2Required: "Please select at least one price."
-            }
+            "price_id[]": {
+                select2Required: "Please select at least one price.",
+            },
         },
         submitHandler: function (form) {
-
             // Only submit if validation is successful
             if ($("#price_details").valid()) {
                 form.submit();
             }
-        }
+        },
     });
 
     // Event triggered when an option is selected in Select2
-    $('#price_id').on('select2:select', function (e) {
-        var selectedOptions = $('#price_id').val();
+    $("#price_id").on("select2:select", function (e) {
+        var selectedOptions = $("#price_id").val();
         updateOptionStyles(selectedOptions);
         $("#price_details").valid();
     });
 
     // Event triggered when an option is unselected in Select2
-    $('#price_id').on('select2:unselect', function (e) {
-        var selectedOptions = $('#price_id').val();
+    $("#price_id").on("select2:unselect", function (e) {
+        var selectedOptions = $("#price_id").val();
         updateOptionStyles(selectedOptions);
         $("#price_details").valid();
     });
 
     // Prevent re-selection of already selected options
-    $('#price_id').on('select2:opening', function (e) {
-        var selectedOptions = $('#price_id').val();
+    $("#price_id").on("select2:opening", function (e) {
+        var selectedOptions = $("#price_id").val();
         // Disable already selected options in the dropdown
-        $('#price_id').find('option').each(function () {
-            var optionValue = $(this).val();
-            if (selectedOptions && selectedOptions.includes(optionValue.toString())) {
-                $(this).prop('disabled', true);
-            } else {
-                //$(this).prop('disabled', false);
-            }
-        });
+        $("#price_id")
+            .find("option")
+            .each(function () {
+                var optionValue = $(this).val();
+                if (
+                    selectedOptions &&
+                    selectedOptions.includes(optionValue.toString())
+                ) {
+                    $(this).prop("disabled", true);
+                } else {
+                    //$(this).prop('disabled', false);
+                }
+            });
     });
     // Disable validation when opening the Select2 dropdown
-    $('#price_id').on('select2:opening', function (e) {
-        $('#price_details').validate().settings.ignore = ":disabled";
+    $("#price_id").on("select2:opening", function (e) {
+        $("#price_details").validate().settings.ignore = ":disabled";
     });
 
     // Re-enable validation after closing the dropdown
-    $('#price_id').on('select2:close', function (e) {
-        $('#price_details').validate().settings.ignore = "";
+    $("#price_id").on("select2:close", function (e) {
+        $("#price_details").validate().settings.ignore = "";
     });
     // End Peice Details
 
@@ -835,7 +842,7 @@ $(document).ready(function () {
     // Custom method for description validation
     $.validator.addMethod(
         "descriptionRequired",
-        function (value, element) { },
+        function (value, element) {},
         "Description is required."
     );
 
@@ -880,28 +887,33 @@ $(document).ready(function () {
         }
     });
     // User Update Form validation
-    $.validator.addMethod("fileSize", function (value, element) {
-        if (element.files.length > 0) {
-            var fileSize = element.files[0].size;
-            return this.optional(element) || (fileSize <= 2 * 1024 * 1024);
-        }
-        return true;
-    }, "File size must be less than 2MB.");
-
-    $.validator.addMethod("fileExtension", function (value, element) {
-        if (this.optional(element)) {
+    $.validator.addMethod(
+        "fileSize",
+        function (value, element) {
+            if (element.files.length > 0) {
+                var fileSize = element.files[0].size;
+                return this.optional(element) || fileSize <= 2 * 1024 * 1024;
+            }
             return true;
-        }
-        var ext = value.split('.').pop().toLowerCase();
-        return /^(jpeg|jpg|png|svg)$/.test(ext);
-    }, "Only JPG, JPEG, PNG, and SVG files are allowed.");
+        },
+        "File size must be less than 2MB."
+    );
+
+    $.validator.addMethod(
+        "fileExtension",
+        function (value, element) {
+            if (this.optional(element)) {
+                return true;
+            }
+            var ext = value.split(".").pop().toLowerCase();
+            return /^(jpeg|jpg|png|svg)$/.test(ext);
+        },
+        "Only JPG, JPEG, PNG, and SVG files are allowed."
+    );
 
     $("#user-update").validate({
         rules: {
             first_name: {
-                required: true,
-            },
-            last_name: {
                 required: true,
             },
             email: {
@@ -915,7 +927,8 @@ $(document).ready(function () {
         },
         messages: {
             profile_image: {
-                fileExtension: "Only JPG, JPEG, PNG, and SVG files are allowed.",
+                fileExtension:
+                    "Only JPG, JPEG, PNG, and SVG files are allowed.",
                 fileSize: "The file size must be less than 2MB.",
             },
         },
@@ -932,16 +945,13 @@ $(document).ready(function () {
             first_name: {
                 required: true,
             },
-            last_name: {
-                required: true,
-            },
             email: {
                 required: true,
                 email: true,
             },
             password: {
                 required: true,
-                minlength: 4
+                minlength: 4,
             },
             password_confirmation: {
                 required: true,
@@ -951,11 +961,11 @@ $(document).ready(function () {
         messages: {
             password: {
                 required: "Please enter a password.",
-                minlength: "Your password must be at least 4 characters long."
+                minlength: "Your password must be at least 4 characters long.",
             },
             password_confirmation: {
                 required: "Please confirm your password.",
-                equalTo: "Password and confirm password do not match."
+                equalTo: "Password and confirm password do not match.",
             },
         },
         submitHandler: function (form, event) {
@@ -1074,5 +1084,4 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
-
 });

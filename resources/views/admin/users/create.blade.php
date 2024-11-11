@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label>Select User Type</label>
+                                        <label>User Type</label>
                                         <select class="form-control select" name="userType_id">
                                             <option value=1>Admin</option>
                                             <option value=2 selected>Instructor</option>
@@ -64,6 +64,23 @@
                                             @error('email')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Transmission Type</label>
+                                        <select class="form-control select" name="transmission_id">
+                                            <option value=0>None</option>
+                                            <option value=1>Both</option>
+                                            <option value=2 selected>Auto</option>
+                                            <option value=3>Manual</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Postcode</label>
+                                            <input type="text" class="form-control" placeholder="801" name="postcode">
                                         </div>
                                     </div>
                                 </div>

@@ -137,44 +137,55 @@ class SearchController extends BaseController
                 return $this->errorResponse($validator->errors());
             }
 
-            $transmissionType = ($request->transmissionType == 'auto' ) ? 'isAuto' : 'isManual';
-            $listingData = [];
-            if ( $transmissionType == 'isAuto' ) {
-                $instructorList = InstructorProfileDetail::select(['id','user_id','profile_picture'])
-                                ->where('isAuto', 1)
-                                ->with(['user' => function ($query) {
-                                    $query->select('id', 'first_name');
-                                }])
+            $transmissionType = ($request->transmissionType == 'auto' ) ? 2 : 3;
+
+            switch ($transmissionType) {
+                case '2':
+                    $instructorList = User::whereIn('transmission_id', [ 2 , 1])
+                    ->where('postcode', $request->postcode)
+                    ->with(['instructorProfileDetail'])
+                    ->get();
+                    break;
+                case '3':
+                    $instructorList = User::whewhereInre('transmission_id', [3 , 1])
+                                ->where('postcode', $request->postcode)
+                                ->with('instructorProfileDetail')
                                 ->get();
+                    break;
+                default:
+                    $instructorList = User::with('instructorProfileDetail')
+                    ->get();
+                    break;
+            }
+            
+            $listingData = [];
+            //This condition is for when data found
+            if( count($instructorList) > 0) {
+                foreach ($instructorList as $instructors) {
+                    //dd($instructors);
+                    $getPrice = InstructorPrice::where('instructor_id', $instructors->id)
+                                ->with(['prices' => function ($query) {
+                                    $query->where('hours', 1)->select('id', 'hours','price');
+                                }])->first();
+                    
+                    if( $getPrice ){
+                        $no = $getPrice->prices[0]['price'] + 8;
+                        $lessonPrice = '$' . $getPrice->prices[0]['price'] . '-$' . number_format((float)$no, 2, '.', '') . ' per hour';
+                    } else {
+                        $lessonPrice = 'Not Disclosed';
+                    }
+                    
+                    $listingData[] = [
+                        'instructor_id' => $instructors->id, 
+                        'profile_picture' => ( $instructors->instructorProfileDetail ) ? $instructors->instructorProfileDetail->profile_picture : null,
+                        'first_name' => $instructors->first_name,
+                        'prices' => $lessonPrice,
+                        'reviews' => '4.93 (134 Reviews)',
+                        'lessons' => '198 Lessons Completed' 
+                    ];
+                }
             } 
 
-            if( $transmissionType == 'isManual' ) {
-                $instructorList = InstructorProfileDetail::where('isManual', 1)
-                                ->with(['user' => function ($query) {
-                                    $query->select('id', 'first_name');
-                                }])->get();
-            }
-            
-            foreach ($instructorList as $instructors) {
-                
-                $getPrice = InstructorPrice::where('instructor_id', $instructors->user->id)
-                            ->with(['prices' => function ($query) {
-                                $query->where('hours', 1)->select('id', 'hours','price');
-                            }])->first();
-
-                $no = $getPrice->prices[0]['price'] + 8;
-                $lessonPrice = '$' . $getPrice->prices[0]['price'] . '-$' . number_format((float)$no, 2, '.', '') . ' per hour';
-                $listingData[] = [
-                    'instructor_id' => $instructors->user->id, 
-                    'profile_picture' => $instructors->profile_picture,
-                    'first_name' => $instructors->user->first_name,
-                    'prices' => $lessonPrice,
-                    'reviews' => '4.93 (134 Reviews)',
-                    'lessons' => '198 Lessons Completed' 
-                ];
-            }
-            
-            
             return $this->successResponse($listingData, "Data Found");
         }catch (Exception $ex) {
             Log::error($ex->getMessage());

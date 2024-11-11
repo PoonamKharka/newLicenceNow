@@ -48,7 +48,7 @@ class InstructorProfileDetail extends Model
         return $this->hasMany(User::class, 'user_id');
     }
 
-    public function locations(){
+    public function instructorLocations(){
         return $this->hasMany(InstructorLocation::class, 'instructor_id', 'user_id');
     }
 

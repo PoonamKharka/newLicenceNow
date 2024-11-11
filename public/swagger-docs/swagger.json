@@ -443,6 +443,48 @@
                 }
             }
         },
+        "/api/instructors-list": {
+            "post": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Search all instructors based on queried street,city or postcode",
+                "description": "Retrieve a list of all instructors",
+                "operationId": "dd3b4a3c54c6dc04e7f555e4b6d908fc",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "postcode": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    },
+                                    "transmissionType": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/api/instructors": {
             "get": {
                 "tags": [

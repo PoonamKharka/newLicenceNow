@@ -60,9 +60,22 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="email">Status</label>
+                                    <label for="transmission">Transmission Type</label>
+                                    <select class="form-control" name="transmission_id">
+                                        <option value=0 {{ $userData->transmission_id == 0 ? 'selected' : '' }}>None</option>
+                                        <option value=1 {{ $userData->transmission_id == 1 ? 'selected' : '' }}>Both</option>
+                                        <option value=2 {{ $userData->transmission_id == 2 ? 'selected' : '' }}>Auto</option>
+                                        <option value=3 {{ $userData->transmission_id == 3 ? 'selected' : '' }}>Manual</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Postcode</label>
+                                    <input type="text" id="postcode" class="form-control" name="postcode"
+                                        value="{{ $userData->postcode ? $userData->postcode : null }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
                                     <select class="form-control" name="status">
                                         <option value=1 {{ $userData->status == 1 ? 'selected' : '' }}>Active</option>
                                         <option value=0 {{ $userData->status == 0 ? 'selected' : '' }}>Inactive</option>
